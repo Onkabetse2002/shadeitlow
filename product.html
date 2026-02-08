@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - DARKIS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-white text-gray-900 font-sans">
+    <!-- Sticky Navbar -->
+    <nav class="sticky top-0 bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold">DARKIS</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-gray-600 transition">Home</a>
+                    <a href="shop.html" class="hover:text-gray-600 transition">Shop</a>
+                    <a href="#" class="hover:text-gray-600 transition">About</a>
+                </div>
+                <button class="md:hidden" id="mobile-menu-toggle">☰</button>
+            </div>
+            <div class="hidden md:hidden" id="mobile-menu">
+                <a href="index.html" class="block py-2">Home</a>
+                <a href="shop.html" class="block py-2">Shop</a>
+                <a href="#" class="block py-2">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Details -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <img id="product-image" src="" alt="Product" class="w-full mb-4">
+                </div>
+                <div>
+                    <h1 id="product-name" class="text-4xl font-bold mb-4"></h1>
+                    <p id="product-price" class="text-2xl mb-4"></p>
+                    <div class="mb-4">
+                        <label for="quantity" class="block text-lg mb-2">Quantity:</label>
+                        <input type="number" id="quantity" value="1" min="1" class="border px-4 py-2 w-20">
+                    </div>
+                    <button id="add-to-cart" class="bg-gray-800 text-white px-6 py-3 mr-4 hover:bg-gray-700 transition">Add to Cart</button>
+                    <button id="buy-now" class="bg-black text-white px-6 py-3 hover:bg-gray-800 transition">Buy Now</button>
+                    <button id="wishlist" class="ml-4 text-red-500 text-2xl">♥</button>
+                    <p class="mt-8 text-gray-700">Description: Premium sunglasses with UV protection and stylish design.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Load product details based on URL param
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+        const products = [
+            { id: 1, name: 'Darkis Aviator', price: 150, image: 'https://via.placeholder.com/600x600?text=Darkis+Aviator' },
+            { id: 2, name: 'Darkis Wayfarer', price: 140, image: 'https://via.placeholder.com/600x600?text=Darkis+Wayfarer' },
+            { id: 3, name: 'Darkis Round', price: 130, image: 'https://via.placeholder.com/600x600?text=Darkis+Round' },
+            { id: 4, name: 'Darkis Cat Eye', price: 160, image: 'https://via.placeholder.com/600x600?text=Darkis+Cat+Eye' },
+            { id: 5, name: 'Darkis Square', price: 145, image: 'https://via.placeholder.com/600x600?text=Darkis+Square' }
+        ];
+        const product = products.find(p => p.id == productId);
+        if (product) {
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-price').textContent = 'R' + product.price;
+            document.getElementById('product-image').src = product.image;
+        }
+
+        // Add to cart
+        document.getElementById('add-to-cart').addEventListener('click', () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existing = cart.find(item => item.id == productId);
+            if (existing) {
+                existing.quantity += parseInt(document.getElementById('quantity').value);
+            } else {
+                cart.push({ id: productId, name: product.name, price: product.price, quantity: parseInt(document.getElementById('quantity').value) });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('Added to cart!');
+        });
+
+        // Buy now
+        document.getElementById('buy-now').addEventListener('click', () => {
+            window.location.href = `checkout.html?product=${productId}&quantity=${document.getElementById('quantity').value}`;
+        });
+
+        // Wishlist toggle (visual only)
+        document.getElementById('wishlist').addEventListener('click', (e) => {
+            e.target.classList.toggle('text-gray-400');
+        });
+    </script>
+</body>
+</html>

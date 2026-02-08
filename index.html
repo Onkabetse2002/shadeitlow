@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DARKIS - Shade it low</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-white text-gray-900 font-sans">
+    <!-- Sticky Navbar -->
+    <nav class="sticky top-0 bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold">DARKIS</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-gray-600 transition">Home</a>
+                    <a href="shop.html" class="hover:text-gray-600 transition">Shop</a>
+                    <a href="#" class="hover:text-gray-600 transition">About</a>
+                </div>
+                <button class="md:hidden" id="mobile-menu-toggle">☰</button>
+            </div>
+            <div class="hidden md:hidden" id="mobile-menu">
+                <a href="index.html" class="block py-2">Home</a>
+                <a href="shop.html" class="block py-2">Shop</a>
+                <a href="#" class="block py-2">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gray-100 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">DARKIS</h1>
+            <p class="text-xl md:text-2xl mb-8">Shade it low.</p>
+            <img src="shadesimages/models/image00017 (1).jpeg" alt="Model" class="mx-auto mb-8 w-full max-w-md md:max-w-lg fade-in">
+            
+
+            <a href="shop.html" class="bg-black text-white px-8 py-4 text-lg hover:bg-gray-800 transition">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">Featured Products</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <img src="shadesimages/products/IMG_20251122_093928 (1).jpg" alt="Darkis Aviator" class="w-full mb-4 hover:scale-105 transition">
+                    <h3 class="text-xl font-semibold">Darkis 1</h3>
+                    <p class="text-lg">R600</p>
+                    <span class="bg-red-500 text-white px-2 py-1 text-sm">New</span>
+                </div>
+                <div class="text-center">
+                    <img src="shadesimages/products/IMG_20251122_094552 (1).jpg" alt="Darkis Wayfarer" class="w-full mb-4 hover:scale-105 transition">
+                    <h3 class="text-xl font-semibold">Darkis 2</h3>
+                    <p class="text-lg">R700</p>
+                </div>
+                <div class="text-center">
+                    <img src="shadesimages/products/IMG_20251122_100106 (1).jpg" alt="Darkis Round" class="w-full mb-4 hover:scale-105 transition">
+                    <h3 class="text-xl font-semibold">Darkis 3</h3>
+                    <p class="text-lg">R500</p>
+                    <span class="bg-red-500 text-white px-2 py-1 text-sm">New</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lifestyle Images -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">Lifestyle</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <img src="shadesimages/models/image00017 (1).jpeg" alt="Lifestyle 1" class="w-full fade-in">
+                <img src="shadesimages/models/image00026 (1).jpeg" alt="Lifestyle 2" class="w-full fade-in">.
+                <img src="shadesimages/models/image00039 (1).jpeg" alt="Lifestyle 1" class="w-full fade-in">
+                <img src="shadesimages/models/image00044 (1).jpeg" alt="Lifestyle 2" class="w-full fade-in">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2026 DARKIS. Shade it low.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="hover:text-gray-400">Instagram</a>
+                <a href="#" class="hover:text-gray-400">Facebook</a>
+                <a href="#" class="hover:text-gray-400">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
