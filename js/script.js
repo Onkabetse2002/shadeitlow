@@ -7,8 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenu = document.getElementById('mobile-menu');
     if (toggleButton && mobileMenu) {
         toggleButton.addEventListener('click', () => {
+            console.log('Toggle button clicked'); // Debugging
             mobileMenu.classList.toggle('show');
+            console.log('Mobile menu class:', mobileMenu.classList); // Debugging
         });
+    } else {
+        console.log('Toggle button or mobile menu not found'); // Debugging
     }
 
     // Fade-in animation on scroll
