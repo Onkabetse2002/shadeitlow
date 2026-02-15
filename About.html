@@ -4,62 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - DARKIS</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-white text-gray-900 font-sans">
+<body>
     <!-- Sticky Navbar -->
-    <nav class="sticky top-0 bg-white shadow-md z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <img src="images/darkis-logo.png" alt="DARKIS" class="logo">
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="hover:text-gray-600 transition">Home</a>
-                    <a href="shop.html" class="hover:text-gray-600 transition">Shop</a>
-                    <a href="gallery.html" class="hover:text-gray-600 transition">Gallery</a>
-                    <a href="cart.html" class="hover:text-gray-600 transition relative">Cart <span class="cart-badge" style="display: none;">0</span></a>
-                    <a href="about.html" class="hover:text-gray-600 transition">About</a>
-                </div>
-                <button class="md:hidden" id="mobile-menu-toggle">☰</button>
+    <nav class="navbar">
+        <div class="container">
+            <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+                <a href="about.html">About</a>
             </div>
-            <div class="hidden md:hidden" id="mobile-menu">
-                <a href="index.html" class="block py-2">Home</a>
-                <a href="shop.html" class="block py-2">Shop</a>
-                <a href="gallery.html" class="block py-2">Gallery</a>
-                <a href="cart.html" class="block py-2 relative">Cart <span class="cart-badge" style="display: none;">0</span></a>
-                <a href="about.html" class="block py-2">About</a>
-            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="cart.html">Cart <span class="cart-badge">0</span></a>
+            <a href="about.html">About</a>
         </div>
     </nav>
 
-    <!-- About Section -->
-    <section class="py-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl font-bold mb-8">About Darkis</h1>
-            <p class="text-lg mb-6">At Darkis, we offer timeless eyewear that exudes sophistication and elegance. Our shades are designed for the modern individual who values understated luxury and effortless style.</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-headline">About DARKIS</h1>
+            <p>Shade it low with elegance and style.</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="brand-section">
+        <div class="container">
+            <h2>About Darkis</h2>
+            <p>At Darkis, we offer timeless eyewear that exudes sophistication and elegance. Our shades are designed for the modern individual who values understated luxury and effortless style.</p>
             
-            <h2 class="text-3xl font-semibold mb-4">Our Story</h2>
-            <p class="text-lg mb-6">Born from a passion for design and a love of the finer things, Darkis is a brand that embodies refinement and poise. We believe in creating sunglasses that complement your unique personality, without drawing attention away from who you are.</p>
+            <h3>Our Story</h3>
+            <p>Born from a passion for design and a love of the finer things, Darkis is a brand that embodies refinement and poise. We believe in creating sunglasses that complement your unique personality, without drawing attention away from who you are.</p>
             
-            <h2 class="text-3xl font-semibold mb-4">What We Offer</h2>
-            <ul class="text-lg mb-6 list-disc list-inside">
+            <h3>What We Offer</h3>
+            <ul>
                 <li>Classic designs with a touch of modern flair</li>
                 <li>Exceptional quality and attention to detail</li>
                 <li>A subtle nod to elegance in every pair</li>
             </ul>
             
-            <p class="text-lg">Let Darkis be your discreet companion in style. Explore our collection and discover the art of subtle sophistication.</p>
+            <p>Let Darkis be your discreet companion in style. Explore our collection and discover the art of subtle sophistication.</p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-black text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <footer class="footer">
+        <div class="container">
             <p>&copy; 2026 DARKIS. Shade it low.</p>
-            <div class="mt-4 space-x-4">
-                <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==" class="hover:text-gray-400">Instagram</a>
-                <a href="https://www.facebook.com/share/1N85wS2pcx/" class="hover:text-gray-400">Facebook</a>
-                <a href="#" class="hover:text-gray-400">Twitter</a>
+            <div class="social-links">
+                <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==">Instagram</a>
+                <a href="https://www.facebook.com/share/1N85wS2pcx/">Facebook</a>
+                <a href="#">Twitter</a>
             </div>
         </div>
     </footer>

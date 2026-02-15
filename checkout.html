@@ -4,75 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout - DARKIS</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-white text-gray-900 font-sans">
+<body>
     <!-- Sticky Navbar -->
-    <nav class="sticky top-0 bg-white shadow-md z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <div class="text-2xl font-bold">DARKIS</div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="hover:text-gray-600 transition">Home</a>
-                    <a href="shop.html" class="hover:text-gray-600 transition">Shop</a>
-                    <a href="cart.html" id="cart-link" class="hover:text-gray-600 transition">Cart</a>
-                    <a href="#" class="hover:text-gray-600 transition">About</a>
-                </div>
-                <button class="md:hidden" id="mobile-menu-toggle">☰</button>
+    <nav class="navbar">
+        <div class="container">
+            <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+                <a href="about.html">About</a>
             </div>
-            <div class="hidden md:hidden" id="mobile-menu">
-                <a href="index.html" class="block py-2">Home</a>
-                <a href="shop.html" class="block py-2">Shop</a>
-                <a href="cart.html" id="mobile-cart-link" class="block py-2">Cart</a>
-                <a href="#" class="block py-2">About</a>
-            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="cart.html">Cart <span class="cart-badge">0</span></a>
+            <a href="about.html">About</a>
         </div>
     </nav>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-headline">Checkout</h1>
+            <p>Complete your purchase securely.</p>
+        </div>
+    </section>
+
     <!-- Checkout Form -->
-    <section class="py-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="text-4xl font-bold text-center mb-12">Checkout</h1>
-            <form action="https://formsubmit.co/onkabetsenkabi3@gmail.com" method="POST" class="bg-gray-50 p-8 rounded-lg shadow-lg">
+    <section class="brand-section">
+        <div class="container">
+            <form action="https://formsubmit.co/onkabetsenkabi3@gmail.com" method="POST" class="checkout-form">
                 <input type="hidden" name="_subject" value="New DARKIS Order">
                 <input type="hidden" name="_captcha" value="false">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="name" class="block text-lg font-semibold mb-2">Full Name</label>
-                        <input type="text" id="name" name="name" required class="w-full border px-4 py-2">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
                     </div>
-                    <div>
-                        <label for="email" class="block text-lg font-semibold mb-2">Email</label>
-                        <input type="email" id="email" name="email" required class="w-full border px-4 py-2">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
                     </div>
-                    <div>
-                        <label for="phone" class="block text-lg font-semibold mb-2">Phone</label>
-                        <input type="tel" id="phone" name="phone" required class="w-full border px-4 py-2">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" required>
                     </div>
-                    <div>
-                        <label for="address" class="block text-lg font-semibold mb-2">Delivery Address</label>
-                        <textarea id="address" name="address" required class="w-full border px-4 py-2"></textarea>
-                    </div>
-                    <div>
-                        <label for="product" class="block text-lg font-semibold mb-2">Product Name</label>
-                        <input type="text" id="product" name="product" required class="w-full border px-4 py-2">
-                    </div>
-                    <div>
-                        <label for="quantity" class="block text-lg font-semibold mb-2">Quantity</label>
-                        <input type="number" id="quantity" name="quantity" min="1" required class="w-full border px-4 py-2">
+                    <div class="form-group">
+                        <label for="address">Delivery Address</label>
+                        <textarea id="address" name="address" required></textarea>
                     </div>
                 </div>
-                <div class="mt-6">
-                    <label for="notes" class="block text-lg font-semibold mb-2">Notes</label>
-                    <textarea id="notes" name="notes" class="w-full border px-4 py-2"></textarea>
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div id="summary-items"></div>
+                    <p id="summary-total">Total: R0</p>
                 </div>
-                <div class="text-center mt-8">
-                    <button type="submit" class="bg-black text-white px-8 py-4 text-lg hover:bg-gray-800 transition">Place Order</button>
-                </div>
+                <button type="submit" class="cta-button">Place Order</button>
             </form>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 DARKIS. Shade it low.</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==">Instagram</a>
+                <a href="https://www.facebook.com/share/1N85wS2pcx/">Facebook</a>
+                <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="js/script.js"></script>
     <script>
@@ -81,18 +91,28 @@
         const productId = urlParams.get('product');
         const quantity = urlParams.get('quantity');
         if (productId) {
-            const products = [
-                { id: 1, name: 'Darkis Aviator' },
-                { id: 2, name: 'Darkis Wayfarer' },
-                { id: 3, name: 'Darkis Round' },
-                { id: 4, name: 'Darkis Cat Eye' },
-                { id: 5, name: 'Darkis Square' }
-            ];
+            const products = getProducts();
             const product = products.find(p => p.id == productId);
             if (product) {
                 document.getElementById('product').value = product.name;
                 if (quantity) document.getElementById('quantity').value = quantity;
             }
+        }
+
+        // Load order summary
+        function loadSummary() {
+            const cart = getCart();
+            const summaryItems = document.getElementById('summary-items');
+            const summaryTotal = document.getElementById('summary-total');
+            summaryItems.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                const itemDiv = document.createElement('div');
+                itemDiv.innerHTML = `<p>${item.name} x ${item.quantity} - R${item.price * item.quantity}</p>`;
+                summaryItems.appendChild(itemDiv);
+            });
+            summaryTotal.textContent = `Total: R${total}`;
         }
 
         // Handle form submission
@@ -103,9 +123,11 @@
                 method: 'POST',
                 body: formData
             }).then(() => {
-                document.body.innerHTML = '<div class="text-center py-20"><h1 class="text-4xl font-bold mb-4">Thank you. Your order has been received. We will contact you shortly.</h1><a href="index.html" class="bg-black text-white px-6 py-3">Back to Home</a></div>';
+                document.body.innerHTML = '<div class="container"><h1>Thank you. Your order has been received. We will contact you shortly.</h1><a href="index.html" class="cta-button">Back to Home</a></div>';
             });
         });
+
+        document.addEventListener('DOMContentLoaded', loadSummary);
     </script>
 </body>
 </html>

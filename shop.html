@@ -4,43 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop - DARKIS</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-white text-gray-900 font-sans">
+<body>
     <!-- Sticky Navbar -->
-    <nav class="sticky top-0 bg-white shadow-md z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <img src="images/darkis-logo.png" alt="DARKIS" class="logo">
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="hover:text-gray-600 transition">Home</a>
-                    <a href="shop.html" class="hover:text-gray-600 transition">Shop</a>
-                    <a href="gallery.html" class="hover:text-gray-600 transition">Gallery</a>
-                    <a href="cart.html" class="hover:text-gray-600 transition relative">Cart <span class="cart-badge" style="display: none;">0</span></a>
-                    <a href="about.html" class="hover:text-gray-600 transition">About</a>
-                </div>
-                <button class="md:hidden" id="mobile-menu-toggle">☰</button>
+    <nav class="navbar">
+        <div class="container">
+            <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+                <a href="about.html">About</a>
             </div>
-            <div class="hidden md:hidden" id="mobile-menu">
-                <a href="index.html" class="block py-2">Home</a>
-                <a href="shop.html" class="block py-2">Shop</a>
-                <a href="gallery.html" class="block py-2">Gallery</a>
-                <a href="cart.html" class="block py-2 relative">Cart <span class="cart-badge" style="display: none;">0</span></a>
-                <a href="about.html" class="block py-2">About</a>
-            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="cart.html">Cart <span class="cart-badge">0</span></a>
+            <a href="about.html">About</a>
         </div>
     </nav>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-headline">Shop All</h1>
+            <p>Discover your perfect pair of DARKIS sunglasses.</p>
+        </div>
+    </section>
+
     <!-- Product Grid -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="text-4xl font-bold text-center mb-12">Shop All</h1>
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <section class="featured-products">
+        <div class="container">
+            <div id="product-grid" class="product-grid">
                 <!-- Products loaded dynamically -->
             </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 DARKIS. Shade it low.</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==">Instagram</a>
+                <a href="https://www.facebook.com/share/1N85wS2pcx/">Facebook</a>
+                <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="js/script.js"></script>
     <script>
@@ -52,12 +69,12 @@
             products.forEach(product => {
                 if (stock[product.id] > 0) {
                     const card = document.createElement('div');
-                    card.className = 'bg-white shadow-lg p-6 text-center hover:shadow-xl transition';
+                    card.className = 'product-card';
                     card.innerHTML = `
-                        <img src="${product.image}" alt="${product.name}" class="w-full mb-4">
-                        <h3 class="text-xl font-semibold">${product.name}</h3>
-                        <p class="text-lg mb-4">R${product.price}</p>
-                        <a href="product.html?id=${product.id}" class="bg-black text-white px-4 py-2 mt-4 inline-block hover:bg-gray-800 transition">View Product</a>
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>R${product.price}</p>
+                        <a href="product.html?id=${product.id}" class="cta-button">View Product</a>
                     `;
                     grid.appendChild(card);
                 }
