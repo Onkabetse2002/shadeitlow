@@ -4,78 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DARKIS - Shade it low</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-white text-gray-900 font-sans">
+<body>
     <!-- Sticky Navbar -->
-    <nav class="sticky top-0 bg-white shadow-md z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <img src="" alt="DARKIS" class="logo">
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="hover:text-gray-600 transition">Home</a>
-                    <a href="shop.html" class="hover:text-gray-600 transition">Shop</a>
-                    <a href="gallery.html" class="hover:text-gray-600 transition">Gallery</a>
-                    <a href="cart.html" class="hover:text-gray-600 transition relative">Cart <span class="cart-badge" style="display: none;">0</span></a>
-                    <a href="about.html" class="hover:text-gray-600 transition">About</a>
-                </div>
-                <button class="md:hidden" id="mobile-menu-toggle">☰</button>
+    <nav class="navbar">
+        <div class="container">
+            <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+                <a href="about.html">About</a>
             </div>
-            <div class="hidden md:hidden" id="mobile-menu">
-                <a href="index.html" class="block py-2">Home</a>
-                <a href="shop.html" class="block py-2">Shop</a>
-                <a href="gallery.html" class="block py-2">Gallery</a>
-                <a href="cart.html" class="block py-2 relative">Cart <span class="cart-badge" style="display: none;">0</span></a>
-                <a href="about.html" class="block py-2">About</a>
-            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="cart.html">Cart <span class="cart-badge">0</span></a>
+            <a href="about.html">About</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative bg-gray-100 py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo mx-auto mb-4">
-            <p class="text-xl md:text-2xl mb-8">Shade it low.</p>
-            <img src="shadesimages/models/homemodel.jpeg" alt="Model" class="mx-auto mb-8 w-full max-w-md md:max-w-lg fade-in">
-            <a href="shop.html" class="bg-black text-white px-8 py-4 text-lg hover:bg-gray-800 transition">Shop Now</a>
+    <section class="hero">
+        <div class="container">
+            <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="hero-logo">
+            <h1 class="hero-headline">Shade it low.</h1>
+            <img src="shadesimages/models/homemodel.jpeg" alt="Model" class="hero-image fade-in">
+            <a href="shop.html" class="cta-button">Shop Now</a>
         </div>
     </section>
 
     <!-- Featured Products -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Featured Products</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <img src="shadesimages/products/product2.jpg" alt="Darkis Aviator" class="w-full mb-4 hover:scale-105 transition">
-                    <h3 class="text-xl font-semibold">Darkis Aviator</h3>
-                    <p class="text-lg">R150</p>
-                    <span class="bg-red-500 text-white px-2 py-1 text-sm">New</span>
+    <section class="featured-products">
+        <div class="container">
+            <h2>Featured Sunglasses</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="shadesimages/products/product2.jpg" alt="Darkis Aviator">
+                    <h3>Darkis Aviator</h3>
+                    <p>R150</p>
+                    <span class="new-badge">New</span>
                 </div>
-                <div class="text-center">
-                    <img src="https://via.placeholder.com/400x400?text=Darkis+Wayfarer" alt="Darkis Wayfarer" class="w-full mb-4 hover:scale-105 transition">
-                    <h3 class="text-xl font-semibold">Darkis Wayfarer</h3>
-                    <p class="text-lg">R140</p>
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/400x400?text=Darkis+Wayfarer" alt="Darkis Wayfarer">
+                    <h3>Darkis Wayfarer</h3>
+                    <p>R140</p>
                 </div>
-                <div class="text-center">
-                    <img src="https://via.placeholder.com/400x400?text=Darkis+Round" alt="Darkis Round" class="w-full mb-4 hover:scale-105 transition">
-                    <h3 class="text-xl font-semibold">Darkis Round</h3>
-                    <p class="text-lg">R130</p>
-                    <span class="bg-red-500 text-white px-2 py-1 text-sm">New</span>
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/400x400?text=Darkis+Round" alt="Darkis Round">
+                    <h3>Darkis Round</h3>
+                    <p>R130</p>
+                    <span class="new-badge">New</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- DARKIS Brand Section -->
+    <section class="brand-section">
+        <div class="container">
+            <h2>The DARKIS Difference</h2>
+            <p>Experience unparalleled luxury with DARKIS sunglasses. Crafted for the discerning individual, our shades blend timeless elegance with cutting-edge design.</p>
+            <div class="brand-features">
+                <div class="feature">
+                    <h3>Premium Quality</h3>
+                    <p>UV protection and superior craftsmanship.</p>
+                </div>
+                <div class="feature">
+                    <h3>Modern Style</h3>
+                    <p>Effortless sophistication for every occasion.</p>
+                </div>
+                <div class="feature">
+                    <h3>Timeless Appeal</h3>
+                    <p>Designed to last a lifetime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Preview Section -->
+    <section class="gallery-preview">
+        <div class="container">
+            <h2>Explore Our Gallery</h2>
+            <div class="gallery-grid">
+                <img src="shadesimages/models/model1.jpeg" alt="Lifestyle 1">
+                <img src="shadesimages/models/model1.jpeg" alt="Lifestyle 2">
+                <img src="shadesimages/models/model2.jpeg" alt="Lifestyle 3">
+                <img src="shadesimages/models/model3.jpeg" alt="Lifestyle 4">
+            </div>
+            <a href="gallery.html" class="cta-button">View Full Gallery</a>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Shade it Low?</h2>
+            <p>Discover your perfect pair today.</p>
+            <a href="shop.html" class="cta-button">Browse Collection</a>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="bg-black text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <footer class="footer">
+        <div class="container">
             <p>&copy; 2026 DARKIS. Shade it low.</p>
-            <div class="mt-4 space-x-4">
-                <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==" class="hover:text-gray-400">Instagram</a>
-                <a href="https://www.facebook.com/share/1N85wS2pcx/" class="hover:text-gray-400">Facebook</a>
-                <a href="#" class="hover:text-gray-400">Twitter</a>
+            <div class="social-links">
+                <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==">Instagram</a>
+                <a href="https://www.facebook.com/share/1N85wS2pcx/">Facebook</a>
+                <a href="#">Twitter</a>
             </div>
         </div>
     </footer>
