@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - DARKIS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-white text-gray-900 font-sans">
+    <!-- Sticky Navbar -->
+    <nav class="sticky top-0 bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo">
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-gray-600 transition">Home</a>
+                    <a href="shop.html" class="hover:text-gray-600 transition">Shop</a>
+                    <a href="gallery.html" class="hover:text-gray-600 transition">Gallery</a>
+                    <a href="cart.html" class="hover:text-gray-600 transition relative">Cart <span class="cart-badge" style="display: none;">0</span></a>
+                    <a href="about.html" class="hover:text-gray-600 transition">About</a>
+                </div>
+                <button class="md:hidden" id="mobile-menu-toggle">☰</button>
+            </div>
+            <div class="hidden md:hidden" id="mobile-menu">
+                <a href="index.html" class="block py-2">Home</a>
+                <a href="shop.html" class="block py-2">Shop</a>
+                <a href="gallery.html" class="block py-2">Gallery</a>
+                <a href="cart.html" class="block py-2 relative">Cart <span class="cart-badge" style="display: none;">0</span></a>
+                <a href="about.html" class="block py-2">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold text-center mb-12">Your Cart</h1>
+            <div id="cart-items" class="space-y-8">
+                <!-- Cart items loaded dynamically -->
+            </div>
+            <div id="cart-total" class="text-right mt-8 text-2xl font-bold">
+                Total: R0
+            </div>
+            <div class="text-center mt-8">
+                <a href="checkout.html" class="bg-black text-white px-8 py-4 text-lg hover:bg-gray-800 transition">Proceed to Checkout</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Load and display cart items
+        function loadCart() {
+            const cart = getCart();
+            const itemsContainer = document.getElementById('cart-items');
+            const totalElement = document.getElementById('cart-total');
+            itemsContainer.innerHTML = '';
+            let total = 0;
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = '<p class="text-center text-lg">Your cart is empty.</p>';
+                totalElement.textContent = 'Total: R0';
+                return;
+            }
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex items-center justify-between bg-gray-50 p-6 rounded-lg';
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover mr-4">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold">${item.name}</h3>
+                        <p class="text-lg">R${item.price}</p>
+                    </div>
+                    <div class="flex items-center">
+                        <label class="mr-2">Qty:</label>
+                        <input type="number" value="${item.quantity}" min="1" class="border px-2 py-1 w-16" onchange="updateQuantity(${item.id}, this.value)">
+                    </div>
+                    <button onclick="removeItem(${item.id})" class="ml-4 bg-red-500 text-white px-4 py-2 hover:bg-red-600 transition">Remove</button>
+                `;
+                itemsContainer.appendChild(itemDiv);
+            });
+            totalElement.textContent = `Total: R${total}`;
+        }
+
+        function updateQuantity(productId, newQuantity) {
+            updateCartQuantity(productId, parseInt(newQuantity));
+            loadCart();
+        }
+
+        function removeItem(productId) {
+            removeFromCart(productId);
+            loadCart();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+</body>
+</html>

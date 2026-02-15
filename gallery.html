@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - DARKIS</title>
+    <title>Gallery - DARKIS</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -32,37 +32,20 @@
         </div>
     </nav>
 
-    <!-- Product Grid -->
+    <!-- Gallery Section -->
     <section class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="text-4xl font-bold text-center mb-12">Shop All</h1>
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Products loaded dynamically -->
+            <h1 class="text-4xl font-bold text-center mb-12">Gallery</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <img src="shadesimages/models/homemodel.jpeg" alt="Lifestyle 1" class="w-full fade-in">
+                <img src="shadesimages/models/model1.jpeg" alt="Lifestyle 2" class="w-full fade-in">
+                <img src="shadesimages/models/model2.jpeg" alt="Lifestyle 3" class="w-full fade-in">
+                <img src="shadesimages/models/model3.jpeg" alt="Lifestyle 4" class="w-full fade-in">
+                <!-- Add more images here if needed -->
             </div>
         </div>
     </section>
 
     <script src="js/script.js"></script>
-    <script>
-        // Load products with stock checks
-        document.addEventListener('DOMContentLoaded', () => {
-            const products = getProducts();
-            const stock = getStock();
-            const grid = document.getElementById('product-grid');
-            products.forEach(product => {
-                if (stock[product.id] > 0) {
-                    const card = document.createElement('div');
-                    card.className = 'bg-white shadow-lg p-6 text-center hover:shadow-xl transition';
-                    card.innerHTML = `
-                        <img src="${product.image}" alt="${product.name}" class="w-full mb-4">
-                        <h3 class="text-xl font-semibold">${product.name}</h3>
-                        <p class="text-lg mb-4">R${product.price}</p>
-                        <a href="product.html?id=${product.id}" class="bg-black text-white px-4 py-2 mt-4 inline-block hover:bg-gray-800 transition">View Product</a>
-                    `;
-                    grid.appendChild(card);
-                }
-            });
-        });
-    </script>
 </body>
 </html>
