@@ -65,7 +65,7 @@
                 <div class="footer-section">
                     <h4>Legal</h4>
                     <a href="privacy-policy.html">Privacy Policy</a>
-                    <a href="terms&conditions.html">Terms & Conditions</a>
+                    <a href="terms-and-conditions.html">Terms & Conditions</a>
                     <a href="return-and-refund-policy.html">Returns & Refunds</a>
                 </div>
                 <div class="footer-section">
@@ -84,11 +84,6 @@
             </div>
         </div>
     </footer>
-    
-
-    <script src="js/script.js"></script>
-</body>
-</html>
 
     <script src="js/script.js"></script>
     <script>
@@ -97,18 +92,31 @@
             const products = getProducts();
             const stock = getStock();
             const grid = document.getElementById('product-grid');
+            
             products.forEach(product => {
-                if (stock[product.id] > 0) {
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
+                const productStock = stock[product.id];
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                if (productStock > 0) {
                     card.innerHTML = `
-                        <img src="${product.image}" alt="${product.name}">
+                        <img src="${product.images.front}" alt="${product.name}">
                         <h3>${product.name}</h3>
+                        <p class="sku">${product.sku}</p>
                         <p>R${product.price}</p>
+                        <p class="stock">Stock: ${productStock}</p>
                         <a href="product.html?id=${product.id}" class="cta-button">View Product</a>
                     `;
-                    grid.appendChild(card);
+                } else {
+                    card.innerHTML = `
+                        <img src="${product.images.front}" alt="${product.name}" style="opacity: 0.5;">
+                        <h3>${product.name}</h3>
+                        <p class="sku">${product.sku}</p>
+                        <p>R${product.price}</p>
+                        <p class="out-of-stock">Out of Stock</p>
+                    `;
                 }
+                grid.appendChild(card);
             });
         });
     </script>

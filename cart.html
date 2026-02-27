@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Sticky Navbar -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo"></a>
@@ -25,12 +24,11 @@
             <a href="index.html">Home</a>
             <a href="shop.html">Shop</a>
             <a href="gallery.html">Gallery</a>
-            <a href="cart.html">Cart <span class="cart-badge">0</span></a>
+            <a href="cart.html">Cart</a>
             <a href="about.html">About</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h1 class="hero-headline">Your Cart</h1>
@@ -38,99 +36,105 @@
         </div>
     </section>
 
-    <!-- Cart Section -->
     <section class="brand-section">
         <div class="container">
-            <div id="cart-items" class="cart-items">
-                <!-- Cart items loaded dynamically -->
-            </div>
-            <div id="cart-total" class="cart-total">Total: R0</div>
+            <div id="cart-items"></div>
+            <div id="cart-total">Total: R0</div>
             <a href="checkout.html" class="cta-button">Proceed to Checkout</a>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>DARKIS</h4>
-                    <p>Shade it low with elegance and style.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <a href="index.html">Home</a>
-                    <a href="shop.html">Shop</a>
-                    <a href="gallery.html">Gallery</a>
-                    <a href="about.html">About</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <a href="privacy-policy.html">Privacy Policy</a>
-                    <a href="terms-and-conditions.html">Terms & Conditions</a>
-                    <a href="return-and-refund-policy.html">Returns & Refunds</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>Email: darkis@khumo.co.za</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 DARKIS. Shade it low.</p>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/share/1N85wS2pcx/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href= "https://wa.me/27683811938" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.tiktok.com/@shade_it_low_with_darkis?_r=1&_t=ZS-93kYvR4PaTa" target="blank" aria-label="TiTkok"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
+            <p>&copy; 2026 DARKIS. Shade it low.</p>
         </div>
     </footer>
 
-
-    <script src="js/script.js"></script>
     <script>
-        // Load and display cart items
+        // Get cart from localStorage
+        function getCart() {
+            var cartData = localStorage.getItem('cart');
+            if (cartData == null || cartData == '') {
+                return [];
+            }
+            return JSON.parse(cartData);
+        }
+
+        // Save cart to localStorage
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateBadge();
+        }
+
+        // Update cart badge
+        function updateBadge() {
+            var cart = getCart();
+            var count = 0;
+            for (var i = 0; i < cart.length; i++) {
+                count += cart[i].quantity;
+            }
+            var badges = document.querySelectorAll('.cart-badge');
+            for (var i = 0; i < badges.length; i++) {
+                badges[i].textContent = count;
+                badges[i].style.display = count > 0 ? 'inline' : 'none';
+            }
+        }
+
+        // Load and display cart
         function loadCart() {
-            const cart = getCart();
-            const itemsContainer = document.getElementById('cart-items');
-            const totalElement = document.getElementById('cart-total');
-            itemsContainer.innerHTML = '';
-            let total = 0;
+            var cart = getCart();
+            var container = document.getElementById('cart-items');
+            var totalEl = document.getElementById('cart-total');
+            
+            container.innerHTML = '';
+            
             if (cart.length === 0) {
-                itemsContainer.innerHTML = '<p>Your cart is empty.</p>';
-                totalElement.textContent = 'Total: R0';
+                container.innerHTML = '<p>Your cart is empty.</p>';
+                totalEl.textContent = 'Total: R0';
                 return;
             }
-            cart.forEach(item => {
+            
+            var total = 0;
+            
+            for (var i = 0; i < cart.length; i++) {
+                var item = cart[i];
                 total += item.price * item.quantity;
-                const itemDiv = document.createElement('div');
+                
+                var itemDiv = document.createElement('div');
                 itemDiv.className = 'cart-item';
-                itemDiv.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}">
-                    <div class="item-details">
-                        <h3>${item.name}</h3>
-                        <p>R${item.price}</p>
-                        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
-                    </div>
-                    <button onclick="removeItem(${item.id})">Remove</button>
-                `;
-                itemsContainer.appendChild(itemDiv);
-            });
-            totalElement.textContent = `Total: R${total}`;
+                itemDiv.innerHTML = 
+                    '<img src="' + item.image + '" alt="' + item.name + '">' +
+                    '<div class="item-details">' +
+                    '<h3>' + item.name + '</h3>' +
+                    '<p>SKU: ' + item.sku + '</p>' +
+                    '<p>R' + item.price + ' x ' + item.quantity + '</p>' +
+                    '</div>' +
+                    '<button onclick="removeItem(' + item.id + ')">Remove</button>';
+                
+                container.appendChild(itemDiv);
+            }
+            
+            totalEl.textContent = 'Total: R' + total;
         }
 
-        function updateQuantity(productId, newQuantity) {
-            updateCartQuantity(productId, parseInt(newQuantity));
+        // Remove item from cart
+        function removeItem(id) {
+            var cart = getCart();
+            var newCart = [];
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].id != id) {
+                    newCart.push(cart[i]);
+                }
+            }
+            saveCart(newCart);
             loadCart();
         }
 
-        function removeItem(productId) {
-            removeFromCart(productId);
+        // Initialize
+        window.onload = function() {
             loadCart();
-        }
-
-        document.addEventListener('DOMContentLoaded', loadCart);
+            updateBadge();
+        };
     </script>
 </body>
 </html>
