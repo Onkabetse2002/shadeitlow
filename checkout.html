@@ -22,4 +22,176 @@
             <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
         </div>
         <div class="mobile-menu" id="mobile-menu">
-            <a href="index.html
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="cart.html">Cart <span class="cart-badge">0</span></a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-headline">Checkout</h1>
+            <p>Complete your purchase securely.</p>
+        </div>
+    </section>
+
+    <!-- Checkout Form -->
+    <section class="brand-section">
+        <div class="container">
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div id="summary-items"></div>
+                <p id="summary-total">Total: R0</p>
+            </div>
+
+            <!-- Customer Details Form -->
+            <form id="checkout-form" class="checkout-form">
+                <h3>Your Details</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Delivery Address *</label>
+                        <textarea id="address" name="address" required></textarea>
+                    </div>
+                </div>
+                
+                <!-- Hidden fields for order details -->
+                <input type="hidden" name="_subject" value="New DARKIS Order">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" id="order-details" name="order_details">
+                
+                <button type="submit" class="cta-button">Place Order</button>
+            </form>
+
+            <!-- Success Message (hidden by default) -->
+            <div id="success-message" style="display: none; text-align: center; padding: 40px;">
+                <h2>Thank You!</h2>
+                <p>Your order has been received.</p>
+                <p>A confirmation email has been sent to <span id="customer-email"></span></p>
+                <p>We will contact you shortly.</p>
+                <a href="index.html" class="cta-button">Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 DARKIS. Shade it low.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Get cart from localStorage
+        function getCart() {
+            var cartData = localStorage.getItem('cart');
+            if (cartData == null || cartData == '') {
+                return [];
+            }
+            return JSON.parse(cartData);
+        }
+
+        // Load order summary
+        function loadSummary() {
+            var cart = getCart();
+            var summaryItems = document.getElementById('summary-items');
+            var summaryTotal = document.getElementById('summary-total');
+            var orderDetails = document.getElementById('order-details');
+            
+            summaryItems.innerHTML = '';
+            var total = 0;
+            var details = '';
+            
+            if (cart.length === 0) {
+                summaryItems.innerHTML = '<p>Your cart is empty.</p>';
+                summaryTotal.textContent = 'Total: R0';
+                return;
+            }
+            
+            for (var i = 0; i < cart.length; i++) {
+                var item = cart[i];
+                total += item.price * item.quantity;
+                
+                summaryItems.innerHTML += '<p>' + item.name + ' x ' + item.quantity + ' - R' + (item.price * item.quantity) + '</p>';
+                
+                details += item.name + ' x ' + item.quantity + ' = R' + (item.price * item.quantity) + '\n';
+            }
+            
+            details += '\nTotal: R' + total;
+            
+            summaryTotal.textContent = 'Total: R' + total;
+            orderDetails.value = details;
+        }
+
+        // Handle form submission
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var form = e.target;
+            var email = document.getElementById('email').value;
+            var name = document.getElementById('name').value;
+            
+            // Get order details
+            var cart = getCart();
+            var total = 0;
+            var orderText = 'Order Details:\n\n';
+            
+            for (var i = 0; i < cart.length; i++) {
+                var item = cart[i];
+                total += item.price * item.quantity;
+                orderText += item.name + ' (SKU: ' + item.sku + ') x ' + item.quantity + ' = R' + (item.price * item.quantity) + '\n';
+            }
+            orderText += '\nTotal: R' + total;
+            
+            // Add order details to form
+            var orderInput = document.getElementById('order-details');
+            orderInput.value = orderText;
+            
+            // Submit to FormSubmit
+            fetch('https://formsubmit.co/onkabetsenkabi3@gmail.com', {
+                method: 'POST',
+                body: new FormData(form)
+            }).then(function() {
+                // Show success message
+                document.getElementById('checkout-form').style.display = 'none';
+                document.querySelector('.order-summary').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+                document.getElementById('customer-email').textContent = email;
+                
+                // Clear cart after successful order
+                localStorage.removeItem('cart');
+                
+                // Update badge
+                var badges = document.querySelectorAll('.cart-badge');
+                for (var i = 0; i < badges.length; i++) {
+                    badges[i].textContent = '0';
+                    badges[i].style.display = 'none';
+                }
+            }).catch(function() {
+                alert('There was an error submitting your order. Please try again.');
+            });
+        });
+
+        // Initialize
+        window.onload = function() {
+            loadSummary();
+        };
+    </script>
+</body>
+</html>

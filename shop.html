@@ -87,35 +87,21 @@
 
     <script src="js/script.js"></script>
     <script>
-        // Load products with stock checks
+        // Load products (without showing stock)
         document.addEventListener('DOMContentLoaded', () => {
             const products = getProducts();
-            const stock = getStock();
             const grid = document.getElementById('product-grid');
             
             products.forEach(product => {
-                const productStock = stock[product.id];
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                
-                if (productStock > 0) {
-                    card.innerHTML = `
-                        <img src="${product.images.front}" alt="${product.name}">
-                        <h3>${product.name}</h3>
-                        <p class="sku">${product.sku}</p>
-                        <p>R${product.price}</p>
-                        <p class="stock">Stock: ${productStock}</p>
-                        <a href="product.html?id=${product.id}" class="cta-button">View Product</a>
-                    `;
-                } else {
-                    card.innerHTML = `
-                        <img src="${product.images.front}" alt="${product.name}" style="opacity: 0.5;">
-                        <h3>${product.name}</h3>
-                        <p class="sku">${product.sku}</p>
-                        <p>R${product.price}</p>
-                        <p class="out-of-stock">Out of Stock</p>
-                    `;
-                }
+                card.innerHTML = `
+                    <img src="${product.images.front}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p class="sku">${product.sku}</p>
+                    <p>R${product.price}</p>
+                    <a href="product.html?id=${product.id}" class="cta-button">View Product</a>
+                `;
                 grid.appendChild(card);
             });
         });
