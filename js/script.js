@@ -173,18 +173,7 @@ function getProducts() {
                 right: 'shadesimages/shades/The Heaven Light Dawn R.jpg'
             }
         },
-        { 
-            id: 5, 
-            name: 'The Luminous Blue', 
-            sku: '3503 C9',
-            price: 600, 
-            stock: 1,
-            images: {
-                front: 'shadesimages/shades/The Luminous Blue F.jpg',
-                left: 'shadesimages/shades/The Luminous Blue L.jpg',
-                right: 'shadesimages/shades/The Luminous Blue R.jpg'
-            }
-        },
+        
         {
             id: 6,
             name: 'The Luminous Orange',
