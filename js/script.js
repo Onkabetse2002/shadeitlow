@@ -1,7 +1,5 @@
 // JavaScript for DARKIS website
-// Handles mobile menu, smooth scrolling, fade-ins, cart, stock, and other interactions
-
-// NOTE: Removed the line that was clearing the cart!
+// Handles mobile menu, smooth scrolling, fade-ins, cart, stock, and cart drawer
 
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,12 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenu = document.getElementById('mobile-menu');
     if (toggleButton && mobileMenu) {
         toggleButton.addEventListener('click', () => {
-            console.log('Toggle button clicked');
             mobileMenu.classList.toggle('show');
-            console.log('Mobile menu class:', mobileMenu.classList);
         });
-    } else {
-        console.log('Toggle button or mobile menu not found');
     }
 
     // Fade-in animation on scroll
@@ -42,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     updateCartCount();
+    initCartDrawer();
+    addCartIconToNavbar();
 });
 
 // Cart and Stock Management Functions
@@ -54,6 +50,7 @@ function getCart() {
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
+    loadCartDrawer();
 }
 
 function getStock() {
@@ -63,10 +60,6 @@ function getStock() {
         stock[product.id] = product.stock;
     });
     return stock;
-}
-
-function saveStock(stock) {
-    // Don't save to localStorage
 }
 
 function updateCartCount() {
@@ -173,7 +166,6 @@ function getProducts() {
                 right: 'shadesimages/shades/The Heaven Light Dawn R.jpg'
             }
         },
-        
         {
             id: 6,
             name: 'The Luminous Orange',
@@ -211,4 +203,181 @@ function getProducts() {
             }
         }
     ];
+}
+
+// --- CART DRAWER FUNCTIONALITY ---
+
+// Open cart drawer
+function openCartDrawer() {
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-drawer-overlay');
+    if (drawer && overlay) {
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Close cart drawer
+function closeCartDrawer() {
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-drawer-overlay');
+    if (drawer && overlay) {
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+
+// Load cart drawer items
+function loadCartDrawer() {
+    const cart = getCart();
+    const drawerItems = document.getElementById('cart-drawer-items');
+    const drawerTotal = document.getElementById('cart-drawer-total');
+    
+    if (!drawerItems) return;
+    
+    drawerItems.innerHTML = '';
+    
+    if (cart.length === 0) {
+        drawerItems.innerHTML = `
+            <div class="cart-drawer-empty">
+                <p>Your cart is empty</p>
+                <a href="shop.html" class="cta-button">Continue Shopping</a>
+            </div>
+        `;
+        drawerTotal.textContent = 'Total: R0';
+        return;
+    }
+    
+    let total = 0;
+    
+    cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+        
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-drawer-item';
+        itemDiv.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <div class="cart-drawer-item-details">
+                <h4>${item.name}</h4>
+                <p>SKU: ${item.sku}</p>
+                <p>R${item.price}</p>
+                <div class="cart-drawer-item-quantity">
+                    <button onclick="updateDrawerQuantity(${index}, -1)">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="updateDrawerQuantity(${index}, 1)">+</button>
+                </div>
+            </div>
+            <button class="cart-drawer-item-remove" onclick="removeFromCartDrawer(${index})">Remove</button>
+        `;
+        
+        drawerItems.appendChild(itemDiv);
+    });
+    
+    drawerTotal.textContent = 'Total: R' + total;
+}
+
+// Update quantity in drawer
+function updateDrawerQuantity(index, change) {
+    const cart = getCart();
+    const item = cart[index];
+    
+    if (item) {
+        const newQuantity = item.quantity + change;
+        if (newQuantity > 0) {
+            item.quantity = newQuantity;
+            saveCart(cart);
+            loadCartDrawer();
+            updateCartCount();
+        }
+    }
+}
+
+// Remove item from drawer
+function removeFromCartDrawer(index) {
+    const cart = getCart();
+    cart.splice(index, 1);
+    saveCart(cart);
+    loadCartDrawer();
+    updateCartCount();
+}
+
+// Initialize cart drawer
+function initCartDrawer() {
+    if (document.getElementById('cart-drawer')) return;
+    
+    const drawerHTML = `
+        <div class="cart-drawer-overlay" id="cart-drawer-overlay" onclick="closeCartDrawer()"></div>
+        <div class="cart-drawer" id="cart-drawer">
+            <div class="cart-drawer-header">
+                <h3>Your Cart</h3>
+                <button class="cart-drawer-close" onclick="closeCartDrawer()">×</button>
+            </div>
+            <div class="cart-drawer-items" id="cart-drawer-items">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-drawer-footer">
+                <div class="cart-drawer-total">
+                    <span>Total</span>
+                    <span id="cart-drawer-total">R0</span>
+                </div>
+                <button class="cart-drawer-checkout" onclick="window.location.href='cart.html'">Proceed to Checkout</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', drawerHTML);
+    loadCartDrawer();
+}
+
+// Add cart icon button to navbar
+function addCartIconToNavbar() {
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+    
+    if (document.querySelector('.cart-icon-btn')) return;
+    
+    const cartIcon = document.createElement('button');
+    cartIcon.className = 'cart-icon-btn';
+    cartIcon.innerHTML = '<i class="fas fa-shopping-bag"></i>';
+    cartIcon.onclick = openCartDrawer;
+    
+    const cartLink = navLinks.querySelector('.cart-link');
+    if (cartLink) {
+        navLinks.insertBefore(cartIcon, cartLink);
+    } else {
+        navLinks.appendChild(cartIcon);
+    }
+}
+
+// --- PRODUCT SLIDER FUNCTIONALITY ---
+
+function changeSlide(direction) {
+    window.currentSlide += direction;
+    const totalSlides = window.productImages.length;
+    if (window.currentSlide >= totalSlides) window.currentSlide = 0;
+    if (window.currentSlide < 0) window.currentSlide = totalSlides - 1;
+    updateSlideDisplay();
+}
+
+function setSlide(index) {
+    window.currentSlide = index;
+    updateSlideDisplay();
+}
+
+function updateSlideDisplay() {
+    document.getElementById('main-image').src = window.productImages[window.currentSlide];
+    const thumbs = document.querySelectorAll('.thumb');
+    thumbs.forEach((thumb, idx) => {
+        thumb.classList.toggle('active', idx === window.currentSlide);
+    });
+}
+
+function addToCartAndNotify(productId) {
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const success = addToCart(productId, quantity);
+    if (success) {
+        alert('Product added to cart!');
+    }
 }

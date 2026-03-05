@@ -127,4 +127,27 @@
 
     <script src="js/script.js"></script>
 </body>
+<!-- Cart Drawer (Add to all pages with navbar) -->
+<div class="cart-drawer-overlay" id="cart-drawer-overlay" onclick="closeCartDrawer()"></div>
+<div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-header">
+        <h3>Your Cart</h3>
+        <button class="cart-drawer-close" onclick="closeCartDrawer()">×</button>
+    </div>
+    <div class="cart-drawer-items" id="cart-drawer-items">
+        <!-- Cart items will be loaded here -->
+    </div>
+    <div class="cart-drawer-footer">
+        <div class="cart-drawer-total">
+            <span>Total</span>
+            <span id="cart-drawer-total">R0</span>
+        </div>
+        <button class="cart-drawer-checkout" onclick="window.location.href='cart.html'">Proceed to Checkout</button>
+    </div>
+</div>
+
+<!-- Cart Icon Button (Add to navbar) -->
+<button class="cart-icon-btn" onclick="openCartDrawer()" style="margin-left: 1rem;">
+    <i class="fas fa-shopping-bag"></i>
+</button>
 </html>
