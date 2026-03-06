@@ -381,3 +381,30 @@ function addToCartAndNotify(productId) {
         alert('Product added to cart!');
     }
 }
+
+// --- IMAGE MODAL FUNCTIONS ---
+
+function openImageModal(src) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    
+    if (modal && modalImg) {
+        modal.style.display = "flex";
+        modalImg.src = src;
+    }
+}
+
+function closeImageModal() {
+    const modal = document.getElementById("imageModal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Close modal if user clicks outside the image
+window.onclick = function(event) {
+    const modal = document.getElementById("imageModal");
+    if (event.target == modal) {
+        closeImageModal();
+    }
+}

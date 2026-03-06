@@ -95,7 +95,7 @@
                         <div class="product-detail-card">
                             <div class="product-image-slider">
                                 <div class="slider-container">
-                                    <img id="main-image" src="${product.images.front}" alt="${product.name}">
+                                    <img id="main-image" src="${product.images.front}" alt="${product.name}" onclick="openImageModal(this.src)">
                                     <button class="slider-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
                                     <button class="slider-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
                                 </div>
@@ -161,5 +161,10 @@
             }
         }
     </script>
+        <!-- IMAGE MODAL (Hidden by default) -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal" onclick="closeImageModal()">&times;</span>
+        <img class="image-modal-content" id="modalImg">
+    </div>
 </body>
 </html>

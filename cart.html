@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart - DARKIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- Sticky Navbar -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo"></a>
@@ -29,6 +31,7 @@
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h1 class="hero-headline">Your Cart</h1>
@@ -36,6 +39,7 @@
         </div>
     </section>
 
+    <!-- Cart Items Section -->
     <section class="brand-section">
         <div class="container">
             <div id="cart-items"></div>
@@ -44,12 +48,34 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 DARKIS. Shade it low.</p>
         </div>
     </footer>
 
+    <!-- Cart Drawer (Mini Cart Pop-up) -->
+    <div class="cart-drawer-overlay" id="cart-drawer-overlay" onclick="closeCartDrawer()"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-drawer-header">
+            <h3>Your Cart</h3>
+            <button class="cart-drawer-close" onclick="closeCartDrawer()">×</button>
+        </div>
+        <div class="cart-drawer-items" id="cart-drawer-items">
+            <!-- Cart items will be loaded here -->
+        </div>
+        <div class="cart-drawer-footer">
+            <div class="cart-drawer-total">
+                <span>Total</span>
+                <span id="cart-drawer-total">R0</span>
+            </div>
+            <button class="cart-drawer-checkout" onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
+            <button class="cart-drawer-continue" onclick="closeCartDrawer()">Continue Shopping</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
     <script>
         // Get cart from localStorage
         function getCart() {
@@ -64,6 +90,7 @@
         function saveCart(cart) {
             localStorage.setItem('cart', JSON.stringify(cart));
             updateBadge();
+            loadCartDrawer();
         }
 
         // Update cart badge
@@ -89,7 +116,7 @@
             container.innerHTML = '';
             
             if (cart.length === 0) {
-                container.innerHTML = '<p>Your cart is empty.</p>';
+                container.innerHTML = '<p style="text-align: center; padding: 2rem;">Your cart is empty.</p>';
                 totalEl.textContent = 'Total: R0';
                 return;
             }
@@ -130,10 +157,98 @@
             loadCart();
         }
 
+        // --- CART DRAWER FUNCTIONS ---
+
+        function openCartDrawer() {
+            var drawer = document.getElementById('cart-drawer');
+            var overlay = document.getElementById('cart-drawer-overlay');
+            if (drawer && overlay) {
+                drawer.classList.add('open');
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeCartDrawer() {
+            var drawer = document.getElementById('cart-drawer');
+            var overlay = document.getElementById('cart-drawer-overlay');
+            if (drawer && overlay) {
+                drawer.classList.remove('open');
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function loadCartDrawer() {
+            var cart = getCart();
+            var drawerItems = document.getElementById('cart-drawer-items');
+            var drawerTotal = document.getElementById('cart-drawer-total');
+            
+            if (!drawerItems) return;
+            
+            drawerItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                drawerItems.innerHTML = '<p style="text-align: center; padding: 2rem;">Your cart is empty.</p>';
+                drawerTotal.textContent = 'Total: R0';
+                return;
+            }
+            
+            var total = 0;
+            
+            cart.forEach(function(item, index) {
+                total += item.price * item.quantity;
+                
+                var itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-drawer-item';
+                itemDiv.innerHTML = 
+                    '<img src="' + item.image + '" alt="' + item.name + '">' +
+                    '<div class="cart-drawer-item-details">' +
+                    '<h4>' + item.name + '</h4>' +
+                    '<p>SKU: ' + item.sku + '</p>' +
+                    '<p>R' + item.price + '</p>' +
+                    '<div class="cart-drawer-item-quantity">' +
+                    '<button onclick="updateDrawerQuantity(' + index + ', -1)">-</button>' +
+                    '<span>' + item.quantity + '</span>' +
+                    '<button onclick="updateDrawerQuantity(' + index + ', 1)">+</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<button class="cart-drawer-item-remove" onclick="removeFromCartDrawer(' + index + ')">Remove</button>';
+                
+                drawerItems.appendChild(itemDiv);
+            });
+            
+            drawerTotal.textContent = 'Total: R' + total;
+        }
+
+        function updateDrawerQuantity(index, change) {
+            var cart = getCart();
+            var item = cart[index];
+            
+            if (item) {
+                var newQuantity = item.quantity + change;
+                if (newQuantity > 0) {
+                    item.quantity = newQuantity;
+                    saveCart(cart);
+                    loadCartDrawer();
+                    updateBadge();
+                }
+            }
+        }
+
+        function removeFromCartDrawer(index) {
+            var cart = getCart();
+            cart.splice(index, 1);
+            saveCart(cart);
+            loadCartDrawer();
+            updateBadge();
+        }
+
         // Initialize
         window.onload = function() {
             loadCart();
             updateBadge();
+            loadCartDrawer();
         };
     </script>
 </body>
