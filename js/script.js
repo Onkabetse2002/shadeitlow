@@ -139,7 +139,7 @@ function getProducts() {
             images: {
                 front: 'shadesimages/shades/The Havenlight Sky F.jpg',
                 left: 'shadesimages/shades/The Havenlight Sky L.jpg',
-                right: 'shadesimages/shades/The Havenlight Sky R.jpg'
+                right: 'shadesimages/shades/The Heavenlight Sky R.jpg'
             }
         },
         { 
@@ -151,7 +151,7 @@ function getProducts() {
             images: {
                 front: 'shadesimages/shades/The Havenlight Green F.jpg',
                 left: 'shadesimages/shades/The Havenlight Green L.jpg',
-                right: 'shadesimages/shades/The Havenlight Green R.jpg'
+                right: 'shadesimages/shades/The Havenlihgt Green R.jpg'
             }
         },
         { 
