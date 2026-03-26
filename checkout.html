@@ -75,7 +75,9 @@
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" id="order-details" name="order_details">
                 
-                <button type="submit" class="cta-button">Place Order</button>
+                <!-- Ozow Pay Now Button -->
+<button type="button" id="pay-now-btn" class="cta-button">Pay Now with Ozow 💳</button>
+<input type="hidden" id="cart-total-amount" value="0">
             </form>
 
             <!-- Success Message (hidden by default) -->
@@ -193,5 +195,83 @@
             loadSummary();
         };
     </script>
+    <script>
+// Ozow Payment Integration
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Calculate cart total and update hidden field
+    function updateCartTotal() {
+        var cart = getCart();
+        var total = 0;
+        
+        for (var i = 0; i < cart.length; i++) {
+            total += cart[i].price * cart[i].quantity;
+        }
+        
+        document.getElementById('cart-total-amount').value = total.toFixed(2);
+        document.getElementById('summary-total').textContent = 'Total: R' + total.toFixed(2);
+    }
+    
+    // Pay Now with Ozow
+    document.getElementById('pay-now-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        var email = document.getElementById('email').value;
+        var name = document.getElementById('name').value;
+        var amount = parseFloat(document.getElementById('cart-total-amount').value);
+        
+        // Validate
+        if (!email || !name) {
+            alert('Please fill in your name and email first');
+            return;
+        }
+        
+        if (amount <= 0) {
+            alert('Cart is empty');
+            return;
+        }
+        
+        // Show loading
+        const btn = this;
+        btn.textContent = 'Processing...';
+        btn.disabled = true;
+        
+        // Call backend /pay endpoint
+        fetch('http://localhost:3000/pay', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: amount,
+                email: email,
+                transactionReference: 'DARKIS_' + Date.now()
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Redirect to Ozow payment page
+                window.location.href = data.data.paymentUrl;
+            } else {
+                alert('Payment error: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Payment failed:', error);
+            alert('Connection error. Please try again.');
+        })
+        .finally(() => {
+            // Reset button
+            btn.textContent = 'Pay Now with Ozow 💳';
+            btn.disabled = false;
+        });
+    });
+    
+    // Initialize
+    updateCartTotal();
+});
+</script>
 </body>
 </html>

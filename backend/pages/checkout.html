@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - DARKIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- [EXACT SAME NAVBAR AS YOUR ORIGINAL] -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo"></a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+                <a href="about.html">About</a>
+            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="cart.html">Cart <span class="cart-badge">0</span></a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-headline">Checkout</h1>
+            <p>Complete your purchase securely with Ozow.</p>
+        </div>
+    </section>
+
+    <!-- Checkout Content -->
+    <section class="brand-section">
+        <div class="container">
+            <!-- Order Summary -->
+            <div class="product-detail-card p-8 mb-12 max-w-4xl mx-auto">
+                <h3 class="text-2xl uppercase tracking-widest mb-6">Order Summary</h3>
+                <div id="summary-items" class="mb-8"></div>
+                <div id="summary-total" class="text-3xl font-bold text-black text-right">Total: R0</div>
+                <input type="hidden" id="cart-total-amount" value="0">
+            </div>
+
+            <!-- Customer Form -->
+            <div class="product-detail-card p-8 max-w-2xl mx-auto">
+                <h3 class="text-2xl uppercase tracking-widest mb-8">Your Details</h3>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm uppercase tracking-wider mb-2 font-medium">Full Name *</label>
+                        <input type="text" id="name" required class="w-full p-4 border border-black">
+                    </div>
+                    <div>
+                        <label class="block text-sm uppercase tracking-wider mb-2 font-medium">Email *</label>
+                        <input type="email" id="email" required class="w-full p-4 border border-black">
+                    </div>
+                    <div>
+                        <label class="block text-sm uppercase tracking-wider mb-2 font-medium">Phone *</label>
+                        <input type="tel" id="phone" required class="w-full p-4 border border-black">
+                    </div>
+                    <div>
+                        <label class="block text-sm uppercase tracking-wider mb-2 font-medium">Address *</label>
+                        <textarea id="address" rows="4" required class="w-full p-4 border border-black"></textarea>
+                    </div>
+                </div>
+
+                <!-- OZOW PAY NOW BUTTON -->
+                <div class="text-center mt-12">
+                    <button id="pay-now-btn" class="cta-button inline-block w-full md:w-auto px-16 py-4 text-lg uppercase tracking-widest font-medium border-2 border-black bg-black text-white hover:bg-transparent hover:text-black transition-all duration-300">
+                        <i class="fas fa-credit-card mr-2"></i>Pay Now with Ozow 💳
+                    </button>
+                    <p class="text-sm text-gray-600 mt-3">100% Secure • Instant Processing</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- [EXACT SAME FOOTER AS YOUR ORIGINAL] -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>DARKIS</h4>
+                    <p>Shade it low with elegance and style.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a><a href="shop.html">Shop</a><a href="gallery.html">Gallery</a><a href="about.html">About</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="privacy-policy.html">Privacy Policy</a><a href="terms&conditions.html">Terms & Conditions</a><a href="return-and-refund-policy.html">Returns & Refunds</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: khumo@darkis.co.za</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 DARKIS. Shade it low.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1N85wS2pcx/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/27683811938" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.tiktok.com/@shade_it_low_with_darkis?_r=1&_t=ZS-93kYvR4PaTa" target="_blank"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // OZOW CHECKOUT LOGIC
+        function getCart() {
+            try {
+                return JSON.parse(localStorage.getItem('cart') || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function updateSummary() {
+            const cart = getCart();
+            const itemsEl = document.getElementById('summary-items');
+            const totalEl = document.getElementById('summary-total');
+            const amountEl = document.getElementById('cart-total-amount');
+            
+            itemsEl.innerHTML = '';
+            let total = 0;
+            
+            if (!cart.length) {
+                itemsEl.innerHTML = '<p class="text-center py-12 text-gray-500">Cart empty</p>';
+                totalEl.textContent = 'Total: R0';
+                amountEl.value = '0';
+                return;
+            }
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                itemsEl.innerHTML += `
+                    <div class="flex justify-between py-4 border-b border-gray-200">
+                        <span>${item.name} ×${item.quantity}</span>
+                        <span class="font-bold">R${itemTotal.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+            
+            totalEl.textContent = `Total: R${total.toFixed(2)}`;
+            amountEl.value = total.toFixed(2);
+        }
+
+        // PAY NOW BUTTON
+        document.getElementById('pay-now-btn').onclick = async e => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const amount = parseFloat(document.getElementById('cart-total-amount').value);
+            
+            if (!name || !email || !phone || !address || amount <= 0) {
+                return alert('Please complete all fields and add items to cart');
+            }
+            
+            const btn = e.target;
+            const original = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            try {
+                const res = await fetch('http://localhost:3000/pay', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        amount,
+                        email,
+                        transactionReference: `DARKIS_${Date.now()}`
+                    })
+                });
+                
+                const data = await res.json();
+                if (data.success) {
+                    window.location.href = data.data.paymentUrl;
+                } else {
+                    alert(data.error || 'Payment failed');
+                }
+            } catch {
+                alert('Backend not running. Start with: cd backend && npm start');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = original;
+            }
+        };
+
+        // INIT
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSummary();
+            if (typeof updateCartCount === 'function') updateCartCount();
+            if (typeof initCartDrawer === 'function') initCartDrawer();
+            if (typeof addCartIconToNavbar === 'function') addCartIconToNavbar();
+        });
+    </script>
+</body>
+</html>

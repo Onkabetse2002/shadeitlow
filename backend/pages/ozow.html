@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Result - DARKIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR (identical to yours) -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html"><img src="../shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo"></a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="../shop.html">Shop</a>
+                <a href="../gallery.html">Gallery</a>
+                <a href="../cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+                <a href="../about.html">About</a>
+            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="../index.html">Home</a><a href="../shop.html">Shop</a><a href="../gallery.html">Gallery</a>
+            <a href="../cart.html">Cart <span class="cart-badge">0</span></a><a href="../about.html">About</a>
+        </div>
+    </nav>
+
+    <!-- PROCESSING (initial view) -->
+    <section class="hero" id="processing">
+        <div class="container text-center py-32">
+            <div class="w-24 h-24 mx-auto mb-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
+            <h1 class="hero-headline">Processing Payment</h1>
+            <p class="text-2xl mb-12">Verifying your Ozow transaction...</p>
+        </div>
+    </section>
+
+    <!-- SUCCESS (hidden) -->
+    <section id="success" class="brand-section" style="display:none;">
+        <div class="container">
+            <div class="text-center mb-20">
+                <div class="w-28 h-28 mx-auto mb-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-check text-4xl text-green-600"></i>
+                </div>
+                <h2 class="text-5xl uppercase tracking-widest mb-8 font-light">Success!</h2>
+                <p class="text-2xl text-gray-600 mb-16">Thank you for your DARKIS purchase</p>
+            </div>
+            <div id="success-details" class="product-detail-card max-w-2xl mx-auto p-12 text-center"></div>
+            <div class="text-center mt-16">
+                <a href="../index.html" class="cta-button mr-4">Shop More</a>
+                <a href="../cart.html" class="cta-button back-button">Order Details</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAILURE (hidden) -->
+    <section id="failure" class="brand-section" style="display:none;">
+        <div class="container">
+            <div class="text-center mb-20">
+                <div class="w-28 h-28 mx-auto mb-12 bg-red-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-times text-4xl text-red-600"></i>
+                </div>
+                <h2 class="text-5xl uppercase tracking-widest mb-8 font-light">Failed</h2>
+                <p class="text-2xl text-gray-600 mb-16">Payment could not be processed</p>
+            </div>
+            <div id="failure-details" class="product-detail-card max-w-2xl mx-auto p-12 text-center"></div>
+            <div class="text-center mt-16">
+                <a href="../checkout.html" class="cta-button mr-4">Try Again</a>
+                <a href="../cart.html" class="cta-button back-button">View Cart</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- [IDENTICAL FOOTER] -->
+    <footer class="footer">
+        <!-- Your exact footer code here -->
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section"><h4>DARKIS</h4><p>Shade it low with elegance and style.</p></div>
+                <div class="footer-section"><h4>Quick Links</h4><a href="../index.html">Home</a><a href="../shop.html">Shop</a><a href="../gallery.html">Gallery</a><a href="../about.html">About</a></div>
+                <div class="footer-section"><h4>Legal</h4><a href="../privacy-policy.html">Privacy Policy</a><a href="../terms&conditions.html">Terms & Conditions</a><a href="../return-and-refund-policy.html">Returns & Refunds</a></div>
+                <div class="footer-section"><h4>Contact</h4><p>Email: khumo@darkis.co.za</p></div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 DARKIS. Shade it low.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1N85wS2pcx/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/27683811938" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.tiktok.com/@shade_it_low_with_darkis?_r=1&_t
