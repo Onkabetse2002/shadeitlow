@@ -6,9 +6,9 @@
     <title>Shop - DARKIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <!-- Sticky Navbar -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo"></a>
@@ -30,7 +30,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h1 class="hero-headline">Shop All</h1>
@@ -38,16 +37,13 @@
         </div>
     </section>
 
-    <!-- Product Grid -->
     <section class="featured-products">
         <div class="container">
             <div id="product-grid" class="product-grid">
-                <!-- Products loaded dynamically -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -78,33 +74,139 @@
                 <div class="social-links">
                     <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.facebook.com/share/1N85wS2pcx/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href= "https://wa.me/27683811938" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.tiktok.com/@shade_it_low_with_darkis?_r=1&_t=ZS-93kYvR4PaTa" target="blank" aria-label="TiTkok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://wa.me/27683811938" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.tiktok.com/@shade_it_low_with_darkis?_r=1&_t=ZS-93kYvR4PaTa" target="blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
     <script>
-        // Load products (without showing stock)
+        // YOUR FULL PRODUCT DATA
+        const products = [
+            {
+                id: 1,
+                name: "The Black Out",
+                sku: "DKS-BO-001",
+                price: 250.00,
+                images: { front: "shadesimages/products/blackout.jpg" }
+            },
+            {
+                id: 2,
+                name: "The Gold Standard",
+                sku: "DKS-GS-002",
+                price: 300.00,
+                images: { front: "shadesimages/products/goldstandard.jpg" }
+            },
+            {
+                id: 3,
+                name: "The Navigator",
+                sku: "DKS-NV-003",
+                price: 280.00,
+                images: { front: "shadesimages/products/navigator.jpg" }
+            },
+            {
+                id: 4,
+                name: "Ocean Breeze",
+                sku: "DKS-OB-004",
+                price: 260.00,
+                images: { front: "shadesimages/products/oceanbreeze.jpg" }
+            },
+            {
+                id: 5,
+                name: "Midnight Pulse",
+                sku: "DKS-MP-005",
+                price: 320.00,
+                images: { front: "shadesimages/products/midnightpulse.jpg" }
+            },
+            {
+                id: 6,
+                name: "Urban Edge",
+                sku: "DKS-UE-006",
+                price: 290.00,
+                images: { front: "shadesimages/products/urbanedge.jpg" }
+            }
+        ];
+
+        function getProducts() {
+            return products;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            const products = getProducts();
             const grid = document.getElementById('product-grid');
+            const productList = getProducts();
             
-            products.forEach(product => {
+            productList.forEach(product => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <img src="${product.images.front}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p class="sku">${product.sku}</p>
-                    <p>R${product.price}</p>
-                    <a href="product.html?id=${product.id}" class="cta-button">View Product</a>
+                    <div class="product-image-container" style="position: relative; overflow: hidden; border-radius: 8px;">
+                        <img src="${product.images.front}" alt="${product.name}" style="width: 100%; display: block;">
+                        <button onclick="addToCart(${product.id})" class="quick-add-btn" style="position: absolute; bottom: 0; width: 100%; background: black; color: white; border: none; padding: 12px; cursor: pointer; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+                            Add to Cart +
+                        </button>
+                    </div>
+                    <h3 style="margin-top: 15px; font-size: 16px;">${product.name}</h3>
+                    <p class="sku" style="font-size: 10px; color: #888;">${product.sku}</p>
+                    <p style="font-weight: 700;">R${product.price.toFixed(2)}</p>
+                    <a href="product.html?id=${product.id}" class="cta-button" style="display: block; text-align: center; margin-top: 10px; font-size: 12px; border: 1px solid black; padding: 8px; text-decoration: none; color: black;">View Product</a>
                 `;
                 grid.appendChild(card);
             });
+            updateBadge();
         });
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingItem = cart.find(item => item.id === productId);
+
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.images.front,
+                        sku: product.sku,
+                        quantity: 1
+                    });
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateBadge();
+                
+                // Feedback
+                const btn = event.target;
+                const originalText = btn.innerText;
+                btn.innerText = "ADDED TO CART";
+                btn.style.background = "#333";
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = "black";
+                }, 1000);
+            }
+        }
+
+        function updateBadge() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('.cart-badge').forEach(badge => {
+                badge.textContent = count;
+                badge.style.display = count > 0 ? 'inline-block' : 'none';
+            });
+        }
+
+        // Mobile Menu Logic
+        const mobileBtn = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if(mobileBtn) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+            });
+        }
     </script>
 </body>
 </html>
