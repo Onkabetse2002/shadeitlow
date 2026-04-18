@@ -1,5 +1,4 @@
 const express = require('express');
-const axios = require('axios');
 const cors = require('cors');
 const crypto = require('crypto');
 const app = express();
@@ -7,52 +6,45 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// --- OFFICIAL DARKIS CREDENTIALS ---
-const siteCode = "DAR-DAR-016"; 
-const privateKey = "ecf33b21e4416d332c8e706107d2aa38";
-const apiKey = "3a753408ea86368f9922e1b6595f8da0";
+// Load from .env or use defaults
+const PF_ID = "34524679";
+const PF_KEY = "1tbfpjuomlb06";
+const PF_PASS = "DARKIS_secure_2026";
 
-app.post('/pay', async (req, res) => {
+app.post('/generate-signature', (req, res) => {
     try {
-        const { amount, transactionReference } = req.body;
+        const { amount, item_name, name_first, email_address } = req.body;
+        
+        // PayFast requires exactly 2 decimal places
+        const formattedAmount = parseFloat(amount).toFixed(2);
 
-        const bankReference = "DARKIS-SHADES";
-        const cancelUrl = "http://127.0.0.1:5500/backend/pages/checkout.html";
-        const errorUrl = "http://127.0.0.1:5500/backend/pages/checkout.html";
-        const successUrl = "http://127.0.0.1:5500/index.html";
-
-        // THE HASH - Forced to lowercase for Ozow compliance
-        const rawString = (siteCode + transactionReference + amount + bankReference + cancelUrl + errorUrl + successUrl + privateKey).toLowerCase();
-        const hash = crypto.createHash('sha512').update(rawString).digest('hex');
-
-        const postData = {
-            siteCode,
-            transactionReference,
-            bankReference,
-            amount,
-            cancelUrl,
-            errorUrl,
-            successUrl,
-            hash,
-            isTest: true 
+        const data = {
+            merchant_id: PF_ID,
+            merchant_key: PF_KEY,
+            return_url: "https://darkis.co.za/success.html",
+            cancel_url: "https://darkis.co.za/cancel.html",
+            name_first: name_first,
+            email_address: email_address,
+            amount: formattedAmount,
+            item_name: item_name
         };
 
-        const response = await axios.post('https://pay.ozow.com/post', postData, {
-            headers: { 'ApiKey': apiKey }
-        });
-        
-        res.json({ url: response.data.url || response.request.res.responseUrl });
-
-    } catch (error) {
-        console.error("--- !!! OZOW REJECTION DETAILS !!! ---");
-        if (error.response) {
-            // THIS IS THE SCANNER: It prints the EXACT reason in your terminal
-            console.log(JSON.stringify(error.response.data, null, 2));
-        } else {
-            console.error("Connection Error:", error.message);
+        // Create signature string
+        let pfOutput = "";
+        for (let key in data) {
+            pfOutput += `${key}=${encodeURIComponent(data[key]).replace(/%20/g, "+")}&`;
         }
-        res.status(500).json({ error: "Rejection from Ozow. See terminal." });
+        
+        const finalString = pfOutput + `passphrase=${PF_PASS}`;
+        const signature = crypto.createHash('md5').update(finalString).digest('hex');
+
+        res.json({ ...data, signature });
+        console.log("✅ Signature Generated for R" + formattedAmount);
+
+    } catch (err) {
+        console.error("❌ Server Error:", err.message);
+        res.status(500).send("Server Error");
     }
 });
 
-app.listen(3000, () => console.log('DARKIS Server is LIVE on port 3000'));
+app.listen(3000, () => console.log('🚀 DARKIS Server running on http://localhost:3000'));

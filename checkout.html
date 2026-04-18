@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - DARKIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        .checkout-container { max-width: 800px; margin: 50px auto; padding: 20px; font-family: 'Poppins', sans-serif; }
+        .summary-card { border: 1px solid #000; padding: 30px; margin-bottom: 30px; }
+        .summary-item { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .total-row { font-size: 24px; font-weight: 700; text-align: right; margin-top: 20px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 15px; border: 1px solid #000; outline: none; }
+        .pay-btn { background: #000; color: #fff; width: 100%; padding: 20px; border: none; cursor: pointer; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        .pay-btn:hover { background: #333; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo" style="width:150px;"></a>
+        </div>
+    </nav>
+
+    <div class="checkout-container">
+        <h1 style="letter-spacing: 5px; text-transform: uppercase; margin-bottom: 30px;">Checkout</h1>
+
+        <div class="summary-card">
+            <h3 style="margin-bottom: 20px;">Order Summary</h3>
+            <div id="cart-items-list">
+                </div>
+            <div class="total-row" id="final-total">Total: R0.00</div>
+        </div>
+
+        <div class="summary-card">
+            <h3 style="margin-bottom: 20px;">Shipping Details</h3>
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" id="cust-name" placeholder="John Doe">
+            </div>
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" id="cust-email" placeholder="john@example.com">
+            </div>
+            <button class="pay-btn" onclick="processPayment()">Complete Purchase</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. Load the Cart on Page Load
+        function loadCheckout() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const listContainer = document.getElementById('cart-items-list');
+            const totalDisplay = document.getElementById('final-total');
+            let total = 0;
+
+            if (cart.length === 0) {
+                listContainer.innerHTML = "<p>Your cart is empty.</p>";
+                return;
+            }
+
+            listContainer.innerHTML = "";
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                listContainer.innerHTML += `
+                    <div class="summary-item">
+                        <span>${item.name} (x${item.quantity})</span>
+                        <span>R${itemTotal.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+
+            totalDisplay.innerText = `Total: R${total.toFixed(2)}`;
+        }
+
+        // 2. Process PayFast Payment
+        function processPayment() {
+            const name = document.getElementById('cust-name').value;
+            const email = document.getElementById('cust-email').value;
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            if (!name || !email) {
+                alert("Please fill in your details.");
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
+            const itemNames = cart.map(item => item.name).join(', ');
+
+            // PayFast Credentials
+            const passphrase = "DARKIS_secure_2026";
+            const payfastData = {
+                merchant_id: "34524679",
+                merchant_key: "1tbfpjuomlb06",
+                return_url: "https://darkis.co.za/success.html",
+                cancel_url: "https://darkis.co.za/checkout.html",
+                amount: total,
+                item_name: "DARKIS Order: " + itemNames.substring(0, 50) // Limit length for PayFast
+            };
+
+            // Generate Signature
+            let pfOutput = "";
+            for (let key in payfastData) {
+                pfOutput += `${key}=${encodeURIComponent(payfastData[key].trim()).replace(/%20/g, "+")}&`;
+            }
+            const finalString = pfOutput + `passphrase=${passphrase}`;
+            const signature = CryptoJS.MD5(finalString).toString();
+
+            // Build and Submit Form
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://www.payfast.co.za/eng/process';
+
+            for (let key in payfastData) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = payfastData[key];
+                form.appendChild(input);
+            }
+
+            const sigInput = document.createElement('input');
+            sigInput.type = 'hidden';
+            sigInput.name = "signature";
+            sigInput.value = signature;
+            form.appendChild(sigInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        window.onload = loadCheckout;
+    </script>
+
+</body>
+</html>

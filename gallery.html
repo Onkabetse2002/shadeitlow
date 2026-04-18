@@ -4,92 +4,170 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery - DARKIS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* UI Section: Reset & Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0a0a0a; 
+            color: #ffffff; 
+            min-height: 100vh;
+            display: block; /* Ensures visibility on Five Server */
+        }
+
+        /* UI Section: Sticky Navbar */
+        .navbar { 
+            background: rgba(10, 10, 10, 0.95); 
+            backdrop-filter: blur(15px); 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+
+        /* UI Section: Hero Design */
+        .hero { 
+            padding: 100px 20px 60px; 
+            text-align: center; 
+            background: radial-gradient(circle at center, #111 0%, #0a0a0a 100%);
+        }
+        .hero-headline { 
+            font-family: 'Poppins'; 
+            font-size: clamp(3rem, 10vw, 6rem); 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: -0.05em;
+            line-height: 0.9;
+        }
+
+        /* UI Section: Gallery Grid */
+        .gallery-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .gallery-item { 
+            position: relative; 
+            overflow: hidden; 
+            aspect-ratio: 4/5; 
+            background: #111; /* Fallback color if image fails */
+        }
+        .gallery-item img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); 
+        }
+        .gallery-item:hover img { 
+            transform: scale(1.1); 
+        }
+        
+        /* Hover Overlay */
+        .gallery-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.5); 
+            display: flex; align-items: center; justify-content: center; 
+            opacity: 0; transition: opacity 0.4s;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+        /* Lightbox */
+        #lightbox { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.98); 
+            z-index: 2000; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: zoom-out;
+        }
+        #lightbox img { 
+            max-width: 90%; 
+            max-height: 85vh; 
+            object-fit: contain; 
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
 </head>
 <body>
-    <!-- Sticky Navbar -->
+
     <nav class="navbar">
-        <div class="container">
-            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo"></a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="shop.html">Shop</a>
-                <a href="gallery.html">Gallery</a>
-                <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
-                <a href="about.html">About</a>
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html">
+                <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-8 brightness-0 invert">
+            </a>
+            <div class="hidden md:flex space-x-10 text-[10px] font-bold uppercase tracking-[0.3em]">
+                <a href="index.html" class="hover:text-gray-400 transition">Home</a>
+                <a href="shop.html" class="hover:text-gray-400 transition">Shop</a>
+                <a href="gallery.html" class="text-white border-b border-white">Gallery</a>
+                <a href="about.html" class="hover:text-gray-400 transition">About</a>
             </div>
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
-        </div>
-        <div class="mobile-menu" id="mobile-menu">
-            <a href="index.html">Home</a>
-            <a href="shop.html">Shop</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="cart.html">Cart <span class="cart-badge">0</span></a>
-            <a href="about.html">About</a>
+            <div class="md:hidden text-white text-xl">☰</div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <h1 class="hero-headline">Gallery</h1>
-            <p>Explore our lifestyle collection.</p>
-        </div>
+        <h1 class="hero-headline">Lifestyle <br/><span class="text-zinc-800">Visuals</span></h1>
+        <p class="mt-6 text-[10px] tracking-[0.5em] uppercase text-zinc-500 font-bold">Shade it low • Edition 2026</p>
     </section>
 
-    <!-- Gallery Section -->
-    <section class="gallery-preview">
-        <div class="container">
-            <div class="gallery-grid">
-                <img src="shadesimages/models/homemodel.jpeg" alt="Lifestyle 1">
-                <img src="shadesimages/models/model1.jpeg" alt="Lifestyle 2">
-                <img src="shadesimages/models/model2.jpeg" alt="Lifestyle 3">
-                <img src="shadesimages/models/model3.jpeg" alt="Lifestyle 4">
-                <!-- Add more images here if needed -->
+    <main class="gallery-container">
+        <div class="gallery-grid">
+            <div class="gallery-item" onclick="openLightbox('shadesimages/models/homemodel.jpeg')">
+                <img src="shadesimages/models/homemodel.jpeg" alt="DARKIS Lookbook">
+                <div class="gallery-overlay"><i class="fas fa-plus text-white text-2xl"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('shadesimages/models/model1.jpeg')">
+                <img src="shadesimages/models/model1.jpeg" alt="DARKIS Lookbook">
+                <div class="gallery-overlay"><i class="fas fa-plus text-white text-2xl"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('shadesimages/models/model2.jpeg')">
+                <img src="shadesimages/models/model2.jpeg" alt="DARKIS Lookbook">
+                <div class="gallery-overlay"><i class="fas fa-plus text-white text-2xl"></i></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('shadesimages/models/model3.jpeg')">
+                <img src="shadesimages/models/model3.jpeg" alt="DARKIS Lookbook">
+                <div class="gallery-overlay"><i class="fas fa-plus text-white text-2xl"></i></div>
             </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>DARKIS</h4>
-                    <p>Shade it low with elegance and style.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <a href="index.html">Home</a>
-                    <a href="shop.html">Shop</a>
-                    <a href="gallery.html">Gallery</a>
-                    <a href="about.html">About</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <a href="privacy-policy.html">Privacy Policy</a>
-                    <a href="terms&conditions.html">Terms & Conditions</a>
-                    <a href="return-and-refund-policy.html">Returns & Refunds</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>Email: khumo@darkis.co.za</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 DARKIS. Shade it low.</p>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/share/1N85wS2pcx/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href= "https://wa.me/27683811938" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.tiktok.com/@shade_it_low_with_darkis?_r=1&_t=ZS-93kYvR4PaTa" target="blank" aria-label="TiTkok"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
-        </div>
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="">
+        <div class="absolute top-10 right-10 text-white text-xl">✕ CLOSE</div>
+    </div>
+
+    <footer class="py-20 border-t border-white/5 text-center">
+        <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-6 mx-auto mb-6 brightness-0 invert opacity-20">
+        <p class="text-[9px] tracking-[0.4em] opacity-30 uppercase font-bold">&copy; 2026 DARKIS. All Rights Reserved.</p>
     </footer>
 
+    <script>
+        function openLightbox(src) {
+            const lb = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lb.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
 
-    <script src="js/script.js"></script>
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
 </body>
 </html>

@@ -3,76 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart - DARKIS</title>
+    <title>Your Bag - DARKIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* UI Section: Cart Page Styling */
+        body { font-family: 'Poppins', sans-serif; background: #fff; }
+        .cart-row { border-bottom: 1px solid #f0f0f0; transition: background 0.3s; }
+        .cart-row:hover { background: #fafafa; }
+        .qty-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.3s; }
+        .qty-btn:hover { background: #000; color: #fff; }
+    </style>
 </head>
 <body class="bg-white font-['Poppins']">
 
-    <nav class="navbar bg-white border-b border-gray-100 py-4 sticky top-0 z-50">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <a href="index.html">
-                <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-10">
+    <nav class="navbar bg-white border-b border-gray-100 py-6 sticky top-0 z-50">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-10"></a>
+            <div class="hidden md:flex space-x-12 uppercase tracking-[0.2em] text-[10px] font-black">
+                <a href="index.html" class="hover:text-gray-400 transition">Home</a>
+                <a href="shop.html" class="hover:text-gray-400 transition">Shop</a>
+                <a href="gallery.html" class="hover:text-gray-400 transition">Gallery</a>
+                <a href="about.html" class="hover:text-gray-400 transition">About</a>
+            </div>
+            <a href="cart.html" class="relative text-xl">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge absolute -top-2 -right-2 bg-black text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full">0</span>
             </a>
-            <div class="hidden md:flex space-x-8 uppercase tracking-widest text-sm font-medium">
-                <a href="index.html" class="hover:text-gray-500">Home</a>
-                <a href="shop.html" class="hover:text-gray-500">Shop</a>
-                <a href="gallery.html" class="hover:text-gray-500">Gallery</a>
-                <a href="about.html" class="hover:text-gray-500">About</a>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div class="relative">
-                    <a href="cart.html" class="text-xl text-black">
-                        <i class="fas fa-shopping-bag"></i>
-                        <span class="cart-badge absolute -top-2 -right-2 bg-black text-white text-[10px] px-1.5 py-0.5 rounded-full">0</span>
-                    </a>
-                </div>
-            </div>
         </div>
     </nav>
 
-    <section class="py-12 bg-gray-50">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold uppercase tracking-tighter">Shopping Cart</h1>
-            <p class="text-gray-500 mt-2 tracking-widest uppercase text-xs">Review your selection before paying</p>
+    <section class="py-24 bg-gray-50">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-6xl font-extrabold uppercase tracking-tighter mb-4">Your Bag</h1>
+            <p class="text-gray-400 tracking-[0.3em] uppercase text-[10px] font-bold">Review items & finalize shipping</p>
         </div>
     </section>
 
-    <section class="py-16 min-h-[50vh]">
-        <div class="container mx-auto px-4 max-w-5xl">
-            <div class="hidden md:grid grid-cols-4 border-b-2 border-black pb-4 mb-8 uppercase tracking-widest text-xs font-bold">
-                <div class="col-span-2">Product</div>
+    <section class="py-24 min-h-[60vh]">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="hidden md:grid grid-cols-4 border-b-2 border-black pb-6 mb-10 uppercase tracking-[0.2em] text-[10px] font-black">
+                <div class="col-span-2">Item Details</div>
                 <div class="text-center">Quantity</div>
                 <div class="text-right">Total</div>
             </div>
 
-            <div id="cart-items-list" class="space-y-8">
-                </div>
+            <div id="cart-items-list" class="space-y-10"></div>
 
-            <div id="empty-cart-msg" class="hidden text-center py-20">
-                <i class="fas fa-shopping-cart text-5xl text-gray-200 mb-4"></i>
-                <p class="text-gray-400 italic text-lg">Your cart is currently empty.</p>
-                <a href="shop.html" class="inline-block mt-6 px-10 py-3 bg-black text-white uppercase tracking-widest text-sm hover:bg-gray-800 transition">Start Shopping</a>
+            <div id="empty-cart-msg" class="hidden text-center py-32">
+                <i class="fas fa-shopping-bag text-7xl text-gray-100 mb-8"></i>
+                <p class="text-gray-300 italic text-2xl font-light">Your bag is currently empty.</p>
+                <a href="shop.html" class="inline-block mt-10 px-14 py-4 bg-black text-white uppercase tracking-widest text-xs font-bold hover:bg-gray-800 transition">Shop the Collection</a>
             </div>
 
-            <div id="cart-summary" class="mt-16 border-t border-gray-100 pt-8 flex flex-col items-end">
-                <div class="w-full md:w-1/3 space-y-4">
-                    <div class="flex justify-between items-center text-sm uppercase tracking-widest">
+            <div id="cart-summary" class="mt-24 border-t-4 border-black pt-12 flex flex-col items-end">
+                <div class="w-full md:w-1/3 space-y-6">
+                    <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-gray-400">
                         <span>Subtotal</span>
                         <span id="subtotal-amount">R0.00</span>
                     </div>
-                    <div class="flex justify-between items-center text-2xl font-bold border-t border-black pt-4">
+                    <div class="flex justify-between items-center text-4xl font-extrabold tracking-tighter">
                         <span>Total</span>
                         <span id="total-amount">R0.00</span>
                     </div>
-                    <div class="pt-6 flex flex-col gap-3">
-                        <a href="backend/pages/checkout.html" class="w-full bg-black text-white py-5 text-center uppercase tracking-[0.2em] font-bold hover:bg-gray-800 transition shadow-xl">
-                            Proceed to Checkout
+                    <div class="pt-10 flex flex-col gap-4">
+                        <a href="backend/pages/checkout.html" class="w-full bg-black text-white py-6 text-center uppercase tracking-[0.3em] font-black hover:bg-zinc-800 transition shadow-2xl text-xs">
+                            Secure Checkout
                         </a>
-                        <button onclick="clearAllItems()" class="text-[10px] uppercase tracking-widest text-gray-400 hover:text-red-500 transition">
-                            Clear Shopping Cart
+                        <button onclick="clearAllItems()" class="text-[9px] uppercase font-bold tracking-[0.2em] text-gray-300 hover:text-red-500 transition">
+                            Empty Bag
                         </button>
                     </div>
                 </div>
@@ -80,10 +81,8 @@
         </div>
     </section>
 
-    <footer class="bg-black text-white py-12">
-        <div class="container mx-auto px-4 text-center">
-            <p class="tracking-[0.4em] font-light text-[10px] opacity-60 uppercase">&copy; 2026 DARKIS. Shade it Low.</p>
-        </div>
+    <footer class="bg-black text-white py-20 text-center">
+        <p class="tracking-[0.5em] font-bold text-[10px] opacity-40 uppercase">&copy; 2026 DARKIS. Shade it Low.</p>
     </footer>
 
     <script>
@@ -103,7 +102,7 @@
             const count = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.querySelectorAll('.cart-badge').forEach(b => {
                 b.textContent = count;
-                b.style.display = count > 0 ? 'inline' : 'none';
+                b.style.display = count > 0 ? 'flex' : 'none';
             });
         }
 
@@ -125,7 +124,7 @@
         }
 
         function clearAllItems() {
-            if (confirm("Clear your entire cart?")) {
+            if (confirm("Clear your entire bag?")) {
                 saveCart([]);
             }
         }
@@ -154,24 +153,26 @@
                 const rowTotal = item.price * item.quantity;
                 grandTotal += rowTotal;
                 return `
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center border-b border-gray-50 pb-8">
-                        <div class="col-span-2 flex items-center space-x-6">
-                            <img src="${item.image}" alt="${item.name}" class="w-24 h-24 object-cover bg-gray-100 shadow-sm">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 items-center cart-row pb-10">
+                        <div class="col-span-2 flex items-center space-x-8">
+                            <div class="w-32 h-32 bg-gray-50 flex items-center justify-center overflow-hidden">
+                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                            </div>
                             <div>
-                                <h3 class="font-bold uppercase tracking-wide text-lg">${item.name}</h3>
-                                <p class="text-xs text-gray-400 uppercase tracking-widest mt-1">Price: R${item.price.toFixed(2)}</p>
-                                <button onclick="removeOneItem(${index})" class="text-[10px] text-red-400 uppercase tracking-widest mt-4 hover:text-red-600 transition">Remove</button>
+                                <h3 class="font-extrabold uppercase tracking-tighter text-2xl">${item.name}</h3>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-2 font-bold">${item.color} • R${item.price.toFixed(2)}</p>
+                                <button onclick="removeOneItem(${index})" class="text-[9px] text-red-500 font-bold uppercase tracking-widest mt-6 hover:underline">Remove</button>
                             </div>
                         </div>
                         <div class="flex justify-center">
-                            <div class="flex items-center border border-black h-10">
-                                <button onclick="updateQty(${index}, -1)" class="px-3 hover:bg-gray-100">-</button>
-                                <span class="px-4 font-bold text-sm">${item.quantity}</span>
-                                <button onclick="updateQty(${index}, 1)" class="px-3 hover:bg-gray-100">+</button>
+                            <div class="flex items-center space-x-6 border-2 border-black px-4 py-2">
+                                <button onclick="updateQty(${index}, -1)" class="qty-btn font-bold">-</button>
+                                <span class="font-black text-lg">${item.quantity}</span>
+                                <button onclick="updateQty(${index}, 1)" class="qty-btn font-bold">+</button>
                             </div>
                         </div>
                         <div class="text-right">
-                            <span class="text-xl font-bold">R${rowTotal.toFixed(2)}</span>
+                            <span class="text-3xl font-bold tracking-tighter">R${rowTotal.toFixed(2)}</span>
                         </div>
                     </div>
                 `;
@@ -181,7 +182,6 @@
             subtotalEl.textContent = `R${grandTotal.toFixed(2)}`;
         }
 
-        // Initialize Page
         window.addEventListener('DOMContentLoaded', () => {
             renderCartPage();
             updateGlobalBadge();

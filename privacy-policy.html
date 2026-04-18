@@ -4,128 +4,220 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - DARKIS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0a0a0a; 
+            color: #ffffff; 
+            line-height: 1.6;
+        }
+
+        /* UI Section: Sticky Navbar */
+        .navbar { 
+            background: rgba(10, 10, 10, 0.98); 
+            backdrop-filter: blur(15px); 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        .nav-links a { 
+            font-size: 0.75rem; 
+            letter-spacing: 0.2em; 
+            text-transform: uppercase; 
+            font-weight: 600; 
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { opacity: 1; color: #fff; }
+
+        /* UI Section: Hero Design */
+        .hero { 
+            padding: 120px 20px 60px; 
+            text-align: center; 
+            background: radial-gradient(circle at center, #111 0%, #0a0a0a 100%);
+        }
+        .hero-headline { 
+            font-family: 'Poppins'; 
+            font-size: clamp(2.5rem, 8vw, 5rem); 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+
+        /* UI Section: Content Styling */
+        .policy-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+        .policy-content h2 {
+            font-family: 'Poppins';
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 4rem 0 1.5rem;
+            color: #fff;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.5rem;
+        }
+        .policy-content p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        .policy-content ul {
+            margin-bottom: 2rem;
+            list-style: none;
+        }
+        .policy-content li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: rgba(255,255,255,0.7);
+        }
+        .policy-content li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: rgba(255,255,255,0.3);
+        }
+        .policy-content strong {
+            color: #fff;
+            font-weight: 600;
+        }
+        .last-updated {
+            margin-top: 6rem;
+            font-size: 0.75rem !important;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            opacity: 0.4;
+        }
+
+        /* Footer Styling */
+        footer { 
+            background: #000; 
+            border-top: 1px solid rgba(255,255,255,0.05); 
+            padding: 100px 0 40px; 
+        }
+        .footer-section h4 { 
+            font-family: 'Poppins';
+            font-size: 0.8rem; 
+            font-weight: 800; 
+            letter-spacing: 0.2em; 
+            text-transform: uppercase; 
+            margin-bottom: 2rem; 
+        }
+        .footer-section a, .footer-section p { 
+            font-size: 0.85rem; 
+            color: rgba(255,255,255,0.5); 
+            transition: 0.3s; 
+            margin-bottom: 0.75rem; 
+            display: block; 
+        }
+        .footer-section a:hover { color: #fff; }
+    </style>
 </head>
 <body>
-    <!-- Sticky Navbar -->
+
     <nav class="navbar">
-        <div class="container">
-            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo"></a>
-            <div class="nav-links">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+            <a href="index.html">
+                <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-10 brightness-0 invert transition-transform hover:scale-110">
+            </a>
+            <div class="nav-links hidden md:flex space-x-12">
                 <a href="index.html">Home</a>
                 <a href="shop.html">Shop</a>
                 <a href="gallery.html">Gallery</a>
-                <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
                 <a href="about.html">About</a>
             </div>
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
-        </div>
-        <div class="mobile-menu" id="mobile-menu">
-            <a href="index.html">Home</a>
-            <a href="shop.html">Shop</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="cart.html">Cart <span class="cart-badge">0</span></a>
-            <a href="about.html">About</a>
+            <div class="md:hidden text-white text-2xl">☰</div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <h1 class="hero-headline">Privacy Policy</h1>
-            <p>How we protect and use your information.</p>
+        <div class="container mx-auto">
+            <h1 class="hero-headline">Privacy <br/><span class="text-zinc-700">Protocol.</span></h1>
+            <p class="mt-6 text-[10px] tracking-[0.5em] uppercase text-zinc-500 font-bold">Data Security • Transparency • Trust</p>
         </div>
     </section>
 
-    <!-- Privacy Policy Content -->
-    <section class="brand-section">
-        <div class="container">
-            <div class="policy-content">
-                <h2>Introduction</h2>
-                <p>At DARKIS, we respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights.</p>
+    <main class="policy-container">
+        <div class="policy-content">
+            <h2>Introduction</h2>
+            <p>At DARKIS, we respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights.</p>
 
+            <h2>Data We Collect</h2>
+            <p>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:</p>
+            <ul>
+                <li><strong>Identity Data:</strong> Includes first name, last name, and usernames.</li>
+                <li><strong>Contact Data:</strong> Includes billing address, delivery address, email address and telephone numbers.</li>
+                <li><strong>Financial Data:</strong> Includes payment card details (processed securely through our payment provider).</li>
+                <li><strong>Transaction Data:</strong> Includes details about payments to and from you and products you have purchased.</li>
+            </ul>
 
+            <h2>How We Use Your Data</h2>
+            <p>We will only use your personal data when the law allows us to. We use your data to:</p>
+            <ul>
+                <li>Register you as a new customer</li>
+                <li>Process and deliver your orders seamlessly</li>
+                <li>Manage our ongoing relationship with you</li>
+                <li>Improve our website performance and marketing experiences</li>
+            </ul>
 
-                <h2> Data We Collect</h2>
-                <p>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together follows:</p>
-                <ul>
-                    <li><strong>Identity Data:</strong> Includes first name, last name, username or similar identifier.</li>
-                    <li><strong>Contact Data:</strong> Includes billing address, delivery address, email address and telephone numbers.</li>
-                    <li><strong>Financial Data:</strong> Includes payment card details (processed securely through our payment provider).</li>
-                    <li><strong>Transaction Data:</strong> Includes details about payments to and from you and other details of products you have purchased from us.</li>
-                </ul>
+            <h2>Data Security</h2>
+            <p>We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed. All financial transactions are processed through encrypted gateways.</p>
 
-                <h2>How We Use Your Data</h2>
-                <p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:</p>
-                <ul>
-                    <li>To register you as a new customer</li>
-                    <li>To process and deliver your order</li>
-                    <li>To manage our relationship with you</li>
-                    <li>To use data analytics to improve our website, products/services, marketing, customer relationships, and experiences</li>
-                </ul>
+            <h2>Your Legal Rights</h2>
+            <p>Under certain circumstances, you have rights under data protection laws (POPIA) in relation to your personal data, including the right to request access, correction, or erasure of your data.</p>
 
-                <h2>Data Security</h2>
-                <p>We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed.</p>
+            <h2>Contact Us</h2>
+            <p>If you have any questions about this privacy policy or our privacy practices, please contact our digital team at:</p>
+            <p><strong>Email:</strong> khumo@darkis.co.za</p>
 
-                <h2>Your Legal Rights</h2>
-                <p>Under certain circumstances, you have rights under data protection laws in relation to your personal data, including the right to:</p>
-                <ul>
-                    <li>Request access to your personal data</li>
-                    <li>Request correction of your personal data</li>
-                    <li>Request erasure of your personal data</li>
-                    <li>Object to processing of your personal data</li>
-                    <li>Request restriction of processing your personal data</li>
-                    <li>Request transfer of your personal data</li>
-                </ul>
+            <h2>Changes to This Policy</h2>
+            <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page.</p>
 
-                <h2>Contact Us</h2>
-                <p>If you have any questions about this privacy policy or our privacy practices, please contact us at:</p>
-                <p><strong>Email:</strong> khumo@darkis.co.za</p>
-
-                <h2>Changes to This Policy</h2>
-                <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page and updating the "Last Updated" date.</p>
-
-                <p class="last-updated"><strong>Last Updated:</strong> January 2025</p>
-            </div>
+            <p class="last-updated">Last Updated: April 2026</p>
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>DARKIS</h4>
-                    <p>Shade it low with elegance and style.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <a href="index.html">Home</a>
-                    <a href="shop.html">Shop</a>
-                    <a href="gallery.html">Gallery</a>
-                    <a href="about.html">About</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <a href="privacy-policy.html">Privacy Policy</a>
-                    <a href="terms&conditions.html">Terms & Conditions</a>
-                    <a href="return-and-refund-policy.html">Returns & Refunds</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>Email: khumo@darkis.co.za</p>
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-12">
+            <div class="footer-section">
+                <h4>DARKIS</h4>
+                <p>Shade it low with elegance and style. Redefining the modern eyewear aesthetic.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms&conditions.html">Terms & Conditions</a>
+                <a href="return-and-refund-policy.html">Returns & Refunds</a>
+            </div>
+            <div class="footer-section">
+                <h4>Social</h4>
+                <div class="flex space-x-6 mt-2">
+                    <a href="https://www.instagram.com/shade_it_low_with_darkis" target="_blank" aria-label="Instagram"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="https://wa.me/27683811938" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp text-xl"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 DARKIS. Shade it low.</p>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/share/1N85wS2pcx/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href= "https://wa.me/27683811938" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.tiktok.com/@shade_it_low_with_darkis?_r=1&_t=ZS-93kYvR4PaTa" target="blank" aria-label="TiTkok"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
+        </div>
+        <div class="container mx-auto px-6 text-center mt-24">
+            <p class="text-[9px] tracking-[0.4em] opacity-30 uppercase font-bold">&copy; 2026 DARKIS. Shade it low.</p>
         </div>
     </footer>
 

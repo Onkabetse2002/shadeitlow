@@ -8,98 +8,97 @@
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* UI Section: Checkout Inputs */
+        input, textarea { border: 2px solid #e5e7eb !important; border-radius: 0px !important; }
+        input:focus, textarea:focus { border-color: #000 !important; background: #fafafa !important; }
+        .secure-badge { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 12px; }
+    </style>
 </head>
 <body class="bg-white font-['Poppins']">
 
-    <nav class="navbar border-b border-gray-100 py-4">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <a href="../../index.html">
-                <img src="../../shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo">
-            </a>
-            <div class="hidden md:flex space-x-8 uppercase tracking-widest text-sm font-medium">
-                <a href="../../index.html">Home</a>
-                <a href="../../shop.html">Shop</a>
-                <a href="../../gallery.html">Gallery</a>
-                <a href="../../cart.html">Cart</a>
-                <a href="../../about.html">About</a>
+    <nav class="navbar border-b border-gray-100 py-6">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="../../index.html"><img src="../../shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-10"></a>
+            <div class="flex items-center text-[10px] font-black uppercase tracking-widest text-gray-400">
+                <i class="fas fa-lock mr-2 text-green-500"></i> Secure Encryption Active
             </div>
         </div>
     </nav>
 
-    <section class="py-12 bg-black text-white text-center">
-        <h1 class="text-4xl font-bold uppercase tracking-tighter">Secure Checkout</h1>
-        <p class="text-xs tracking-[0.3em] opacity-60 mt-2">SHADE IT LOW • PAY SECURELY</p>
+    <section class="py-20 bg-black text-white text-center">
+        <h1 class="text-5xl font-extrabold uppercase tracking-tighter">Finalize Order</h1>
+        <p class="text-[10px] tracking-[0.4em] font-bold opacity-40 mt-4">SHADE IT LOW • WORLDWIDE SHIPPING</p>
     </section>
 
-    <section class="py-16">
-        <div class="container mx-auto px-4 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-16">
+    <section class="py-24">
+        <div class="container mx-auto px-6 max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-20">
             
-            <div class="bg-gray-50 p-8 border border-gray-200 h-fit">
-                <h3 class="text-xl font-bold uppercase tracking-widest mb-8 border-b border-black pb-2">Your Order</h3>
-                
-                <div id="summary-items" class="space-y-4 mb-8">
+            <div class="bg-gray-50 p-10 border border-gray-100 h-fit">
+                <h3 class="text-lg font-black uppercase tracking-widest mb-10 border-b-2 border-black pb-4">Order Summary</h3>
+                <div id="summary-items" class="space-y-6 mb-12"></div>
+                <div class="border-t-2 border-black pt-8 flex justify-between items-end">
+                    <div>
+                        <span class="text-[10px] uppercase tracking-widest font-black text-gray-400 block mb-2">Total Payable</span>
+                        <span class="text-sm font-bold uppercase">Incl. Vat & Shipping</span>
                     </div>
-
-                <div class="border-t-2 border-black pt-6 flex justify-between items-center">
-                    <span class="text-sm uppercase tracking-[0.2em] font-bold">Total Amount</span>
-                    <span id="summary-total" class="text-3xl font-bold text-black">R0.00</span>
+                    <span id="summary-total" class="text-5xl font-extrabold tracking-tighter text-black">R0.00</span>
                 </div>
-                
                 <input type="hidden" id="cart-total-amount" value="0">
             </div>
 
-            <div class="space-y-8">
-                <h3 class="text-xl font-bold uppercase tracking-widest">Shipping & Contact</h3>
-                
-                <form id="payment-form" class="grid grid-cols-1 gap-6">
+            <div class="space-y-12">
+                <h3 class="text-2xl font-extrabold uppercase tracking-tighter">Shipping & Billing</h3>
+                <form id="payment-form" class="grid grid-cols-1 gap-8">
                     <div>
-                        <label class="block text-[10px] uppercase tracking-widest font-bold mb-2">Full Name</label>
-                        <input type="text" id="name" required placeholder="Onkabetse Galehole"
-                            class="w-full p-4 border border-black rounded-none focus:bg-gray-50 outline-none transition">
+                        <label class="block text-[10px] uppercase tracking-widest font-black mb-3">Recipient Full Name</label>
+                        <input type="text" id="name" required placeholder="Full Name"
+                            class="w-full p-5 outline-none transition text-sm">
                     </div>
 
                     <div>
-                        <label class="block text-[10px] uppercase tracking-widest font-bold mb-2">Email Address</label>
-                        <input type="email" id="email" required placeholder="khumo@darkis.co.za"
-                            class="w-full p-4 border border-black rounded-none focus:bg-gray-50 outline-none transition">
+                        <label class="block text-[10px] uppercase tracking-widest font-black mb-3">Email Contact</label>
+                        <input type="email" id="email" required placeholder="Email Address"
+                            class="w-full p-5 outline-none transition text-sm">
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <label class="block text-[10px] uppercase tracking-widest font-bold mb-2">Phone</label>
-                            <input type="tel" id="phone" required placeholder="081 234 5678"
-                                class="w-full p-4 border border-black rounded-none focus:bg-gray-50 outline-none transition">
+                            <label class="block text-[10px] uppercase tracking-widest font-black mb-3">Mobile Number</label>
+                            <input type="tel" id="phone" required placeholder="Phone Number"
+                                class="w-full p-5 outline-none transition text-sm">
                         </div>
                         <div>
-                            <label class="block text-[10px] uppercase tracking-widest font-bold mb-2">City</label>
-                            <input type="text" id="city" required placeholder="Kuruman"
-                                class="w-full p-4 border border-black rounded-none focus:bg-gray-50 outline-none transition">
+                            <label class="block text-[10px] uppercase tracking-widest font-black mb-3">Province/City</label>
+                            <input type="text" id="city" required placeholder="City"
+                                class="w-full p-5 outline-none transition text-sm">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-[10px] uppercase tracking-widest font-bold mb-2">Delivery Address</label>
-                        <textarea id="address" rows="3" required placeholder="664 Kutlwanong Section, Maruping"
-                            class="w-full p-4 border border-black rounded-none focus:bg-gray-50 outline-none transition"></textarea>
+                        <label class="block text-[10px] uppercase tracking-widest font-black mb-3">Full Residential Address</label>
+                        <textarea id="address" rows="3" required placeholder="Street, Section, House Number"
+                            class="w-full p-5 outline-none transition text-sm"></textarea>
                     </div>
 
-                    <div class="pt-4">
-                        <button type="button" id="pay-now-btn" class="your-styles-here">
-    Pay Now with Ozow
-</button>
-                        <div class="flex justify-center items-center mt-6 space-x-4 opacity-40">
-                            <i class="fab fa-cc-visa text-2xl"></i>
-                            <i class="fab fa-cc-mastercard text-2xl"></i>
-                            <span class="text-[10px] uppercase font-bold">Secure EFT Payment</span>
+                    <div class="pt-8">
+                        <button type="button" id="pay-now-btn" class="w-full bg-black text-white py-6 font-black uppercase tracking-[0.4em] text-xs shadow-2xl hover:bg-zinc-800 transition">
+                            Pay Securely with Ozow
+                        </button>
+                        <div class="flex justify-center items-center mt-10 space-x-6 opacity-30 grayscale">
+                            <i class="fab fa-cc-visa text-3xl"></i>
+                            <i class="fab fa-cc-mastercard text-3xl"></i>
+                            <i class="fas fa-shield-alt text-2xl"></i>
                         </div>
+                        <p class="text-center text-[9px] uppercase tracking-widest font-bold mt-6 text-gray-400">SSL Encrypted Checkout</p>
                     </div>
                 </form>
             </div>
         </div>
     </section>
 
-    <footer class="bg-black text-white py-12 text-center mt-20">
-        <p class="tracking-[0.4em] text-[10px] opacity-50">&copy; 2026 DARKIS. Shade it Low.</p>
+    <footer class="bg-black text-white py-16 text-center">
+        <p class="tracking-[0.5em] text-[10px] font-bold opacity-30">&copy; 2026 DARKIS. Shade it Low.</p>
     </footer>
 
     <script src="../../js/script.js"></script>

@@ -2,18 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Successful - DARKIS</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #fff; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .success-card { text-align: center; max-width: 500px; padding: 40px; border: 1px solid rgba(255,255,255,0.1); background: #111; }
+    </style>
 </head>
-<body style="text-align: center; padding: 100px;">
-    <i class="fas fa-check-circle" style="font-size: 80px; color: #28a745;"></i>
-    <h1>Payment Successful!</h1>
-    <p>Thank you for shopping with DARKIS SHADES. Your order is being processed.</p>
-    <a href="/index.html" class="cta-button">Return to Home</a>
-
+<body>
+    <div class="success-card">
+        <div class="text-6xl mb-8">✨</div>
+        <h1 style="font-family: 'Poppins'; font-weight: 800;" class="text-4xl uppercase tracking-tighter mb-4">Thank you for your order</h1>
+        <p class="text-gray-400 mb-8 leading-relaxed">Your payment has been successfully processed. Please check your email for your order confirmation and tracking details.</p>
+        <div class="space-y-4">
+            <a href="shop.html" class="block w-full bg-white text-black py-4 font-bold uppercase tracking-widest text-xs">Continue Shopping</a>
+            <a href="index.html" class="block text-gray-500 uppercase tracking-widest text-[10px] hover:text-white transition">Back to Home</a>
+        </div>
+        <p class="mt-12 text-[9px] uppercase tracking-[0.5em] text-gray-700 font-bold">&copy; 2026 DARKIS. Shade it low.</p>
+    </div>
+    
     <script>
-        // Clear the cart since the purchase is done
+        // Clear the cart on success
         localStorage.removeItem('cart');
     </script>
 </body>

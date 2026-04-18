@@ -4,157 +4,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Return & Refund Policy - DARKIS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0a0a0a; 
+            color: #ffffff; 
+            line-height: 1.6;
+        }
+
+        /* UI Section: Premium Navbar */
+        .navbar { 
+            background: rgba(10, 10, 10, 0.98); 
+            backdrop-filter: blur(15px); 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        .nav-links a { 
+            color: #ffffff !important;
+            font-size: 0.75rem; 
+            letter-spacing: 0.25em; 
+            text-transform: uppercase; 
+            font-weight: 700; 
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        .nav-links a:hover { 
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        /* UI Section: Hero Design */
+        .hero { 
+            padding: 120px 20px 60px; 
+            text-align: center; 
+            background: radial-gradient(circle at center, #111 0%, #0a0a0a 100%);
+        }
+        .hero-headline { 
+            font-family: 'Poppins'; 
+            font-size: clamp(2.5rem, 8vw, 5rem); 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+
+        /* UI Section: Content Styling */
+        .policy-container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+        .policy-content h2 {
+            font-family: 'Poppins';
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin: 3.5rem 0 1.2rem;
+            color: #fff;
+            border-left: 3px solid #fff;
+            padding-left: 1rem;
+        }
+        .policy-content p {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        .policy-content ul, .policy-content ol {
+            margin-bottom: 2rem;
+            list-style: none;
+        }
+        .policy-content li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: rgba(255,255,255,0.7);
+        }
+        .policy-content li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: rgba(255,255,255,0.2);
+        }
+        .policy-content strong {
+            color: #fff;
+        }
+        .last-updated {
+            margin-top: 6rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: rgba(255,255,255,0.3);
+            text-align: center;
+        }
+
+        /* Footer Styling */
+        footer { 
+            background: #000; 
+            border-top: 1px solid rgba(255,255,255,0.05); 
+            padding: 100px 0 40px; 
+        }
+        .footer-section h4 { 
+            font-family: 'Poppins';
+            font-size: 0.8rem; 
+            font-weight: 800; 
+            letter-spacing: 0.2em; 
+            text-transform: uppercase; 
+            margin-bottom: 2rem; 
+        }
+        .footer-section a, .footer-section p { 
+            font-size: 0.85rem; 
+            color: rgba(255,255,255,0.4); 
+            transition: 0.3s; 
+            margin-bottom: 0.75rem; 
+            display: block; 
+        }
+        .footer-section a:hover { color: #fff; }
+    </style>
 </head>
 <body>
-    <!-- Sticky Navbar -->
+
     <nav class="navbar">
-        <div class="container">
-            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo"></a>
-            <div class="nav-links">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+            <a href="index.html">
+                <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-10 brightness-0 invert transition-transform hover:scale-110">
+            </a>
+            <div class="nav-links hidden md:flex space-x-12">
                 <a href="index.html">Home</a>
                 <a href="shop.html">Shop</a>
                 <a href="gallery.html">Gallery</a>
-                <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
                 <a href="about.html">About</a>
             </div>
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
-        </div>
-        <div class="mobile-menu" id="mobile-menu">
-            <a href="index.html">Home</a>
-            <a href="shop.html">Shop</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="cart.html">Cart <span class="cart-badge">0</span></a>
-            <a href="about.html">About</a>
+            <div class="md:hidden text-white text-2xl">☰</div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <h1 class="hero-headline">Return & Refund Policy</h1>
-            <p>Our commitment to your satisfaction.</p>
+        <div class="container mx-auto">
+            <h1 class="hero-headline">Return <br/><span class="text-zinc-700">Policy.</span></h1>
+            <p class="mt-6 text-[10px] tracking-[0.5em] uppercase text-zinc-500 font-bold">Satisfaction • Quality • Guarantee</p>
         </div>
     </section>
 
-    <!-- Return & Refund Policy Content -->
-    <section class="brand-section">
-        <div class="container">
-            <div class="policy-content">
-                <h2>1. Introduction</h2>
-                <p>At DARKIS, we want you to be completely satisfied with your purchase. If for any reason you are not happy with your order, we are here to help. This Return & Refund Policy outlines the terms and conditions for returning products and requesting refunds.</p>
+    <main class="policy-container">
+        <div class="policy-content">
+            <h2>1. Introduction</h2>
+            <p>At DARKIS, we want you to be completely satisfied with your purchase. If for any reason you are not happy with your order, we are here to help. This Return & Refund Policy outlines the terms and conditions for returning products and requesting refunds.</p>
 
-                <h2>2. Eligibility for Returns</h2>
-                <p>You may return a product within <strong>7 days</strong> of delivery if the following conditions are met:</p>
-                <ul>
-                    <li>The product is unused, unworn, and in its original condition</li>
-                    <li>All original tags, packaging, and accessories are included</li>
-                    <li>The product is not marked as "Final Sale" or "Non-Returnable"</li>
-                    <li>You have proof of purchase (order confirmation or receipt)</li>
-                </ul>
+            <h2>2. Eligibility for Returns</h2>
+            <p>You may return a product within <strong>7 days</strong> of delivery if the following conditions are met:</p>
+            <ul>
+                <li>The product is unused, unworn, and in its original condition</li>
+                <li>All original tags, packaging, and accessories are included</li>
+                <li>The product is not marked as "Final Sale"</li>
+                <li>You have valid proof of purchase</li>
+            </ul>
 
-                <h2>3. Non-Returnable Items</h2>
-                <p>The following items cannot be returned:</p>
-                <ul>
-                    <li>Custom or personalized orders</li>
-                    <li>Items marked as "Final Sale"</li>
-                    <li>Gift cards</li>
-                    <li>Products that have been used or damaged by customer</li>
-                </ul>
+            <h2>3. Non-Returnable Items</h2>
+            <p>The following items cannot be returned:</p>
+            <ul>
+                <li>Custom or personalized orders</li>
+                <li>Gift cards</li>
+                <li>Products that have been used or damaged by the customer</li>
+            </ul>
 
-                <h2>4. Return Process</h2>
-                <p>To initiate a return, please follow these steps:</p>
-                <ol>
-                    <li>Contact us at khumo@darkis.co.za within 7 days of receiving your order</li>
-                    <li>Provide your order number and reason for return</li>
-                    <li>Wait for our return authorization and shipping instructions</li>
-                    <li>Pack the item securely in its original packaging</li>
-                    <li>Ship the item back using the provided shipping label</li>
-                </ol>
+            <h2>4. Return Process</h2>
+            <p>To initiate a return, please follow these steps:</p>
+            <ol>
+                <li>Contact <strong>khumo@darkis.co.za</strong> within 7 days of delivery</li>
+                <li>Provide your order number and reason for return</li>
+                <li>Await our return authorization and shipping instructions</li>
+                <li>Pack the item securely in its original packaging</li>
+            </ol>
 
-                <h2>5. Return Shipping</h2>
-                <p>Customers are responsible for return shipping costs unless:</p>
-                <ul>
-                    <li>The product received is defective or damaged</li>
-                    <li>We sent the wrong product</li>
-                    <li>The return is due to our error</li>
-                </ul>
-                <p>In these cases, we will provide a prepaid return shipping label.</p>
+            <h2>5. Refund Processing</h2>
+            <p>Once we receive and inspect your return, we will process your refund within <strong>5-7 business days</strong>. Refunds will be issued to the original payment method. You will receive a confirmation email once your refund has been processed.</p>
 
-                <h2>6. Refund Processing</h2>
-                <p>Once we receive and inspect your return, we will process your refund within <strong>5-7 business days</strong>. Refunds will be issued to the original payment method.</p>
-                <p>You will receive a confirmation email once your refund has been processed.</p>
+            <h2>6. Exchanges</h2>
+            <p>We offer exchanges for different colors of the same product, subject to availability. Contact us within 7 days of delivery to request an exchange.</p>
 
-                <h2>7. Exchange Policy</h2>
-                <p>We offer exchanges for different colors of the same product. To request an exchange:</p>
-                <ul>
-                    <li>Contact us within 7 days of delivery</li>
-                    <li>Specify the product you want to exchange and the replacement</li>
-                    <li>Exchanges are subject to product availability</li>
-                </ul>
+            <h2>7. Damaged Items</h2>
+            <p>If you receive a damaged or defective item, contact us immediately with photos of the damage. We will arrange a replacement or full refund at no extra cost.</p>
 
-                <h2>8. Damaged or Defective Items</h2>
-                <p>If you receive a damaged or defective item, please:</p>
-                <ul>
-                    <li>Contact us immediately upon receipt</li>
-                    <li>Provide photos of the damage or defect</li>
-                    <li>We will arrange for replacement or full refund at no extra cost</li>
-                </ul>
-
-                <h2>9. Late or Missing Refunds</h2>
-                <p>If you haven't received your refund within 7 business days after processing, please:</p>
-                <ul>
-                    <li>Check your bank account again</li>
-                    <li>Contact your credit card company (may take time to post)</li>
-                    <li>Contact us if the issue persists</li>
-                </ul>
-
-                <h2>10. Contact Us</h2>
-                <p>If you have any questions about our Return & Refund Policy, please contact us at:</p>
-                <p><strong>Email:</strong> khumo@darkis.co.za</p>
-
-                <p class="last-updated"><strong>Last Updated:</strong> January 2025</p>
-            </div>
+            <p class="last-updated">Last Updated: April 2026</p>
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>DARKIS</h4>
-                    <p>Shade it low with elegance and style.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <a href="index.html">Home</a>
-                    <a href="shop.html">Shop</a>
-                    <a href="gallery.html">Gallery</a>
-                    <a href="about.html">About</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <a href="privacy-policy.html">Privacy Policy</a>
-                    <a href="terms-and-conditions.html">Terms & Conditions</a>
-                    <a href="return-and-refund-policy.html">Returns & Refunds</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>Email: khumo@darkis.co.za</p>
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-12">
+            <div class="footer-section">
+                <h4>DARKIS</h4>
+                <p>Shade it low with elegance and style. High-fidelity optics for the modern era.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Explore</h4>
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop Collection</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-and-conditions.html">Terms & Conditions</a>
+                <a href="return-and-refund-policy.html">Returns & Refunds</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="flex space-x-6 mt-2">
+                    <a href="https://www.instagram.com/shade_it_low_with_darkis" target="_blank"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="https://wa.me/27683811938" target="_blank"><i class="fab fa-whatsapp text-xl"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 DARKIS. Shade it low.</p>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/shade_it_low_with_darkis?igsh=MWJsaTljZGd4cjNzdQ==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/share/1N85wS2pcx/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href= "https://wa.me/27683811938" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.tiktok.com/@shade_it_low_with_darkis?_r=1&_t=ZS-93kYvR4PaTa" target="blank" aria-label="TiTkok"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
+        </div>
+        <div class="container mx-auto px-6 text-center mt-24">
+            <p class="text-[9px] tracking-[0.4em] opacity-30 uppercase font-bold">&copy; 2026 DARKIS. International.</p>
         </div>
     </footer>
 
