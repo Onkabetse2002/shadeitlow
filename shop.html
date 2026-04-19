@@ -42,7 +42,7 @@
         .checkout-form input, .checkout-form textarea { width: 100%; padding: 16px; margin-bottom: 12px; border: 1px solid #222; background: #0a0a0a; color: #fff; font-size: 0.75rem; outline: none; }
         .pay-now-btn { background: #fff; color: #000; width: 100%; padding: 20px; border: none; font-weight: 800; letter-spacing: 0.2em; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
 
-        /* MOBILE BUTTON FIX: Added z-index and scroll capability */
+        /* MOBILE BUTTON FIX */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a0a; z-index: 5000; overflow-y: auto; }
         .modal-content { max-width: 1100px; margin: 60px auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; padding: 40px; position: relative; }
 
@@ -112,7 +112,7 @@
         <input type="hidden" name="return_url" value="https://darkis.co.za/success.html"><input type="hidden" name="cancel_url" value="https://darkis.co.za/shop.html">
         <input type="hidden" name="name_first" id="pf-first-name"><input type="hidden" name="name_last" id="pf-last-name">
         <input type="hidden" name="email_address" id="pf-email"><input type="hidden" name="amount" id="pf-amount">
-        <input type="hidden" name="item_name" value="DARKIS Order"><input type="hidden" name="signature" id="pf-signature">
+        <input type="hidden" name="item_name" id="pf-item-name"><input type="hidden" name="signature" id="pf-signature">
     </form>
 
     <script>
@@ -196,14 +196,24 @@
         function processPayFast() {
             const fn = document.getElementById('cust-first-name').value, ln = document.getElementById('cust-last-name').value, em = document.getElementById('cust-email').value;
             if(!fn || !em) return alert("Fill delivery info");
+            
             const subt = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
             const total = (subt + DELIVERY_FEE).toFixed(2);
-            document.getElementById('pf-first-name').value = fn; document.getElementById('pf-last-name').value = ln;
-            document.getElementById('pf-email').value = em; document.getElementById('pf-amount').value = total;
-            const data = { merchant_id: "34524679", merchant_key: "1tbfpjuomlb06", return_url: "https://darkis.co.za/success.html", cancel_url: "https://darkis.co.za/shop.html", name_first: fn, name_last: ln, email_address: em, amount: total, item_name: "DARKIS Order" };
+            const itemNames = cart.map(item => `${item.name} (x${item.quantity})`).join(', ');
+
+            document.getElementById('pf-first-name').value = fn; 
+            document.getElementById('pf-last-name').value = ln;
+            document.getElementById('pf-email').value = em; 
+            document.getElementById('pf-amount').value = total;
+            document.getElementById('pf-item-name').value = itemNames;
+
+            const data = { merchant_id: "34524679", merchant_key: "1tbfpjuomlb06", return_url: "https://darkis.co.za/success.html", cancel_url: "https://darkis.co.za/shop.html", name_first: fn, name_last: ln, email_address: em, amount: total, item_name: itemNames };
+            
             let pfStr = ""; for (let k in data) pfStr += `${k}=${encodeURIComponent(data[k].toString().trim()).replace(/%20/g, "+")}&`;
             const sig = CryptoJS.MD5(pfStr + "passphrase=DARKIS_secure_2026").toString();
-            document.getElementById('pf-signature').value = sig; document.getElementById('payfast-form').submit();
+            
+            document.getElementById('pf-signature').value = sig; 
+            document.getElementById('payfast-form').submit();
         }
 
         function toggleCart(show) { document.getElementById('cart').classList.toggle('open', show); }
