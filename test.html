@@ -3,91 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DARKIS - Shade It Low</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>Shop - DARKIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #fff; overflow-x: hidden; }
+        body { font-family: 'Poppins', sans-serif; background-color: #fff; color: #000; overflow-x: hidden; }
+        .navbar { background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
         
-        .navbar { 
-            background: rgba(10, 10, 10, 0.98); 
-            backdrop-filter: blur(15px); 
-            border-bottom: 1px solid rgba(255,255,255,0.05); 
-            position: sticky; top: 0; z-index: 1000; 
-        }
-        .nav-links a { color: #fff !important; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 700; opacity: 0.8; transition: 0.3s; }
+        /* Product Grid */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+        .product-card { text-align: center; padding: 20px; border: 1px solid #f9f9f9; border-radius: 8px; }
+        .product-img-box { width: 100%; height: 400px; background: #000; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 8px; cursor: pointer; }
+        .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Mobile Menu Style */
-        #mobile-menu-overlay {
-            position: fixed; inset: 0; background: #0a0a0a; z-index: 2000;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-        }
-        #mobile-menu-overlay a { font-size: 2rem; font-weight: 800; text-transform: uppercase; margin: 15px 0; letter-spacing: -0.02em; }
+        .view-btn { background: #000; color: #fff; border: 1px solid #000; width: 100%; padding: 15px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: 0.3s; }
+        .view-btn:hover { background: #fff; color: #000; }
 
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: #0a0a0a; overflow: hidden; }
-        .hero-bg-image {
-            position: absolute; top: 0; right: 0; width: 50%; height: 100%;
-            background: url('shadesimages/models/homemodel.jpeg') no-repeat center center;
-            background-size: cover; z-index: 1; filter: grayscale(20%);
-        }
-        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, #0a0a0a 40%, rgba(10,10,10,0.2) 100%); z-index: 2; }
-        .hero-content { position: relative; z-index: 3; width: 100%; }
-        .hero-headline { font-family: 'Poppins'; font-size: clamp(3.5rem, 12vw, 9rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.05em; line-height: 0.85; }
+        /* Modal / Slider */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 2000; overflow-y: auto; }
+        .modal-content { max-width: 1100px; margin: 60px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; padding: 40px; position: relative; }
+        .close-modal { position: absolute; top: 40px; left: 40px; cursor: pointer; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+        
+        .slider-container { position: relative; width: 100%; height: 500px; background: #f9f9f9; overflow: hidden; border-radius: 8px; }
+        .slider-wrapper { display: flex; transition: transform 0.5s ease-in-out; height: 100%; }
+        .slider-wrapper img { min-width: 100%; height: 100%; object-fit: cover; }
+        .slider-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; transform: translateY(-50%); padding: 0 15px; }
+        .slider-nav button { background: rgba(0,0,0,0.8); color: #fff; border: none; width: 40px; height: 40px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-        @media (max-width: 768px) {
-            .hero-bg-image { width: 100%; opacity: 0.5; }
-            .hero-overlay { background: linear-gradient(to top, #0a0a0a 50%, rgba(10,10,10,0.3) 100%); }
-            .hero-headline { font-size: 4rem !important; }
-        }
+        /* Cart Drawer */
+        .cart-drawer { position: fixed; right: -450px; top: 0; width: 450px; height: 100%; background: #fff; border-left: 1px solid #eee; transition: 0.4s; z-index: 3000; padding: 40px; box-shadow: -10px 0 30px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+        .cart-drawer.open { right: 0; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #f9f9f9; font-size: 0.85rem; }
+        
+        .shipping-form input, .shipping-form textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #eee; font-family: 'Inter'; font-size: 0.8rem; outline: none; }
+        .checkout-btn { background: #000; color: #fff; width: 100%; padding: 20px; border: none; font-weight: 700; letter-spacing: 0.3em; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        
+        .cart-badge { background: black; color: white; padding: 2px 8px; border-radius: 50%; font-size: 10px; margin-left: 5px; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar py-8">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-10 brightness-0 invert"></a>
-            <div class="nav-links hidden md:flex space-x-12">
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="logo"></a>
+            <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="shop.html">Shop</a>
                 <a href="gallery.html">Gallery</a>
+                <a href="#" onclick="toggleCart(true)">Cart <span class="cart-badge" id="cart-count">0</span></a>
                 <a href="about.html">About</a>
             </div>
-            <button class="md:hidden text-white text-2xl" onclick="toggleMenu(true)"><i class="fas fa-bars"></i></button>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
         </div>
     </nav>
 
-    <div id="mobile-menu-overlay">
-        <button class="absolute top-10 right-10 text-white text-3xl" onclick="toggleMenu(false)">&times;</button>
-        <a href="index.html" onclick="toggleMenu(false)">Home</a>
-        <a href="shop.html" onclick="toggleMenu(false)">Shop</a>
-        <a href="gallery.html" onclick="toggleMenu(false)">Gallery</a>
-        <a href="about.html" onclick="toggleMenu(false)">About</a>
+    <div class="product-grid" id="main-grid"></div>
+
+    <div id="modal" class="modal-overlay">
+        <div class="close-modal" onclick="closeModal()">← Back to Shop</div>
+        <div class="modal-content" id="modal-content"></div>
     </div>
 
-    <section class="hero">
-        <div class="hero-bg-image"></div>
-        <div class="hero-overlay"></div>
-        <div class="container mx-auto px-6 hero-content">
-            <div class="max-w-4xl">
-                <h1 class="hero-headline">SHADE <br/><span class="text-zinc-700 italic">IT LOW.</span></h1>
-                <p class="mt-8 text-[10px] tracking-[0.5em] uppercase text-zinc-400 font-bold max-w-sm leading-relaxed">
-                    Understated Luxury. <br>Crafted for the modern narrative.
-                </p>
-                <div class="mt-12">
-                    <a href="shop.html" class="inline-block bg-white text-black px-12 py-5 font-black uppercase tracking-widest text-xs hover:bg-zinc-200 transition">Enter Collection</a>
-                </div>
-            </div>
+    <div id="cart" class="cart-drawer">
+        <div style="cursor: pointer; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;" onclick="toggleCart(false)">Close [X]</div>
+        <h2 style="margin-top: 20px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 300;">Your Bag</h2>
+        
+        <div id="cart-list" style="flex-grow:1; overflow-y:auto; margin-top:20px;"></div>
+
+        <div class="shipping-form">
+            <p style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 10px; text-transform: uppercase;">Delivery Info</p>
+            <input type="text" id="cust-name" placeholder="FULL NAME">
+            <input type="email" id="cust-email" placeholder="EMAIL ADDRESS">
+            <textarea id="cust-address" placeholder="SHIPPING ADDRESS (STREET, CITY, CODE)" style="height: 60px; resize: none;"></textarea>
         </div>
-    </section>
+
+        <div style="display:flex; justify-content:space-between; font-size:1.4rem; font-weight:700; margin:20px 0; border-top: 1px solid #000; padding-top: 15px;">
+            <span>TOTAL</span>
+            <span id="cart-total-display">R0.00</span>
+        </div>
+        <button class="checkout-btn" onclick="submitToPayFast()">Checkout Now</button>
+        <button class="view-btn" style="background:none; border:none; color:#888; font-size:0.6rem; margin-top:10px;" onclick="toggleCart(false)">Continue Shopping</button>
+    </div>
+
+    <footer class="footer">
+        <div class="container" style="text-align: center;">
+            <p>&copy; 2026 DARKIS. Shade it low.</p>
+        </div>
+    </footer>
 
     <script>
-        function toggleMenu(show) {
-            const menu = document.getElementById('mobile-menu-overlay');
-            menu.style.display = show ? 'flex' : 'none';
-            // Stop background scrolling when menu is open
-            document.body.style.overflow = show ? 'hidden' : 'auto';
+        const products = [
+            { id: 1, name: "The Black Out", sku: "DKS-BO-001", price: 250.00, images: ["shadesimages/products/blackout.jpg", "shadesimages/products/blackout_side.jpg", "shadesimages/products/blackout_detail.jpg"], desc: "Full UV protection. Premium black-on-black luxury frames." },
+            { id: 2, name: "The Gold Standard", sku: "DKS-GS-002", price: 300.00, images: ["shadesimages/products/goldstandard.jpg", "shadesimages/products/gold_side.jpg", "shadesimages/products/gold_detail.jpg"], desc: "Luxury hand-polished 24K gold plated frames." },
+            { id: 3, name: "The Navigator", sku: "DKS-NV-003", price: 280.00, images: ["shadesimages/products/navigator.jpg", "shadesimages/products/navigator_side.jpg", "shadesimages/products/navigator_detail.jpg"], desc: "Precision engineered for urban explorers." },
+            { id: 4, name: "Ocean Breeze", sku: "DKS-OB-004", price: 260.00, images: ["shadesimages/products/oceanbreeze.jpg", "shadesimages/products/ocean_side.jpg", "shadesimages/products/ocean_detail.jpg"], desc: "Cool tones for summer days and coastal vibes." },
+            { id: 5, name: "Midnight Pulse", sku: "DKS-MP-005", price: 320.00, images: ["shadesimages/products/midnightpulse.jpg", "shadesimages/products/pulse_side.jpg", "shadesimages/products/pulse_detail.jpg"], desc: "Modern aesthetics combined with deep-tone lenses." },
+            { id: 6, name: "Urban Edge", sku: "DKS-UE-006", price: 290.00, images: ["shadesimages/products/urbanedge.jpg", "shadesimages/products/edge_side.jpg", "shadesimages/products/edge_detail.jpg"], desc: "Sharp lines and lightweight frames for maximum comfort." }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('darkis_cart')) || [];
+        let currentProduct = null;
+        let slideIndex = 0;
+
+        function init() {
+            const grid = document.getElementById('main-grid');
+            grid.innerHTML = products.map(p => `
+                <div class="product-card">
+                    <div class="product-img-box" onclick="openProduct(${p.id})"><img src="${p.images[0]}" alt="${p.name}"></div>
+                    <h3 style="font-size: 0.9rem; text-transform: uppercase;">${p.name}</h3>
+                    <p style="font-weight: 700; margin-bottom: 15px;">R${p.price.toFixed(2)}</p>
+                    <button class="view-btn" onclick="openProduct(${p.id})">View Product</button>
+                </div>
+            `).join('');
+            updateCartDisplay();
         }
+
+        function openProduct(id) {
+            currentProduct = products.find(p => p.id === id);
+            slideIndex = 0;
+            renderModal();
+            document.getElementById('modal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function renderModal() {
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <div class="slider-container">
+                    <div class="slider-wrapper" style="transform: translateX(-${slideIndex * 100}%)">
+                        ${currentProduct.images.map(img => `<img src="${img}" onerror="this.src='shadesimages/products/blackout.jpg'">`).join('')}
+                    </div>
+                    <div class="slider-nav">
+                        <button onclick="changeSlide(-1)">❮</button>
+                        <button onclick="changeSlide(1)">❯</button>
+                    </div>
+                </div>
+                <div>
+                    <h1 style="font-size: 1.8rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 15px;">${currentProduct.name}</h1>
+                    <p style="color: #888; font-size: 0.7rem; margin-bottom: 10px;">SKU: ${currentProduct.sku}</p>
+                    <p style="color: #444; margin-bottom: 25px; line-height: 1.6;">${currentProduct.desc}</p>
+                    <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 30px;">R${currentProduct.price.toFixed(2)}</div>
+                    <button class="view-btn" onclick="addToCart()">Add to Bag</button>
+                    <p style="text-align:center; margin-top:15px; font-size:0.7rem; cursor:pointer; text-decoration:underline;" onclick="closeModal()">Continue Shopping</p>
+                </div>
+            `;
+        }
+
+        function changeSlide(n) {
+            const slides = currentProduct.images.length;
+            slideIndex = (slideIndex + n + slides) % slides;
+            renderModal();
+        }
+
+        function addToCart() {
+            const existing = cart.find(i => i.id === currentProduct.id);
+            if (existing) { existing.quantity += 1; } 
+            else { cart.push({ ...currentProduct, quantity: 1 }); }
+            
+            localStorage.setItem('darkis_cart', JSON.stringify(cart));
+            closeModal();
+            updateCartDisplay();
+            toggleCart(true);
+        }
+
+        function removeItem(idx) {
+            cart.splice(idx, 1);
+            localStorage.setItem('darkis_cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            let total = 0;
+            let count = 0;
+            document.getElementById('cart-list').innerHTML = cart.map((item, idx) => {
+                total += (item.price * item.quantity);
+                count += item.quantity;
+                return `
+                    <div class="cart-item">
+                        <div>
+                            <b>${item.name}</b><br>
+                            <span style="font-size:0.7rem; color:#888;">Qty: ${item.quantity}</span><br>
+                            <span style="color:red; cursor:pointer; font-size:0.6rem;" onclick="removeItem(${idx})">REMOVE</span>
+                        </div>
+                        <b>R${(item.price * item.quantity).toFixed(2)}</b>
+                    </div>`;
+            }).join('');
+            document.getElementById('cart-total-display').innerText = `R${total.toFixed(2)}`;
+            document.getElementById('cart-count').innerText = count;
+        }
+
+        function submitToPayFast() {
+            const name = document.getElementById('cust-name').value;
+            const email = document.getElementById('cust-email').value;
+            const address = document.getElementById('cust-address').value;
+            if (!name || !email || !address || cart.length === 0) return alert("Please fill shipping details and add items.");
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
+            
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://www.payfast.co.za/eng/process';
+            
+            const fields = {
+                merchant_id: "34524679",
+                merchant_key: "1tbfpjuomlb06",
+                return_url: "https://darkis.co.za/success.html",
+                cancel_url: "https://darkis.co.za/shop.html",
+                name_first: name,
+                email_address: email,
+                amount: total,
+                item_name: "DARKIS Luxury Order"
+            };
+
+            for (let k in fields) {
+                let input = document.createElement('input');
+                input.type = 'hidden'; input.name = k; input.value = fields[k];
+                form.appendChild(input);
+            }
+            
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function toggleCart(show) { document.getElementById('cart').classList.toggle('open', show); }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        init();
     </script>
 </body>
 </html>

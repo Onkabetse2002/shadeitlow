@@ -6,54 +6,25 @@
     <title>Shop - DARKIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #fff; overflow-x: hidden; }
-        
-        /* Navbar Visibility Fix */
-        .navbar { 
-            background: rgba(10, 10, 10, 0.98); 
-            backdrop-filter: blur(15px); 
-            border-bottom: 1px solid rgba(255,255,255,0.05); 
-            position: sticky; top: 0; z-index: 1000; 
-        }
-        .nav-links a { 
-            color: #ffffff !important; 
-            font-size: 0.75rem; 
-            letter-spacing: 0.25em; 
-            text-transform: uppercase; 
-            font-weight: 700; 
-            opacity: 0.8; 
-            transition: 0.3s; 
-        }
-        .nav-links a:hover { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-
-        /* Grid & Cards */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 80px 20px; max-width: 1400px; margin: 0 auto; }
-        .product-card { background: #111; padding: 15px; border: 1px solid rgba(255,255,255,0.03); transition: 0.4s; }
-        .product-card:hover { transform: translateY(-10px); border-color: rgba(255,255,255,0.1); }
-        .product-img-box { width: 100%; height: 450px; background: #000; margin-bottom: 25px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .navbar { background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; z-index: 1000; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 60px 20px; max-width: 1400px; margin: 0 auto; }
+        .product-card { background: #111; padding: 15px; border: 1px solid rgba(255,255,255,0.03); transition: 0.4s; text-align: center; }
+        .product-img-box { width: 100%; height: 400px; background: #000; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Drawer & Forms */
-        .cart-drawer { position: fixed; right: -550px; top: 0; width: 550px; height: 100%; background: #111; border-left: 1px solid rgba(255,255,255,0.05); transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); z-index: 3000; padding: 40px; box-shadow: -20px 0 50px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+        
+        .cart-drawer { position: fixed; right: -100%; top: 0; width: 550px; height: 100%; background: #111; border-left: 1px solid rgba(255,255,255,0.05); transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); z-index: 6000; padding: 40px; box-shadow: -20px 0 50px rgba(0,0,0,0.5); }
         .cart-drawer.open { right: 0; }
-        .checkout-form input, .checkout-form textarea { width: 100%; padding: 16px; margin-bottom: 12px; border: 1px solid #222; background: #0a0a0a; color: #fff; font-size: 0.75rem; outline: none; }
-        .pay-now-btn { background: #fff; color: #000; width: 100%; padding: 20px; border: none; font-weight: 800; letter-spacing: 0.2em; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-
-        /* MOBILE BUTTON FIX */
+        
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a0a; z-index: 5000; overflow-y: auto; }
         .modal-content { max-width: 1100px; margin: 60px auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; padding: 40px; position: relative; }
 
-        /* 📱 MOBILE RESPONSIVENESS */
-        @media (max-width: 768px) {
-            .navbar { padding: 1rem 0; }
-            .product-grid { grid-template-columns: 1fr; padding: 40px 15px; }
-            .product-img-box { height: 320px; }
-            .cart-drawer { width: 100%; right: -100%; padding: 30px 20px; }
-            .modal-content { grid-template-columns: 1fr; margin: 0; min-height: 100vh; border-radius: 0; padding: 20px; padding-bottom: 100px; }
-        }
+        .checkout-input { width: 100%; padding: 16px; margin-bottom: 12px; border: 1px solid #222; background: #0a0a0a; color: #fff; font-size: 0.75rem; outline: none; }
+        .btn-luxury { background: #fff; color: #000; width: 100%; padding: 20px; border: none; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+
+        @media (max-width: 768px) { .cart-drawer { width: 100%; } .modal-content { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -61,163 +32,161 @@
     <nav class="navbar py-6">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-8 md:h-10 brightness-0 invert"></a>
-            <div class="nav-links hidden md:flex space-x-12">
-                <a href="index.html">Home</a>
-                <a href="shop.html">Shop</a>
-                <a href="gallery.html">Gallery</a>
-                <a href="#" onclick="toggleCart(true)">Bag <span id="cart-count" class="ml-2 px-2 py-0.5 bg-white text-black rounded-full font-bold">0</span></a>
+            <div class="flex items-center space-x-12">
+                <div class="hidden md:flex space-x-12 uppercase tracking-[0.2em] text-[10px] font-black">
+                    <a href="index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="gallery.html">Gallery</a>
+                </div>
+                <button class="relative text-white text-xl" onclick="toggleCart(true)">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-black text-[9px] w-5 h-5 flex items-center justify-center rounded-full font-black">0</span>
+                </button>
             </div>
-            <button class="md:hidden text-white text-xl" onclick="toggleCart(true)"><i class="fas fa-shopping-bag"></i></button>
         </div>
     </nav>
 
     <div class="product-grid" id="main-grid"></div>
 
     <div id="modal" class="modal-overlay">
-        <div class="p-10 text-[10px] tracking-[0.3em] font-bold cursor-pointer opacity-50 text-white" onclick="closeModal()">[←] BACK</div>
+        <div class="p-10 text-[10px] tracking-[0.3em] font-bold cursor-pointer opacity-50 text-white" onclick="closeModal()">[←] BACK TO COLLECTION</div>
         <div class="modal-content" id="modal-content"></div>
     </div>
 
-    <div id="cart" class="cart-drawer text-white">
-        <div class="flex justify-between items-center border-b border-white/10 pb-6 mb-8">
-            <h2 class="text-xl tracking-[0.4em] uppercase font-light">Your Bag</h2>
-            <div class="cursor-pointer font-bold text-[10px] tracking-[0.2em] opacity-40" onclick="toggleCart(false)">CLOSE [X]</div>
+    <div id="cart" class="cart-drawer flex flex-col">
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-2xl tracking-widest uppercase font-light">Your Bag</h2>
+            <div class="cursor-pointer font-bold text-[10px] tracking-widest opacity-40" onclick="toggleCart(false)">CLOSE [X]</div>
         </div>
         
-        <div id="bag-view" class="flex flex-col h-full">
-            <div id="cart-list" class="flex-grow overflow-y-auto pr-2"></div>
-            <div class="border-t border-white/10 pt-8 mt-4 space-y-2">
-                <div class="flex justify-between text-[10px] text-gray-500 uppercase tracking-widest"><span>Subtotal</span><span id="subtotal-display">R0.00</span></div>
-                <div class="flex justify-between text-[10px] text-gray-500 uppercase tracking-widest"><span>Delivery</span><span>R100.00</span></div>
-                <div class="flex justify-between items-center font-bold tracking-tighter pt-4 mb-6"><span class="text-xs uppercase">Total</span><span id="cart-total-display" class="text-3xl">R0.00</span></div>
-                <button class="pay-now-btn" onclick="showCheckout()">Proceed to Checkout</button>
-            </div>
-        </div>
+        <div id="cart-list" class="flex-grow overflow-y-auto mb-8"></div>
 
-        <div id="checkout-view" class="hidden flex flex-col h-full">
-            <button class="text-[10px] font-bold text-indigo-500 uppercase mb-4" onclick="showBag()">← Back</button>
-            <form id="checkout-form" class="checkout-form flex-grow overflow-y-auto">
-                <div class="grid grid-cols-2 gap-3"><input type="text" id="cust-first-name" placeholder="FIRST NAME" required><input type="text" id="cust-last-name" placeholder="LAST NAME" required></div>
-                <input type="email" id="cust-email" placeholder="EMAIL ADDRESS" required>
-                <input type="tel" id="cust-phone" placeholder="PHONE" required>
-                <textarea id="cust-address" placeholder="FULL ADDRESS" style="height: 100px; resize: none;" required></textarea>
-                <div class="p-6 bg-white/5 border border-white/5 rounded-xl mb-6 mt-4"><p id="checkout-total-display" class="text-3xl font-bold">R0.00</p></div>
-                <button type="button" class="pay-now-btn" onclick="processPayFast()">Pay Now</button>
-            </form>
+        <div class="border-t border-white/10 pt-8">
+            <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="fn" class="checkout-input" placeholder="FIRST NAME">
+                <input type="text" id="ln" class="checkout-input" placeholder="LAST NAME">
+            </div>
+            <input type="email" id="em" class="checkout-input" placeholder="EMAIL ADDRESS">
+            <textarea id="adr" class="checkout-input" style="height: 80px; resize: none;" placeholder="SHIPPING ADDRESS (STREET, CITY, POSTAL CODE)"></textarea>
+            
+            <div class="flex justify-between items-center mb-6 pt-4">
+                <span class="text-[10px] uppercase tracking-widest opacity-50">Total (Inc. R100 Delivery)</span>
+                <span id="total-display" class="text-3xl font-bold">R0.00</span>
+            </div>
+            
+            <button class="btn-luxury" onclick="processPayNow()">Pay with PayFast</button>
         </div>
     </div>
 
-    <form id="payfast-form" action="https://www.payfast.co.za/eng/process" method="POST" style="display:none;">
-        <input type="hidden" name="merchant_id" value="34524679"><input type="hidden" name="merchant_key" value="1tbfpjuomlb06">
-        <input type="hidden" name="return_url" value="https://darkis.co.za/success.html"><input type="hidden" name="cancel_url" value="https://darkis.co.za/shop.html">
-        <input type="hidden" name="name_first" id="pf-first-name"><input type="hidden" name="name_last" id="pf-last-name">
-        <input type="hidden" name="email_address" id="pf-email"><input type="hidden" name="amount" id="pf-amount">
-        <input type="hidden" name="item_name" id="pf-item-name"><input type="hidden" name="signature" id="pf-signature">
+    <form id="pf-form" action="https://www.payfast.co.za/eng/process" method="POST" style="display:none;">
+        <input type="hidden" name="merchant_id" value="34524679">
+        <input type="hidden" name="merchant_key" value="1tbfpjuomlb06">
+        <input type="hidden" name="return_url" value="https://darkis.co.za/success.html">
+        <input type="hidden" name="cancel_url" value="https://darkis.co.za/shop.html">
+        <input type="hidden" name="name_first" id="pf-fn">
+        <input type="hidden" name="name_last" id="pf-ln">
+        <input type="hidden" name="email_address" id="pf-em">
+        <input type="hidden" name="amount" id="pf-amt">
+        <input type="hidden" name="item_name" id="pf-items">
     </form>
 
     <script>
         const products = [
-            { id: 1, name: "The Luminous Orange", price: 600.00, images: ["shadesimages/shades/The Luminous Orange R.jpg", "shadesimages/shades/The Luminous Orange L.jpg", "shadesimages/shades/The Luminous Orange F.jpg"], desc: "Full UV protection. Premium luxury frames." },
-            { id: 2, name: "The Luminous Purple", price: 600.00, images: ["shadesimages/shades/The Luminous Purple R.jpg", "shadesimages/shades/The Luminous Purple L.jpg", "shadesimages/shades/The Luminous Purple F.jpg"], desc: "Hand-polished vibrant finish." },
-            { id: 3, name: "The Luminous Blue", price: 600.00, images: ["shadesimages/shades/The Luminous Blue f.jpg", "shadesimages/shades/The Luminous Blue L.jpg", "shadesimages/shades/The Luminous Blue R.jpg"], desc: "Electric deep blue optics." },
-            { id: 4, name: "The Havenlight Green", price: 600.00, images: ["shadesimages/shades/The Havenlight Green L.jpg", "shadesimages/shades/The Havenlihgt Green R.jpg", "shadesimages/shades/The Havenlight Green F.jpg"], desc: "Cool forest tones." },
-            { id: 5, name: "Thee Havenlight Sky", price: 600.00, images: ["shadesimages/shades/The Havenlight Sky L.jpg", "shadesimages/shades/The Havenlight Sky F.jpg"], desc: "Modern sky-blue clarity." },
-            { id: 6, name: "The Havenlight Dawn", price: 600.00, images: ["shadesimages/shades/The Heaven Light Dawn L.jpg", "shadesimages/shades/The Heaven Light Dawn R.jpg", "shadesimages/shades/The Heaven Light Dawn F.jpg"], desc: "Sharp lines for maximum comfort." }
+            { id: 1, name: "The Luminous Orange", price: 600, images: ["shadesimages/shades/The Luminous Orange R.jpg", "shadesimages/shades/The Luminous Orange L.jpg", "shadesimages/shades/The Luminous Orange F.jpg"] },
+            { id: 2, name: "The Luminous Purple", price: 600, images: ["shadesimages/shades/The Luminous Purple R.jpg", "shadesimages/shades/The Luminous Purple L.jpg", "shadesimages/shades/The Luminous Purple F.jpg"] },
+            { id: 3, name: "The Luminous Blue", price: 600, images: ["shadesimages/shades/The Luminous Blue f.jpg", "shadesimages/shades/The Luminous Blue L.jpg", "shadesimages/shades/The Luminous Blue R.jpg"] },
+            { id: 4, name: "The Havenlight Green", price: 600, images: ["shadesimages/shades/The Havenlight Green L.jpg", "shadesimages/shades/The Havenlihgt Green R.jpg", "shadesimages/shades/The Havenlight Green F.jpg"] },
+            { id: 5, name: "Thee Havenlight Sky", price: 600, images: ["shadesimages/shades/The Havenlight Sky L.jpg", "shadesimages/shades/The Havenlight Sky F.jpg"] },
+            { id: 6, name: "The Havenlight Dawn", price: 600, images: ["shadesimages/shades/The Heaven Light Dawn L.jpg", "shadesimages/shades/The Heaven Light Dawn R.jpg", "shadesimages/shades/The Heaven Light Dawn F.jpg"] }
         ];
-        
-        const DELIVERY_FEE = 100.00;
+
         let cart = [];
-        let currentProduct = null;
-        let slideIndex = 0;
+        let cur = null;
+        let sIdx = 0;
 
         function init() {
             document.getElementById('main-grid').innerHTML = products.map(p => `
                 <div class="product-card">
                     <div class="product-img-box"><img src="${p.images[0]}" alt="${p.name}"></div>
-                    <h3 class="text-xs tracking-[0.2em] uppercase font-bold text-center mb-2">${p.name}</h3>
-                    <p class="text-center text-lg font-light mb-6 text-white">R${p.price.toFixed(2)}</p>
-                    <button class="bg-white text-black w-full py-4 text-[10px] font-black uppercase tracking-widest hover:bg-gray-200 transition" onclick="openProduct(${p.id})">Details</button>
+                    <h3 class="text-xs tracking-widest uppercase font-bold mb-2">${p.name}</h3>
+                    <p class="text-lg font-light mb-6">R${p.price.toFixed(2)}</p>
+                    <button class="bg-white text-black w-full py-4 text-[10px] font-black uppercase" onclick="openP(${p.id})">Details</button>
                 </div>`).join('');
+            updateCartUI();
         }
 
-        function openProduct(id) {
-            currentProduct = products.find(p => p.id === id);
-            slideIndex = 0;
-            renderModal();
-            document.getElementById('modal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
+        function openP(id) {
+            cur = products.find(p => p.id === id); sIdx = 0;
+            renderM(); document.getElementById('modal').style.display = 'block';
         }
 
-        function renderModal() {
+        function renderM() {
             document.getElementById('modal-content').innerHTML = `
                 <div class="relative overflow-hidden aspect-square bg-zinc-900 rounded-3xl">
-                    <div class="flex transition-transform duration-700 h-full" style="transform: translateX(-${slideIndex * 100}%)">
-                        ${currentProduct.images.map(img => `<img src="${img}" class="min-w-full h-full object-cover">`).join('')}
+                    <div class="flex transition-transform duration-700 h-full" style="transform: translateX(-${sIdx * 100}%)">
+                        ${cur.images.map(img => `<img src="${img}" class="min-w-full h-full object-cover">`).join('')}
                     </div>
                     <div class="absolute inset-0 flex justify-between items-center px-4">
-                        <button onclick="changeSlide(-1)" class="w-10 h-10 bg-black/50 text-white rounded-full">❮</button>
-                        <button onclick="changeSlide(1)" class="w-10 h-10 bg-black/50 text-white rounded-full">❯</button>
+                        <button onclick="changeS(-1)" class="w-10 h-10 bg-black/50 rounded-full">❮</button>
+                        <button onclick="changeS(1)" class="w-10 h-10 bg-black/50 rounded-full">❯</button>
                     </div>
                 </div>
-                <div class="flex flex-col justify-center text-white">
-                    <h1 class="text-5xl font-black uppercase mb-6 leading-none tracking-tighter">${currentProduct.name}</h1>
-                    <p class="text-gray-400 mb-8 text-lg font-light">${currentProduct.desc}</p>
-                    <div class="text-4xl font-bold mb-10">R${currentProduct.price.toFixed(2)}</div>
-                    <button class="pay-now-btn" onclick="addToCart()">Add to Bag</button>
+                <div class="flex flex-col justify-center">
+                    <h1 class="text-6xl font-black uppercase tracking-tighter mb-4">${cur.name}</h1>
+                    <div class="text-4xl font-bold mb-10">R${cur.price.toFixed(2)}</div>
+                    <button class="btn-luxury" onclick="add()">Add to Bag</button>
                 </div>`;
         }
 
-        function changeSlide(n) { slideIndex = (slideIndex + n + currentProduct.images.length) % currentProduct.images.length; renderModal(); }
+        function changeS(n) { sIdx = (sIdx + n + cur.images.length) % cur.images.length; renderM(); }
 
-        function addToCart() {
-            const ex = cart.find(i => i.id === currentProduct.id);
-            if(ex) ex.quantity++; else cart.push({...currentProduct, quantity: 1});
-            closeModal(); updateCartDisplay(); showBag(); toggleCart(true);
+        function add() {
+            const ex = cart.find(i => i.id === cur.id);
+            if(ex) ex.q++; else cart.push({...cur, q: 1});
+            closeModal(); updateCartUI(); toggleCart(true);
         }
 
-        function updateCartDisplay() {
-            const list = document.getElementById('cart-list');
-            let subt = 0, items = 0;
-            list.innerHTML = cart.map((item, idx) => {
-                const line = item.price * item.quantity; subt += line; items += item.quantity;
-                return `<div class="flex justify-between items-center mb-6 pb-6 border-b border-white/5"><div><b class="uppercase text-xs">${item.name}</b><div class="text-[9px] text-gray-500 mt-1">Qty: ${item.quantity} • R${item.price.toFixed(2)}</div><span class="text-red-500 text-[8px] font-bold cursor-pointer mt-2 block" onclick="removeItem(${idx})">Remove</span></div><b class="text-lg">R${line.toFixed(2)}</b></div>`;
+        function updateCartUI() {
+            let subt = 0; let totalQ = 0;
+            document.getElementById('cart-list').innerHTML = cart.map((item, idx) => {
+                subt += (item.price * item.q); totalQ += item.q;
+                return `<div class="flex justify-between items-center mb-6 pb-6 border-b border-white/5">
+                            <div><b class="text-xs uppercase">${item.name}</b><br/><span class="text-[10px] opacity-40">Qty: ${item.q}</span></div>
+                            <button onclick="rem(${idx})" class="text-red-500 text-[9px] font-bold">REMOVE</button>
+                        </div>`;
             }).join('');
-            const total = subt > 0 ? subt + DELIVERY_FEE : 0;
-            document.getElementById('subtotal-display').innerText = `R${subt.toFixed(2)}`;
-            document.getElementById('cart-total-display').innerText = `R${total.toFixed(2)}`;
-            document.getElementById('checkout-total-display').innerText = `R${total.toFixed(2)}`;
-            document.getElementById('cart-count').innerText = items;
+            const total = subt > 0 ? subt + 100 : 0;
+            document.getElementById('total-display').innerText = `R${total.toFixed(2)}`;
+            document.getElementById('cart-count').innerText = totalQ;
         }
 
-        function removeItem(idx) { cart.splice(idx, 1); updateCartDisplay(); }
-        function showCheckout() { if(cart.length === 0) return alert("Bag is empty"); document.getElementById('bag-view').classList.add('hidden'); document.getElementById('checkout-view').classList.remove('hidden'); }
-        function showBag() { document.getElementById('checkout-view').classList.add('hidden'); document.getElementById('bag-view').classList.remove('hidden'); }
+        function rem(idx) { cart.splice(idx, 1); updateCartUI(); }
 
-        function processPayFast() {
-            const fn = document.getElementById('cust-first-name').value, ln = document.getElementById('cust-last-name').value, em = document.getElementById('cust-email').value;
-            if(!fn || !em) return alert("Fill delivery info");
-            
-            const subt = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-            const total = (subt + DELIVERY_FEE).toFixed(2);
-            const itemNames = cart.map(item => `${item.name} (x${item.quantity})`).join(', ');
+        function processPayNow() {
+            const f = document.getElementById('fn').value;
+            const l = document.getElementById('ln').value;
+            const e = document.getElementById('em').value;
+            const a = document.getElementById('adr').value;
 
-            document.getElementById('pf-first-name').value = fn; 
-            document.getElementById('pf-last-name').value = ln;
-            document.getElementById('pf-email').value = em; 
-            document.getElementById('pf-amount').value = total;
-            document.getElementById('pf-item-name').value = itemNames;
+            if(!f || !e || !a || cart.length === 0) return alert("Please complete your name, email, and shipping address.");
 
-            const data = { merchant_id: "34524679", merchant_key: "1tbfpjuomlb06", return_url: "https://darkis.co.za/success.html", cancel_url: "https://darkis.co.za/shop.html", name_first: fn, name_last: ln, email_address: em, amount: total, item_name: itemNames };
+            const subt = cart.reduce((s, i) => s + (i.price * i.q), 0);
+            const total = (subt + 100).toFixed(2);
             
-            let pfStr = ""; for (let k in data) pfStr += `${k}=${encodeURIComponent(data[k].toString().trim()).replace(/%20/g, "+")}&`;
-            const sig = CryptoJS.MD5(pfStr + "passphrase=DARKIS_secure_2026").toString();
-            
-            document.getElementById('pf-signature').value = sig; 
-            document.getElementById('payfast-form').submit();
+            // Item description now includes the delivery address so you see it in PayFast
+            const itemsWithAddress = cart.map(i => `${i.name} (x${i.q})`).join(', ') + " | SHIP TO: " + a;
+
+            document.getElementById('pf-fn').value = f;
+            document.getElementById('pf-ln').value = l;
+            document.getElementById('pf-em').value = e;
+            document.getElementById('pf-amt').value = total;
+            document.getElementById('pf-items').value = itemsWithAddress;
+
+            document.getElementById('pf-form').submit();
         }
 
-        function toggleCart(show) { document.getElementById('cart').classList.toggle('open', show); }
-        function closeModal() { document.getElementById('modal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function toggleCart(s) { document.getElementById('cart').classList.toggle('open', s); }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
         init();
     </script>
 </body>
