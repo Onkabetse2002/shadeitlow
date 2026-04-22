@@ -9,9 +9,46 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* UI Section: Hero Animation */
-        .hero { min-height: 100vh; display: flex; align-items: center; background: #0a0a0a; color: #fff; position: relative; overflow: hidden; }
-        .hero-image { position: absolute; right: 0; top: 0; height: 100%; width: 50%; object-fit: cover; opacity: 0.8; mask-image: linear-gradient(to left, black, transparent); }
+        body { background-color: #0a0a0a; color: #fff; font-family: 'Poppins', sans-serif; }
+        
+        .hero { 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            position: relative; 
+            overflow: hidden; 
+        }
+
+        /* Responsive Hero Image Logic */
+        .hero-image { 
+            position: absolute; 
+            right: 0; 
+            top: 0; 
+            height: 100%; 
+            width: 100%; /* Default mobile width */
+            object-fit: cover; 
+            z-index: 0;
+        }
+
+        /* Mobile specific fading and opacity */
+        @media (max-width: 1023px) {
+            .hero-image {
+                opacity: 0.35;
+                mask-image: linear-gradient(to top, black, transparent);
+                -webkit-mask-image: linear-gradient(to top, black, transparent);
+            }
+        }
+
+        /* Desktop specific fading and opacity */
+        @media (min-width: 1024px) {
+            .hero-image {
+                width: 50%;
+                opacity: 0.8;
+                mask-image: linear-gradient(to left, black, transparent);
+                -webkit-mask-image: linear-gradient(to left, black, transparent);
+            }
+        }
+
         .hero-content { position: relative; z-index: 10; max-width: 600px; }
         
         .fade-in { animation: fadeIn 1.5s ease-out; }
@@ -24,7 +61,7 @@
         .gallery-grid img:hover { filter: grayscale(0); transform: scale(1.05); }
     </style>
 </head>
-<body class="bg-[#0a0a0a] text-white font-['Poppins']">
+<body class="bg-[#0a0a0a] text-white">
 
     <nav class="navbar fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5 py-6">
         <div class="container mx-auto px-6 flex justify-between items-center">
@@ -35,27 +72,27 @@
                 <a href="gallery.html">Gallery</a>
                 <a href="about.html">About</a>
             </div>
-            <button class="cart-icon-btn relative text-xl" onclick="openCartDrawer()">
+            <a href="shop.html" class="md:hidden text-xl">
                 <i class="fas fa-shopping-bag"></i>
-                <span class="cart-badge absolute -top-2 -right-2 bg-white text-black text-[9px] w-5 h-5 flex items-center justify-center rounded-full font-black">0</span>
-            </button>
+            </a>
         </div>
     </nav>
 
     <section class="hero px-6">
+        <img src="shadesimages/models/homemodel.jpeg" alt="DARKIS Model" class="hero-image">
+
         <div class="container mx-auto hero-content fade-in">
             <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="w-32 mb-10 brightness-0 invert">
-            <h1 class="text-8xl font-black uppercase tracking-tighter leading-none mb-8">Shade <br/> it low.</h1>
+            <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-8">Shade <br/> it low.</h1>
             <p class="text-gray-400 text-lg font-light mb-12 max-w-md">Experience unparalleled luxury. Crafted for the discerning, DARKIS blends timeless elegance with street-ready design.</p>
             <a href="shop.html" class="inline-block bg-white text-black px-14 py-5 font-black uppercase tracking-widest text-xs hover:bg-gray-200 transition">Enter Shop</a>
         </div>
-        <img src="shadesimages/models/homemodel.jpeg" alt="Model" class="hero-image hidden lg:block">
     </section>
 
     <section class="py-32 bg-white text-black">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-10">
-                <h2 class="text-6xl font-black uppercase tracking-tighter">The DARKIS <br/> Essence</h2>
+                <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tighter">The DARKIS <br/> Essence</h2>
                 <p class="max-w-md text-gray-500 font-medium">Elevating your perspective through premium optics and handcrafted frames. This is more than eyewear; it's a signature.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-10">
@@ -103,22 +140,21 @@
                 <a href="about.html" class="text-gray-500 hover:text-white">Our Story</a>
             </div>
             <div class="flex flex-col space-y-4 uppercase tracking-widest text-[10px] font-black">
-                <h4 class="text-white mb-4">Legal</h4>
-                <a href="privacy-policy.html" class="text-gray-500 hover:text-white">Privacy</a>
-                <a href="terms&conditions.html" class="text-gray-500 hover:text-white">Terms</a>
-                <a href="return-and-refund-policy.html" class="text-gray-500 hover:text-white">Returns</a>
+                <h4 class="text-white mb-4">Social</h4>
+                <a href="https://www.instagram.com/shade_it_low_with_darkis" target="_blank" class="text-gray-500 hover:text-white">Instagram</a>
+                <a href="https://wa.me/27683811938" target="_blank" class="text-gray-500 hover:text-white">WhatsApp</a>
+                <a href="https://www.tiktok.com/@shade_it_low_with_darkis" target="_blank" class="text-gray-500 hover:text-white">TikTok</a>
             </div>
         </div>
         <div class="container mx-auto px-6 mt-32 flex justify-between items-center opacity-30 border-t border-white/5 pt-10">
             <p class="text-[9px] font-black uppercase tracking-[0.4em]">&copy; 2026 DARKIS. International.</p>
             <div class="flex space-x-6 text-lg">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/shade_it_low_with_darkis" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@shade_it_low_with_darkis" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://wa.me/27683811938" target="_blank"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
 </body>
 </html>
