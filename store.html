@@ -3,122 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DARKIS - Shade it low</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>DARKIS | Shade it low</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
-        /* UI Section: Hero Animation */
-        .hero { min-height: 100vh; display: flex; align-items: center; background: #0a0a0a; color: #fff; position: relative; overflow: hidden; }
-        .hero-image { position: absolute; right: 0; top: 0; height: 100%; width: 50%; object-fit: cover; opacity: 0.8; mask-image: linear-gradient(to left, black, transparent); }
-        .hero-content { position: relative; z-index: 10; max-width: 600px; }
-        
-        .fade-in { animation: fadeIn 1.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #050505; color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
 
-        .feature-card { border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; padding: 40px; background: #111; }
-        .feature-card:hover { border-color: #fff; }
-        
-        .gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; filter: grayscale(1); transition: 0.5s; }
-        .gallery-grid img:hover { filter: grayscale(0); transform: scale(1.05); }
+        /* HERO SECTION */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 0 25px;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            /* Prioritize the top/face of the model */
+            object-position: center 15%; 
+        }
+
+        /* Desktop: Cinematic Split */
+        @media (min-width: 1024px) {
+            .hero { padding: 0 80px; }
+            .hero-image { width: 65%; object-position: right 15%; }
+            .overlay { background: linear-gradient(to right, #050505 25%, rgba(5,5,5,0.4) 65%, transparent 100%); }
+        }
+
+        /* Mobile: Gradient for readability */
+        .overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: linear-gradient(to top, #050505 35%, rgba(5,5,5,0.2) 100%);
+        }
+
+        /* TYPOGRAPHY hierarchy */
+        .main-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4.5rem, 16vw, 12rem);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.02em; /* Tighter for the logo look */
+            text-transform: uppercase;
+        }
+
+        .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(10px, 2vw, 13px);
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.9em; /* Matches your logo's wide tracking */
+            color: rgba(255,255,255,0.5);
+            margin-top: 25px;
+            padding-left: 10px; /* Balances the letter spacing on the right */
+        }
+
+        /* BUTTON: Minimalist Luxury */
+        .btn-luxury {
+            display: inline-block;
+            margin-top: 50px;
+            padding: 22px 55px;
+            background: #fff;
+            color: #000;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            border-radius: 100px;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            border: 1px solid #fff;
+        }
+
+        .btn-luxury:hover {
+            background: transparent;
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255,255,255,0.1);
+        }
+
+        /* Section Layouts */
+        .essence-card {
+            border-left: 1px solid rgba(0,0,0,0.1);
+            padding-left: 30px;
+        }
+
+        .gallery-img {
+            filter: grayscale(1);
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), filter 1s ease;
+        }
+        .gallery-img:hover { filter: grayscale(0); transform: scale(1.05); }
+
     </style>
 </head>
-<body class="bg-[#0a0a0a] text-white font-['Poppins']">
+<body>
 
-    <nav class="navbar fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5 py-6">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-10 brightness-0 invert"></a>
-            <div class="hidden md:flex space-x-12 uppercase tracking-[0.2em] text-[10px] font-black">
-                <a href="index.html">Home</a>
-                <a href="shop.html">Shop</a>
-                <a href="gallery.html">Gallery</a>
-                <a href="about.html">About</a>
-            </div>
-            <button class="cart-icon-btn relative text-xl" onclick="openCartDrawer()">
-                <i class="fas fa-shopping-bag"></i>
-                <span class="cart-badge absolute -top-2 -right-2 bg-white text-black text-[9px] w-5 h-5 flex items-center justify-center rounded-full font-black">0</span>
-            </button>
+    <nav class="fixed top-0 w-full z-50 py-8 px-8 flex justify-between items-center mix-blend-difference">
+        <a href="index.html">
+            <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-8 brightness-0 invert">
+        </a>
+        <div class="hidden md:flex space-x-12">
+            <a href="index.html" class="text-[10px] tracking-[0.4em] uppercase font-bold text-white">Home</a>
+            <a href="shop.html" class="text-[10px] tracking-[0.4em] uppercase font-bold text-white/50 hover:text-white transition">Shop</a>
+            <a href="gallery.html" class="text-[10px] tracking-[0.4em] uppercase font-bold text-white/50 hover:text-white transition">Gallery</a>
         </div>
+        <a href="shop.html" class="text-white text-lg"><i class="fas fa-shopping-bag"></i></a>
     </nav>
 
-    <section class="hero px-6">
-        <div class="container mx-auto hero-content fade-in">
-            <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="w-32 mb-10 brightness-0 invert">
-            <h1 class="text-8xl font-black uppercase tracking-tighter leading-none mb-8">Shade <br/> it low.</h1>
-            <p class="text-gray-400 text-lg font-light mb-12 max-w-md">Experience unparalleled luxury. Crafted for the discerning, DARKIS blends timeless elegance with street-ready design.</p>
-            <a href="shop.html" class="inline-block bg-white text-black px-14 py-5 font-black uppercase tracking-widest text-xs hover:bg-gray-200 transition">Enter Shop</a>
-        </div>
-        <img src="shadesimages/models/homemodel.jpeg" alt="Model" class="hero-image hidden lg:block">
-    </section>
+    <section class="hero">
+        <img src="shadesimages/models/homemodel.jpeg" alt="DARKIS" class="hero-image">
+        <div class="overlay"></div>
 
-    <section class="py-32 bg-white text-black">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-10">
-                <h2 class="text-6xl font-black uppercase tracking-tighter">The DARKIS <br/> Essence</h2>
-                <p class="max-w-md text-gray-500 font-medium">Elevating your perspective through premium optics and handcrafted frames. This is more than eyewear; it's a signature.</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-10">
-                <div class="feature-card !bg-gray-50 !text-black border-none">
-                    <h3 class="text-xl font-black uppercase tracking-widest mb-4">Quality</h3>
-                    <p class="text-sm opacity-60">Full UV400 protection with scratch-resistant lenses for the ultimate clarity.</p>
-                </div>
-                <div class="feature-card !bg-gray-50 !text-black border-none">
-                    <h3 class="text-xl font-black uppercase tracking-widest mb-4">Style</h3>
-                    <p class="text-sm opacity-60">Effortless sophistication designed to complement any urban aesthetic.</p>
-                </div>
-                <div class="feature-card !bg-gray-50 !text-black border-none">
-                    <h3 class="text-xl font-black uppercase tracking-widest mb-4">Legacy</h3>
-                    <p class="text-sm opacity-60">Materials sourced for durability. Designed to be a staple in your collection.</p>
+        <div class="relative z-10 w-full max-w-7xl mx-auto">
+            <div class="flex flex-col items-start animate-fade-in">
+                <span class="text-[10px] tracking-[0.6em] uppercase opacity-30 mb-8">Collection 2026</span>
+                
+                <h1 class="main-title">DARKIS</h1>
+                <p class="tagline">Shade it low</p>
+                
+                <p class="text-gray-400 font-light mt-12 max-w-[280px] md:max-w-md leading-loose text-xs md:text-sm">
+                    Unparalleled luxury optics. Handcrafted frames designed for the modern elite. Experience the signature of resilience.
+                </p>
+
+                <div class="mt-12">
+                    <a href="shop.html" class="btn-luxury">Enter Shop</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-32 bg-black">
-        <div class="container mx-auto px-6">
-            <h2 class="text-center text-3xl font-black uppercase tracking-widest mb-20">Visual Narrative</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 gallery-grid">
-                <img src="shadesimages/models/homemodel.jpeg" alt="DARKIS Lifestyle">
-                <img src="shadesimages/models/model1.jpeg" alt="DARKIS Lifestyle">
-                <img src="shadesimages/models/model2.jpeg" alt="DARKIS Lifestyle">
-                <img src="shadesimages/models/model3.jpeg" alt="DARKIS Lifestyle">
+    <section class="py-40 bg-white text-black px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-32 gap-12">
+                <h2 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">The <br> Essence</h2>
+                <p class="max-w-sm text-gray-500 text-sm font-medium leading-relaxed tracking-wide">
+                    Redefining luxury through high-end optics and craftsmanship.
+                </p>
             </div>
-            <div class="text-center mt-20">
-                <a href="gallery.html" class="inline-block border-2 border-white px-14 py-4 font-black uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition">Full Gallery</a>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                <div class="essence-card">
+                    <h3 class="text-[10px] font-black uppercase tracking-[0.4em] mb-6">Quality</h3>
+                    <p class="text-xs opacity-60 leading-loose">Full UV400 protection with scratch-resistant premium lenses.</p>
+                </div>
+                <div class="essence-card">
+                    <h3 class="text-[10px] font-black uppercase tracking-[0.4em] mb-6">Style</h3>
+                    <p class="text-xs opacity-60 leading-loose">Effortless sophistication for the bold, urban luxury aesthetic.</p>
+                </div>
+                <div class="essence-card">
+                    <h3 class="text-[10px] font-black uppercase tracking-[0.4em] mb-6">Legacy</h3>
+                    <p class="text-xs opacity-60 leading-loose">Sourced for endurance. A permanent staple in your personal collection.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-32 border-t border-white/5">
-        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-20">
-            <div class="col-span-1 md:col-span-2">
-                <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-8 mb-8 brightness-0 invert">
-                <p class="text-gray-500 max-w-sm">Shade it low with elegance and uncompromising style. Redefining the South African luxury eyewear space.</p>
+    <footer class="py-32 bg-[#050505] px-8 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-20 mb-32">
+                <div class="md:col-span-2">
+                    <img src="shadesimages/logo/Dark Logo 1.svg" class="h-6 mb-10 brightness-0 invert opacity-30">
+                    <p class="text-gray-600 text-[9px] uppercase tracking-widest leading-loose max-w-xs">
+                        Redefining South African luxury from the Northern Cape. Crafted for the bold.
+                    </p>
+                </div>
+                
+                <div class="flex flex-col space-y-6">
+                    <h4 class="text-[10px] uppercase tracking-widest text-white/20">Navigate</h4>
+                    <a href="shop.html" class="text-[10px] tracking-[0.3em] uppercase hover:text-white transition">Collection</a>
+                    <a href="gallery.html" class="text-[10px] tracking-[0.3em] uppercase hover:text-white transition">Archive</a>
+                    <a href="about.html" class="text-[10px] tracking-[0.3em] uppercase hover:text-white transition">About</a>
+                </div>
+
+                <div class="flex flex-col space-y-6">
+                    <h4 class="text-[10px] uppercase tracking-widest text-white/20">Legal</h4>
+                    <a href="privacy-policy.html" class="text-[10px] tracking-[0.3em] uppercase hover:text-white transition">Privacy</a>
+                    <a href="terms&conditions.html" class="text-[10px] tracking-[0.3em] uppercase hover:text-white transition">Terms</a>
+                    <a href="return-and-refund-policy.html" class="text-[10px] tracking-[0.3em] uppercase hover:text-white transition">Returns</a>
+                </div>
             </div>
-            <div class="flex flex-col space-y-4 uppercase tracking-widest text-[10px] font-black">
-                <h4 class="text-white mb-4">Navigate</h4>
-                <a href="shop.html" class="text-gray-500 hover:text-white">Collection</a>
-                <a href="gallery.html" class="text-gray-500 hover:text-white">Gallery</a>
-                <a href="about.html" class="text-gray-500 hover:text-white">Our Story</a>
-            </div>
-            <div class="flex flex-col space-y-4 uppercase tracking-widest text-[10px] font-black">
-                <h4 class="text-white mb-4">Legal</h4>
-                <a href="privacy-policy.html" class="text-gray-500 hover:text-white">Privacy</a>
-                <a href="terms&conditions.html" class="text-gray-500 hover:text-white">Terms</a>
-                <a href="return-and-refund-policy.html" class="text-gray-500 hover:text-white">Returns</a>
-            </div>
-        </div>
-        <div class="container mx-auto px-6 mt-32 flex justify-between items-center opacity-30 border-t border-white/5 pt-10">
-            <p class="text-[9px] font-black uppercase tracking-[0.4em]">&copy; 2026 DARKIS. International.</p>
-            <div class="flex space-x-6 text-lg">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
+
+            <div class="flex justify-between items-center opacity-20 border-t border-white/5 pt-12">
+                <p class="text-[8px] uppercase tracking-[0.5em]">&copy; 2026 DARKIS.</p>
+                <div class="flex space-x-8">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
 </body>
 </html>

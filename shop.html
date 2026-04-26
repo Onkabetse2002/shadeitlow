@@ -4,43 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop - DARKIS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #fff; overflow-x: hidden; }
-        .navbar { background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; z-index: 1000; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 60px 20px; max-width: 1400px; margin: 0 auto; }
-        .product-card { background: #111; padding: 15px; border: 1px solid rgba(255,255,255,0.03); transition: 0.4s; text-align: center; }
-        .product-img-box { width: 100%; height: 400px; background: #000; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; }
         
-        .cart-drawer { position: fixed; right: -100%; top: 0; width: 550px; height: 100%; background: #111; border-left: 1px solid rgba(255,255,255,0.05); transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); z-index: 6000; padding: 40px; box-shadow: -20px 0 50px rgba(0,0,0,0.5); }
-        .cart-drawer.open { right: 0; }
+        /* Glassmorphism Navbar */
+        .navbar { 
+            background: rgba(5, 5, 5, 0.8); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            position: sticky; top: 0; z-index: 1000; 
+        }
+
+        /* Editorial Product Grid */
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 2px; /* Thin line separator look */
+            background-color: rgba(255,255,255,0.05); /* Creates the lines between cards */
+            max-width: 1600px; margin: 0 auto; 
+        }
+
+        .product-card { 
+            background: #050505; 
+            padding: 40px 20px; 
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        /* Image box with soft hover effect */
+        .product-img-box { 
+            width: 100%; 
+            aspect-ratio: 4/5; 
+            background: #000; 
+            margin-bottom: 30px; 
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
         
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a0a; z-index: 5000; overflow-y: auto; }
-        .modal-content { max-width: 1100px; margin: 60px auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; padding: 40px; position: relative; }
+        .product-img-box img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            transition: transform 1.2s ease;
+        }
 
-        .checkout-input { width: 100%; padding: 16px; margin-bottom: 12px; border: 1px solid #222; background: #0a0a0a; color: #fff; font-size: 0.75rem; outline: none; }
-        .btn-luxury { background: #fff; color: #000; width: 100%; padding: 20px; border: none; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .product-card:hover img { transform: scale(1.08); }
 
-        @media (max-width: 768px) { .cart-drawer { width: 100%; } .modal-content { grid-template-columns: 1fr; } }
+        /* Luxury Drawer */
+        .cart-drawer { 
+            position: fixed; right: -100%; top: 0; width: 100%; max-width: 500px; height: 100%; 
+            background: #0a0a0a; z-index: 6000; padding: 40px 25px; 
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1); 
+            box-shadow: -20px 0 60px rgba(0,0,0,0.8); 
+        }
+        .cart-drawer.open { transform: translateX(-100%); }
+
+        /* Inputs - Clean Minimalist */
+        .checkout-input { 
+            width: 100%; padding: 18px 0; margin-bottom: 15px; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            background: transparent; color: #fff; font-size: 0.8rem; outline: none;
+            transition: border-color 0.3s;
+        }
+        .checkout-input:focus { border-bottom-color: #fff; }
+
+        .btn-luxury { 
+            background: #fff; color: #000; width: 100%; padding: 22px; 
+            font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase; 
+            font-size: 0.7rem; cursor: pointer; transition: 0.4s;
+        }
+
+        /* Modal / Detail View */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 5000; overflow-y: auto; }
+        .modal-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 0; position: relative; min-height: 100vh; }
+
+        @media (max-width: 1023px) {
+            .modal-content { grid-template-columns: 1fr; padding-bottom: 100px; }
+            .product-grid { grid-template-columns: 1fr; }
+            .product-card { padding: 60px 25px; }
+        }
+
+        /* Animated Slider Dots */
+        .dot { height: 2px; width: 20px; background: rgba(255,255,255,0.2); display: inline-block; margin: 0 5px; transition: 0.3s; }
+        .dot.active { background: #fff; width: 40px; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar py-6">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-8 md:h-10 brightness-0 invert"></a>
-            <div class="flex items-center space-x-12">
-                <div class="hidden md:flex space-x-12 uppercase tracking-[0.2em] text-[10px] font-black">
-                    <a href="index.html">Home</a>
-                    <a href="shop.html">Shop</a>
-                    <a href="gallery.html">Gallery</a>
+    <nav class="navbar py-5">
+        <div class="container mx-auto px-8 flex justify-between items-center">
+            <a href="index.html" class="transition hover:opacity-70">
+                <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-7 md:h-8 brightness-0 invert">
+            </a>
+            <div class="flex items-center space-x-10">
+                <div class="hidden md:flex space-x-10 uppercase tracking-[0.3em] text-[9px] font-bold">
+                    <a href="index.html" class="hover:opacity-50 transition">Home</a>
+                    <a href="shop.html" class="hover:opacity-50 transition">Collection</a>
+                    <a href="gallery.html" class="hover:opacity-50 transition">Gallery</a>
                 </div>
-                <button class="relative text-white text-xl" onclick="toggleCart(true)">
+                <button class="relative text-white text-lg" onclick="toggleCart(true)">
                     <i class="fas fa-shopping-bag"></i>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-black text-[9px] w-5 h-5 flex items-center justify-center rounded-full font-black">0</span>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-black text-[8px] w-4 h-4 flex items-center justify-center rounded-full font-black">0</span>
                 </button>
             </div>
         </div>
@@ -49,33 +115,33 @@
     <div class="product-grid" id="main-grid"></div>
 
     <div id="modal" class="modal-overlay">
-        <div class="p-10 text-[10px] tracking-[0.3em] font-bold cursor-pointer opacity-50 text-white" onclick="closeModal()">[←] BACK TO COLLECTION</div>
+        <div class="fixed top-8 left-8 z-[6000] mix-blend-difference cursor-pointer text-[10px] tracking-[0.4em] font-bold" onclick="closeModal()">
+            CLOSE [X]
+        </div>
         <div class="modal-content" id="modal-content"></div>
     </div>
 
     <div id="cart" class="cart-drawer flex flex-col">
-        <div class="flex justify-between items-center mb-10">
-            <h2 class="text-2xl tracking-widest uppercase font-light">Your Bag</h2>
-            <div class="cursor-pointer font-bold text-[10px] tracking-widest opacity-40" onclick="toggleCart(false)">CLOSE [X]</div>
+        <div class="flex justify-between items-center mb-16">
+            <h2 class="text-xs tracking-[0.5em] uppercase font-bold opacity-30">Your Selection</h2>
+            <div class="cursor-pointer font-bold text-[10px] tracking-[0.3em]" onclick="toggleCart(false)">CLOSE</div>
         </div>
         
-        <div id="cart-list" class="flex-grow overflow-y-auto mb-8"></div>
+        <div id="cart-list" class="flex-grow overflow-y-auto mb-10 custom-scrollbar"></div>
 
-        <div class="border-t border-white/10 pt-8">
-            <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="fn" class="checkout-input" placeholder="FIRST NAME">
-                <input type="text" id="ln" class="checkout-input" placeholder="LAST NAME">
-            </div>
-            <input type="email" id="em" class="checkout-input" placeholder="EMAIL ADDRESS">
-            <input type="tel" id="ph" class="checkout-input" placeholder="PHONE NUMBER">
-            <textarea id="adr" class="checkout-input" style="height: 80px; resize: none;" placeholder="SHIPPING ADDRESS (STREET, CITY, POSTAL CODE)"></textarea>
+        <div class="pt-8 border-t border-white/5">
+            <input type="text" id="fn" class="checkout-input" placeholder="FIRST NAME">
+            <input type="text" id="ln" class="checkout-input" placeholder="LAST NAME">
+            <input type="email" id="em" class="checkout-input" placeholder="EMAIL">
+            <input type="tel" id="ph" class="checkout-input" placeholder="MOBILE NUMBER">
+            <textarea id="adr" class="checkout-input h-20" placeholder="DELIVERY ADDRESS"></textarea>
             
-            <div class="flex justify-between items-center mb-6 pt-4">
-                <span class="text-[10px] uppercase tracking-widest opacity-50">Total (Inc. R100 Delivery)</span>
-                <span id="total-display" class="text-3xl font-bold">R0.00</span>
+            <div class="flex justify-between items-end mb-10 mt-6">
+                <span class="text-[9px] uppercase tracking-[0.3em] opacity-40">Total Amount</span>
+                <span id="total-display" class="text-4xl font-bold tracking-tighter">R0.00</span>
             </div>
             
-            <button class="btn-luxury" onclick="processPayNow()">Pay with PayFast</button>
+            <button class="btn-luxury" onclick="processPayNow()">Finalize & Pay</button>
         </div>
     </div>
 
@@ -94,12 +160,12 @@
 
     <script>
         const products = [
-            { id: 1, name: "The Luminous Orange", price: 600, images: ["shadesimages/shades/The Luminous Orange R.jpg", "shadesimages/shades/The Luminous Orange L.jpg", "shadesimages/shades/The Luminous Orange F.jpg"] },
-            { id: 2, name: "The Luminous Purple", price: 600, images: ["shadesimages/shades/The Luminous Purple R.jpg", "shadesimages/shades/The Luminous Purple L.jpg", "shadesimages/shades/The Luminous Purple F.jpg"] },
-            { id: 3, name: "The Luminous Blue", price: 600, images: ["shadesimages/shades/The Luminous Blue f.jpg", "shadesimages/shades/The Luminous Blue L.jpg", "shadesimages/shades/The Luminous Blue R.jpg"] },
-            { id: 4, name: "The Havenlight Green", price: 600, images: ["shadesimages/shades/The Havenlight Green L.jpg", "shadesimages/shades/The Havenlihgt Green R.jpg", "shadesimages/shades/The Havenlight Green F.jpg"] },
-            { id: 5, name: "Thee Havenlight Sky", price: 600, images: ["shadesimages/shades/The Havenlight Sky L.jpg", "shadesimages/shades/The Havenlight Sky F.jpg"] },
-            { id: 6, name: "The Havenlight Dawn", price: 600, images: ["shadesimages/shades/The Heaven Light Dawn L.jpg", "shadesimages/shades/The Heaven Light Dawn R.jpg", "shadesimages/shades/The Heaven Light Dawn F.jpg"] }
+            { id: 1, name: "The Luminous Orange", price: 600, images: ["shadesimages/shades/The Luminous Orange R.jpg", "shadesimages/shades/The Luminous Orange L.jpg", "shadesimages/shades/The Luminous Orange F.jpg"], desc: "Architectural precision meets vibrant optics. Hand-polished frames with full UV400 protection." },
+            { id: 2, name: "The Luminous Purple", price: 600, images: ["shadesimages/shades/The Luminous Purple R.jpg", "shadesimages/shades/The Luminous Purple L.jpg", "shadesimages/shades/The Luminous Purple F.jpg"], desc: "A royal deep-tone aesthetic. Designed for the discerning urban collector." },
+            { id: 3, name: "The Luminous Blue", price: 600, images: ["shadesimages/shades/The Luminous Blue f.jpg", "shadesimages/shades/The Luminous Blue L.jpg", "shadesimages/shades/The Luminous Blue R.jpg"], desc: "Electric azure clarity. Engineered for maximum visual impact and street-ready comfort." },
+            { id: 4, name: "The Havenlight Green", price: 600, images: ["shadesimages/shades/The Havenlight Green L.jpg", "shadesimages/shades/The Havenlihgt Green R.jpg", "shadesimages/shades/The Havenlight Green F.jpg"], desc: "Forest-inspired minimalism. Lightweight frames crafted for daily luxury." },
+            { id: 5, name: "Thee Havenlight Sky", price: 600, images: ["shadesimages/shades/The Havenlight Sky L.jpg", "shadesimages/shades/The Havenlight Sky F.jpg"], desc: "Ethereal sky optics. Clean lines and a cloud-light feel." },
+            { id: 6, name: "The Havenlight Dawn", price: 600, images: ["shadesimages/shades/The Heaven Light Dawn L.jpg", "shadesimages/shades/The Heaven Light Dawn R.jpg", "shadesimages/shades/The Heaven Light Dawn F.jpg"], desc: "The signature transition piece. Sharp, professional, and uncompromisingly DARKIS." }
         ];
 
         let cart = [];
@@ -108,11 +174,11 @@
 
         function init() {
             document.getElementById('main-grid').innerHTML = products.map(p => `
-                <div class="product-card">
+                <div class="product-card group" onclick="openP(${p.id})">
                     <div class="product-img-box"><img src="${p.images[0]}" alt="${p.name}"></div>
-                    <h3 class="text-xs tracking-widest uppercase font-bold mb-2">${p.name}</h3>
-                    <p class="text-lg font-light mb-6">R${p.price.toFixed(2)}</p>
-                    <button class="bg-white text-black w-full py-4 text-[10px] font-black uppercase" onclick="openP(${p.id})">Details</button>
+                    <h3 class="text-[10px] tracking-[0.4em] uppercase font-bold mb-4 opacity-80">${p.name}</h3>
+                    <p class="text-sm font-light tracking-widest opacity-40 mb-8">R${p.price.toFixed(2)}</p>
+                    <button class="text-[9px] tracking-[0.3em] uppercase border-b border-white/20 pb-2 group-hover:border-white transition">Explore Piece</button>
                 </div>`).join('');
             updateCartUI();
         }
@@ -120,23 +186,30 @@
         function openP(id) {
             cur = products.find(p => p.id === id); sIdx = 0;
             renderM(); document.getElementById('modal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
 
         function renderM() {
             document.getElementById('modal-content').innerHTML = `
-                <div class="relative overflow-hidden aspect-square bg-zinc-900 rounded-3xl">
-                    <div class="flex transition-transform duration-700 h-full" style="transform: translateX(-${sIdx * 100}%)">
+                <div class="relative w-full h-[60vh] lg:h-screen sticky top-0 overflow-hidden">
+                    <div class="flex transition-transform duration-[1000ms] cubic-bezier(0.16, 1, 0.3, 1) h-full" style="transform: translateX(-${sIdx * 100}%)">
                         ${cur.images.map(img => `<img src="${img}" class="min-w-full h-full object-cover">`).join('')}
                     </div>
-                    <div class="absolute inset-0 flex justify-between items-center px-4">
-                        <button onclick="changeS(-1)" class="w-10 h-10 bg-black/50 rounded-full">❮</button>
-                        <button onclick="changeS(1)" class="w-10 h-10 bg-black/50 rounded-full">❯</button>
+                    <div class="absolute bottom-10 left-10 flex space-x-2">
+                        ${cur.images.map((_, i) => `<div class="dot ${i === sIdx ? 'active' : ''}"></div>`).join('')}
+                    </div>
+                    <div class="absolute inset-0 flex">
+                        <div class="w-1/2 cursor-w-resize" onclick="changeS(-1)"></div>
+                        <div class="w-1/2 cursor-e-resize" onclick="changeS(1)"></div>
                     </div>
                 </div>
-                <div class="flex flex-col justify-center">
-                    <h1 class="text-6xl font-black uppercase tracking-tighter mb-4">${cur.name}</h1>
-                    <div class="text-4xl font-bold mb-10">R${cur.price.toFixed(2)}</div>
-                    <button class="btn-luxury" onclick="add()">Add to Bag</button>
+                <div class="p-10 lg:p-24 flex flex-col justify-center bg-[#050505]">
+                    <div class="mb-4 text-[10px] tracking-[0.5em] uppercase opacity-30">Selection 0${cur.id}</div>
+                    <h1 class="text-5xl lg:text-7xl font-bold uppercase tracking-tighter leading-[0.9] mb-10">${cur.name}</h1>
+                    <p class="text-gray-500 font-light leading-relaxed mb-12 max-w-sm text-sm">${cur.desc}</p>
+                    <div class="text-3xl font-bold tracking-tighter mb-16">R${cur.price.toFixed(2)}</div>
+                    <button class="btn-luxury" onclick="add()">Add to selection</button>
+                    <div class="mt-8 text-[9px] tracking-[0.2em] uppercase opacity-40 text-center cursor-pointer" onclick="closeModal()">Back to collection</div>
                 </div>`;
         }
 
@@ -152,9 +225,12 @@
             let subt = 0; let totalQ = 0;
             document.getElementById('cart-list').innerHTML = cart.map((item, idx) => {
                 subt += (item.price * item.q); totalQ += item.q;
-                return `<div class="flex justify-between items-center mb-6 pb-6 border-b border-white/5">
-                            <div><b class="text-xs uppercase">${item.name}</b><br/><span class="text-[10px] opacity-40">Qty: ${item.q}</span></div>
-                            <button onclick="rem(${idx})" class="text-red-500 text-[9px] font-bold">REMOVE</button>
+                return `<div class="flex justify-between items-center mb-8 pb-8 border-b border-white/5">
+                            <div class="flex items-center space-x-4">
+                                <img src="${item.images[0]}" class="w-12 h-12 object-cover rounded-sm">
+                                <div><b class="text-[10px] uppercase tracking-widest">${item.name}</b><br/><span class="text-[9px] opacity-30 uppercase tracking-tighter">Quantity: ${item.q}</span></div>
+                            </div>
+                            <button onclick="rem(${idx})" class="text-[9px] opacity-40 hover:opacity-100 tracking-widest">REMOVE</button>
                         </div>`;
             }).join('');
             const total = subt > 0 ? subt + 100 : 0;
@@ -171,26 +247,24 @@
             const p = document.getElementById('ph').value;
             const a = document.getElementById('adr').value;
 
-            if(!f || !e || !p || !a || cart.length === 0) return alert("Please complete your name, email, phone, and shipping address.");
+            if(!f || !e || !p || !a || cart.length === 0) return alert("All fields are mandatory for secure delivery.");
 
             const subt = cart.reduce((s, i) => s + (i.price * i.q), 0);
             const total = (subt + 100).toFixed(2);
-            
-            // Item description now includes phone and address so it's all in your notification
-            const detailsForMerchant = cart.map(i => `${i.name} (x${i.q})`).join(', ') + ` | PHONE: ${p} | SHIP TO: ${a}`;
+            const details = cart.map(i => `${i.name} (x${i.q})`).join(', ') + ` | PHONE: ${p} | SHIP: ${a}`;
 
             document.getElementById('pf-fn').value = f;
             document.getElementById('pf-ln').value = l;
-            document.getElementById('pf-email').value = e;
-            document.getElementById('pf-ph').value = p; // Standard PayFast field
+            document.getElementById('pf-em').value = e;
+            document.getElementById('pf-ph').value = p;
             document.getElementById('pf-amt').value = total;
-            document.getElementById('pf-items').value = detailsForMerchant;
+            document.getElementById('pf-items').value = details;
 
             document.getElementById('pf-form').submit();
         }
 
         function toggleCart(s) { document.getElementById('cart').classList.toggle('open', s); }
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; document.body.style.overflow = 'auto'; }
         init();
     </script>
 </body>
