@@ -67,6 +67,7 @@
                 <input type="text" id="ln" class="checkout-input" placeholder="LAST NAME">
             </div>
             <input type="email" id="em" class="checkout-input" placeholder="EMAIL ADDRESS">
+            <input type="tel" id="ph" class="checkout-input" placeholder="PHONE NUMBER">
             <textarea id="adr" class="checkout-input" style="height: 80px; resize: none;" placeholder="SHIPPING ADDRESS (STREET, CITY, POSTAL CODE)"></textarea>
             
             <div class="flex justify-between items-center mb-6 pt-4">
@@ -86,6 +87,7 @@
         <input type="hidden" name="name_first" id="pf-fn">
         <input type="hidden" name="name_last" id="pf-ln">
         <input type="hidden" name="email_address" id="pf-em">
+        <input type="hidden" name="cell_number" id="pf-ph">
         <input type="hidden" name="amount" id="pf-amt">
         <input type="hidden" name="item_name" id="pf-items">
     </form>
@@ -166,21 +168,23 @@
             const f = document.getElementById('fn').value;
             const l = document.getElementById('ln').value;
             const e = document.getElementById('em').value;
+            const p = document.getElementById('ph').value;
             const a = document.getElementById('adr').value;
 
-            if(!f || !e || !a || cart.length === 0) return alert("Please complete your name, email, and shipping address.");
+            if(!f || !e || !p || !a || cart.length === 0) return alert("Please complete your name, email, phone, and shipping address.");
 
             const subt = cart.reduce((s, i) => s + (i.price * i.q), 0);
             const total = (subt + 100).toFixed(2);
             
-            // Item description now includes the delivery address so you see it in PayFast
-            const itemsWithAddress = cart.map(i => `${i.name} (x${i.q})`).join(', ') + " | SHIP TO: " + a;
+            // Item description now includes phone and address so it's all in your notification
+            const detailsForMerchant = cart.map(i => `${i.name} (x${i.q})`).join(', ') + ` | PHONE: ${p} | SHIP TO: ${a}`;
 
             document.getElementById('pf-fn').value = f;
             document.getElementById('pf-ln').value = l;
-            document.getElementById('pf-em').value = e;
+            document.getElementById('pf-email').value = e;
+            document.getElementById('pf-ph').value = p; // Standard PayFast field
             document.getElementById('pf-amt').value = total;
-            document.getElementById('pf-items').value = itemsWithAddress;
+            document.getElementById('pf-items').value = detailsForMerchant;
 
             document.getElementById('pf-form').submit();
         }
