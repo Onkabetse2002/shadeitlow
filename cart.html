@@ -4,76 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Bag - DARKIS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* UI Section: Cart Page Styling */
-        body { font-family: 'Poppins', sans-serif; background: #fff; }
-        .cart-row { border-bottom: 1px solid #f0f0f0; transition: background 0.3s; }
-        .cart-row:hover { background: #fafafa; }
-        .qty-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.3s; }
-        .qty-btn:hover { background: #000; color: #fff; }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        /* Navbar Glassmorphism */
+        .navbar { 
+            background: rgba(5, 5, 5, 0.8); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .cart-row { border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .cart-row:hover { background: rgba(255,255,255,0.02); }
+
+        .qty-btn { 
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; 
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; transition: 0.3s; 
+        }
+        .qty-btn:hover { background: #fff; color: #000; border-color: #fff; }
+
+        .btn-luxury {
+            background: #fff; color: #000; padding: 20px; 
+            font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase; 
+            font-size: 0.7rem; transition: 0.4s;
+        }
+        .btn-luxury:hover { background: #e2e2e2; transform: translateY(-3px); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #222; }
     </style>
 </head>
-<body class="bg-white font-['Poppins']">
+<body class="bg-[#050505]">
 
-    <nav class="navbar bg-white border-b border-gray-100 py-6 sticky top-0 z-50">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="index.html"><img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-10"></a>
-            <div class="hidden md:flex space-x-12 uppercase tracking-[0.2em] text-[10px] font-black">
-                <a href="index.html" class="hover:text-gray-400 transition">Home</a>
-                <a href="shop.html" class="hover:text-gray-400 transition">Shop</a>
-                <a href="gallery.html" class="hover:text-gray-400 transition">Gallery</a>
-                <a href="about.html" class="hover:text-gray-400 transition">About</a>
+    <nav class="navbar sticky top-0 z-50 py-6">
+        <div class="container mx-auto px-8 flex justify-between items-center">
+            <a href="index.html">
+                <img src="shadesimages/logo/Dark Logo 1.svg" alt="DARKIS" class="h-8 brightness-0 invert">
+            </a>
+            <div class="hidden md:flex space-x-12 uppercase tracking-[0.4em] text-[9px] font-bold">
+                <a href="index.html" class="hover:opacity-50 transition">Home</a>
+                <a href="shop.html" class="hover:opacity-50 transition">Shop</a>
+                <a href="gallery.html" class="hover:opacity-50 transition">Gallery</a>
             </div>
-            <a href="cart.html" class="relative text-xl">
+            <a href="cart.html" class="relative text-white text-lg">
                 <i class="fas fa-shopping-bag"></i>
-                <span class="cart-badge absolute -top-2 -right-2 bg-black text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full">0</span>
+                <span class="cart-badge absolute -top-2 -right-2 bg-white text-black text-[8px] w-4 h-4 flex items-center justify-center rounded-full font-black">0</span>
             </a>
         </div>
     </nav>
 
-    <section class="py-24 bg-gray-50">
-        <div class="container mx-auto px-6 text-center">
-            <h1 class="text-6xl font-extrabold uppercase tracking-tighter mb-4">Your Bag</h1>
-            <p class="text-gray-400 tracking-[0.3em] uppercase text-[10px] font-bold">Review items & finalize shipping</p>
+    <!-- Header Section -->
+    <section class="py-24 border-b border-white/5">
+        <div class="container mx-auto px-8 text-center">
+            <h1 class="text-7xl font-serif italic mb-4">Your Bag</h1>
+            <p class="text-white/30 tracking-[0.6em] uppercase text-[10px] font-bold">Review selection & finalize shipping</p>
         </div>
     </section>
 
     <section class="py-24 min-h-[60vh]">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <div class="hidden md:grid grid-cols-4 border-b-2 border-black pb-6 mb-10 uppercase tracking-[0.2em] text-[10px] font-black">
+        <div class="container mx-auto px-8 max-w-6xl">
+            <div class="hidden md:grid grid-cols-4 border-b border-white/10 pb-6 mb-10 uppercase tracking-[0.4em] text-[9px] font-black text-white/30">
                 <div class="col-span-2">Item Details</div>
                 <div class="text-center">Quantity</div>
                 <div class="text-right">Total</div>
             </div>
 
-            <div id="cart-items-list" class="space-y-10"></div>
+            <!-- List of items injected by JS -->
+            <div id="cart-items-list" class="space-y-4"></div>
 
-            <div id="empty-cart-msg" class="hidden text-center py-32">
-                <i class="fas fa-shopping-bag text-7xl text-gray-100 mb-8"></i>
-                <p class="text-gray-300 italic text-2xl font-light">Your bag is currently empty.</p>
-                <a href="shop.html" class="inline-block mt-10 px-14 py-4 bg-black text-white uppercase tracking-widest text-xs font-bold hover:bg-gray-800 transition">Shop the Collection</a>
+            <!-- Empty Cart Message -->
+            <div id="empty-cart-msg" class="hidden text-center py-32 animate-fade-in">
+                <i class="fas fa-shopping-bag text-5xl text-white/10 mb-8"></i>
+                <p class="text-white/20 italic text-xl font-light">Your selection is currently empty.</p>
+                <div class="mt-10">
+                    <a href="shop.html" class="text-[10px] tracking-[0.4em] uppercase font-bold border-b border-white/20 pb-2 hover:border-white transition">Explore Collection</a>
+                </div>
             </div>
 
-            <div id="cart-summary" class="mt-24 border-t-4 border-black pt-12 flex flex-col items-end">
-                <div class="w-full md:w-1/3 space-y-6">
-                    <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-gray-400">
+            <!-- Summary -->
+            <div id="cart-summary" class="mt-24 border-t border-white/10 pt-12 flex flex-col items-end">
+                <div class="w-full md:w-1/3 space-y-8">
+                    <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-white/40">
                         <span>Subtotal</span>
                         <span id="subtotal-amount">R0.00</span>
                     </div>
-                    <div class="flex justify-between items-center text-4xl font-extrabold tracking-tighter">
-                        <span>Total</span>
-                        <span id="total-amount">R0.00</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-white/40">Total</span>
+                        <span id="total-amount" class="text-5xl font-bold tracking-tighter">R0.00</span>
                     </div>
-                    <div class="pt-10 flex flex-col gap-4">
-                        <a href="backend/pages/checkout.html" class="w-full bg-black text-white py-6 text-center uppercase tracking-[0.3em] font-black hover:bg-zinc-800 transition shadow-2xl text-xs">
+                    <div class="pt-6 flex flex-col gap-6">
+                        <!-- Redirects to Shop.html to use the existing PayFast drawer logic -->
+                        <a href="shop.html" class="btn-luxury text-center block">
                             Secure Checkout
                         </a>
-                        <button onclick="clearAllItems()" class="text-[9px] uppercase font-bold tracking-[0.2em] text-gray-300 hover:text-red-500 transition">
-                            Empty Bag
+                        <button onclick="clearAllItems()" class="text-[9px] uppercase font-bold tracking-[0.4em] text-white/20 hover:text-white transition">
+                            Empty Selection
                         </button>
                     </div>
                 </div>
@@ -81,18 +113,23 @@
         </div>
     </section>
 
-    <footer class="bg-black text-white py-20 text-center">
-        <p class="tracking-[0.5em] font-bold text-[10px] opacity-40 uppercase">&copy; 2026 DARKIS. Shade it Low.</p>
+    <footer class="py-24 border-t border-white/5 bg-[#050505]">
+        <div class="container mx-auto px-8 text-center">
+            <p class="tracking-[0.6em] font-bold text-[9px] text-white/20 uppercase">&copy; 2026 DARKIS. International.</p>
+        </div>
     </footer>
 
     <script>
+        // Use the same storage key as shop.html
+        const STORAGE_KEY = 'cart'; 
+
         function getCart() {
-            const data = localStorage.getItem('cart');
+            const data = localStorage.getItem(STORAGE_KEY);
             return data ? JSON.parse(data) : [];
         }
 
         function saveCart(cart) {
-            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
             renderCartPage();
             updateGlobalBadge();
         }
@@ -112,8 +149,10 @@
                 const newQty = cart[index].quantity + delta;
                 if (newQty > 0) {
                     cart[index].quantity = newQty;
-                    saveCart(cart);
+                } else {
+                    cart.splice(index, 1); // Auto-remove if qty is 0
                 }
+                saveCart(cart);
             }
         }
 
@@ -124,7 +163,7 @@
         }
 
         function clearAllItems() {
-            if (confirm("Clear your entire bag?")) {
+            if (confirm("Clear your entire selection?")) {
                 saveCart([]);
             }
         }
@@ -150,29 +189,35 @@
             let grandTotal = 0;
 
             list.innerHTML = cart.map((item, index) => {
-                const rowTotal = item.price * item.quantity;
+                const price = Number(item.price) || 0;
+                const rowTotal = price * item.quantity;
                 grandTotal += rowTotal;
+                
+                // Use default image if none provided
+                const imgSource = item.image || (item.images ? item.images[0] : 'shadesimages/shades/default.jpg');
+
                 return `
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 items-center cart-row pb-10">
-                        <div class="col-span-2 flex items-center space-x-8">
-                            <div class="w-32 h-32 bg-gray-50 flex items-center justify-center overflow-hidden">
-                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 items-center cart-row py-10">
+                        <div class="col-span-2 flex items-center space-x-10">
+                            <div class="w-32 h-40 bg-[#111] flex-shrink-0 overflow-hidden">
+                                <img src="${imgSource}" alt="${item.name}" class="w-full h-full object-cover opacity-80">
                             </div>
                             <div>
-                                <h3 class="font-extrabold uppercase tracking-tighter text-2xl">${item.name}</h3>
-                                <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-2 font-bold">${item.color} • R${item.price.toFixed(2)}</p>
-                                <button onclick="removeOneItem(${index})" class="text-[9px] text-red-500 font-bold uppercase tracking-widest mt-6 hover:underline">Remove</button>
+                                <h3 class="font-serif italic text-3xl mb-1">${item.name}</h3>
+                                <p class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-bold">Piece ID: #0${item.id || index}</p>
+                                <p class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-bold mt-1">R${price.toFixed(2)}</p>
+                                <button onclick="removeOneItem(${index})" class="text-[8px] text-white/20 font-black uppercase tracking-[0.3em] mt-8 hover:text-red-500 transition">Remove Piece</button>
                             </div>
                         </div>
                         <div class="flex justify-center">
-                            <div class="flex items-center space-x-6 border-2 border-black px-4 py-2">
-                                <button onclick="updateQty(${index}, -1)" class="qty-btn font-bold">-</button>
-                                <span class="font-black text-lg">${item.quantity}</span>
-                                <button onclick="updateQty(${index}, 1)" class="qty-btn font-bold">+</button>
+                            <div class="flex items-center space-x-8">
+                                <button onclick="updateQty(${index}, -1)" class="qty-btn">-</button>
+                                <span class="font-bold text-lg w-4 text-center">${item.quantity}</span>
+                                <button onclick="updateQty(${index}, 1)" class="qty-btn">+</button>
                             </div>
                         </div>
                         <div class="text-right">
-                            <span class="text-3xl font-bold tracking-tighter">R${rowTotal.toFixed(2)}</span>
+                            <span class="text-2xl font-bold tracking-tighter">R${rowTotal.toFixed(2)}</span>
                         </div>
                     </div>
                 `;
